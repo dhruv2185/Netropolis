@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class Users(models.Model):
-    identifier = models.OneToOneField(User, on_delete=models.CASCADE, default=7, null=True)
-    username = models.CharField(max_length=50)
+class Teams(models.Model):
+    id = models.AutoField(primary_key=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=7, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     number_of_people = models.IntegerField()
@@ -18,8 +18,8 @@ class Users(models.Model):
     concerns = models.TextField()
 
     def __str__(self):
-        return self.identifier
-
+        return self.id
+    
 
 class Community_Managers(models.Model):
     id = models.AutoField(primary_key=True)
@@ -50,7 +50,7 @@ class Schedules(models.Model):
 
 class Applications(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Users, on_delete=models.CASCADE, default=7)
+    user_id = models.ForeignKey(Teams, on_delete=models.CASCADE, default=7)
     quest_id = models.ForeignKey(Quests, on_delete=models.CASCADE)
     status = models.CharField(max_length=30)
     application_date = models.DateTimeField()
