@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSignUpMutation } from "../../features/slices/usersApiSlice";
-import { setCredentials } from "../../features/slices/authSlice";
+import { setCredentials, setTokens } from "../../features/slices/authSlice";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../../utils/AppLoader";
 import { AppError } from "../../utils/AppError";
@@ -12,14 +12,41 @@ import { AppError } from "../../utils/AppError";
 const baseUrl = "http://localhost:8000"
 
 const signUpRequest = async (userInfo) => {
-    const res = await fetch(`${baseUrl}/register/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
-    });
-    return res;
+    try {
+        const res = await fetch(`${baseUrl}/register/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userInfo),
+        });
+        const data = await res.json();
+        return data;
+    }
+    catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+const fetchUserProfile = async (tokens) => {
+    console.log("fetching user profile");
+    console.log(tokens.access);
+    try {
+        const res = await fetch(`${baseUrl}/fetch_user/`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${tokens.access}`,
+            },
+        });
+        const data = await res.json();
+        return data;
+    }
+    catch (err) {
+        console.log(err);
+        return err;
+    }
 }
 
 const initialState = {
@@ -54,15 +81,15 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // if (!userData.name || !userData.email || !userData.password) {
-        //     return toast.error("All fields are required");
-        // }
-        // if (userData.password.length < 6) {
-        //     return toast.error("Password must be up to 6 characters");
-        // }
-        // if (userData.password !== userData.password2) {
-        //     return toast.error("Passwords do not match");
-        // }
+        if (!userData.username || !userData.email || !userData.password || !userData.password2 || !userData.first_name || !userData.last_name) {
+            return toast.error("All fields are required");
+        }
+        if (userData.password.length < 6) {
+            return toast.error("Password must contain atleast 6 characters");
+        }
+        if (userData.password !== userData.password2) {
+            return toast.error("Passwords do not match");
+        }
 
         const userInfo = {
             first_name: userData.first_name,
@@ -73,17 +100,16 @@ const Register = () => {
             password2: userData.password2,
         };
         setLoading(true);
-
         try {
-            console.log(userInfo);
-            // const res = await signUp(userInfo).unwrap();
-            const res = await signUpRequest(userInfo);
-            // const res = userInfo;
-            const data = await res.json();
-            console.log(data);
-
-            dispatch(setCredentials(data));
-            // navigate("/");
+            const data = await signUpRequest(userInfo);
+            const tokens = {
+                access: data.access,
+                refresh: data.refresh,
+            };
+            dispatch(setTokens({ ...tokens }));
+            const user = await fetchUserProfile(tokens);
+            dispatch(setCredentials({ ...user }));
+            navigate("/");
             toast.success("Signup is successful");
         } catch (err) {
             setLoading(false);
