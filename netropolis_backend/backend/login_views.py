@@ -8,10 +8,14 @@ from django.contrib.auth.models import User
 from .serializers import RegisterSerializer, TeamsSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Teams
+from django.contrib.auth import get_user_model
+from django.core.exceptions import MultipleObjectsReturned
+
 
 class RegisterView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
+
     def create(self, request, *args, **kwargs):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
@@ -22,9 +26,11 @@ class RegisterView(generics.ListCreateAPIView):
                 'access': str(refresh.access_token),
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+
 class TeamProfile(APIView):
     permission_classes = (IsAuthenticated,)
+
     def post(self, request, *args, **kwargs):
         serialzer = TeamsSerializer(data=request.data)
         if serialzer.is_valid():
@@ -32,12 +38,21 @@ class TeamProfile(APIView):
             return Response(serialzer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)
-            
-    def get(self, pk):
-        teams = Teams.objects.get(created_by=pk)
-        serializer = TeamsSerializer(teams, many = True)
-        return Response(serializer.data, status= status.HTTP_200_OK)
-    
+
+    def get(self, request, format=None):
+        pk = request.query_params.get('pk', None)
+        if pk is not None:
+            # user = get_user_model().objects.get(username=pk)
+            try:
+                team = Teams.objects.get(created_by=pk)
+                serializer = TeamsSerializer(team, many=False)
+            except MultipleObjectsReturned:
+                teams = Teams.objects.filter(created_by=pk)
+                serializer = TeamsSerializer(teams, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
     def put(self, request, pk):
         teams = Teams.objects.get(id=pk)
         serializer = TeamsSerializer(teams, data=request.data)
@@ -46,11 +61,8 @@ class TeamProfile(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     def delete(self, pk):
         teams = Teams.objects.get(id=pk)
         teams.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-        
-              
-    
