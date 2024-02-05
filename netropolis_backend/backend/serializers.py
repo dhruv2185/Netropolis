@@ -6,18 +6,23 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from six import text_type
 from .models import Teams, Community_Managers, Quests, Schedules, Applications
 
+
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
-            required=True,
-            validators=[UniqueValidator(queryset=User.objects.all())]
-            )
-    password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+    first_name = serializers.CharField(required=True)
+    last_name = serializers.CharField(required=False)
+    password = serializers.CharField(
+        write_only=True, required=True, validators=[validate_password])
     password2 = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'password2', 'email')
-        
+        fields = ('username', 'password', 'password2',
+                  'email', 'first_name', 'last_name')
+
     def get_tokens(self, user):
         tokens = RefreshToken.for_user(user)
         refresh = text_type(tokens)
@@ -30,19 +35,53 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
+            raise serializers.ValidationError(
+                {"password": "Password fields didn't match."})
         return attrs
 
     def create(self, validated_data):
         user = User.objects.create(
             username=validated_data['username'],
             email=validated_data['email'],
-        )        
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name']
+        )
         user.set_password(validated_data['password'])
         user.save()
         return user
-    
+
+
 class TeamsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teams
         fields = '__all__'
+
+
+class CommunityManagersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Community_Managers
+        fields = '__all__'
+
+
+class QuestsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Quests
+        fields = '__all__'
+
+
+class SchedulesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Schedules
+        fields = '__all__'
+
+
+class ApplicationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Applications
+        fields = '__all__'
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
