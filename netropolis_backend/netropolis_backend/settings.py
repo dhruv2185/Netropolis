@@ -29,7 +29,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,7 +49,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        )
+    )
 }
 
 MIDDLEWARE = [
@@ -114,7 +113,19 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'netropolis',
+    #     'USER': 'dhruvghevariya2002',
+    #     'PASSWORD': 'fEb6ZrXNld1U',
+    #     'HOST': 'ep-fragrant-forest-a1swnx40-pooler.ap-southeast-1.aws.neon.tech',
+    #     'PORT': '5432',
+    #     'OPTIONS': {'sslmode': 'require'},
+    #     'DISABLE_SERVER_SIDE_CURSORS': True,
+    # }
+
 }
 
 
@@ -158,6 +169,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
