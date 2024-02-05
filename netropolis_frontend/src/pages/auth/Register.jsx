@@ -79,8 +79,10 @@ const Register = () => {
             // const res = await signUp(userInfo).unwrap();
             const res = await signUpRequest(userInfo);
             // const res = userInfo;
-            console.log(res);
-            // dispatch(setCredentials({ ...res }));
+            const data = await res.json();
+            console.log(data);
+
+            dispatch(setCredentials(data));
             // navigate("/");
             toast.success("Signup is successful");
         } catch (err) {
