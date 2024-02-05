@@ -9,6 +9,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useLoginMutation } from "../../features/slices/usersApiSlice";
 
 const Login = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,7 +38,18 @@ const Login = () => {
     }
 
     try {
-      const res = await login({ email, password }).unwrap();
+      const res = await fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      })
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
+      console.log(data);
       dispatch(setCredentials({ ...res }));
       navigate("/");
     } catch (err) {
