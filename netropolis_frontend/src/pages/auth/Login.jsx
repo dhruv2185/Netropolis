@@ -10,7 +10,7 @@ import { useLoginMutation } from "../../features/slices/usersApiSlice";
 
 const Login = () => {
   const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [visible, setVisible] = useState(false);
@@ -30,20 +30,18 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!username || !password) {
       return toast.error("All fields are required");
     }
-    if (!validateEmail(email)) {
-      return toast.error("Please enter a valid email");
-    }
+    
 
     try {
-      const res = await fetch(`${BASE_URL}/login`, {
+      const res = await fetch(`${BASE_URL}/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       })
       const data = await res.json();
       if (!res.ok) {
@@ -77,17 +75,17 @@ const Login = () => {
                 htmlFor="email"
                 className="text-[14px] font-inter text-[var(--tertiary)]"
               >
-                Email Address
+                Username
               </label>
               <input
-                type="email"
-                id="email"
-                value={email}
-                name="email"
+                type="text"
+                id="username"
+                value={username}
+                name="username"
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setUsername(e.target.value);
                 }}
-                placeholder="Email"
+                placeholder="Username"
                 required
                 className="w-full rounded-lg placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
               />
