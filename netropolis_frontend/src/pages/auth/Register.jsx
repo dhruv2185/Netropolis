@@ -9,6 +9,12 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../../utils/AppLoader";
 import { AppError } from "../../utils/AppError";
 
+const signUpRequest = async (userInfo) => {
+    const res = await fetch(`${baseUrl}/register`, {
+
+    })
+}
+
 const initialState = {
     name: "",
     email: "",
@@ -50,14 +56,19 @@ const Register = () => {
         }
 
         const userInfo = {
-            name: userData.name,
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            username: userData.username,
             email: userData.email,
             password: userData.password,
+            password2: userData.password2,
         };
         setLoading(true);
 
         try {
-            const res = await signUp(userInfo).unwrap();
+            console.log(userInfo);
+            // const res = await signUp(userInfo).unwrap();
+            const res = userInfo;
             dispatch(setCredentials({ ...res }));
             navigate("/");
             toast.success("Signup is successful");
@@ -93,6 +104,41 @@ const Register = () => {
                         onSubmit={handleSubmit}
                         className="flex flex-col gap-4 items-center justify-center"
                     >
+                        <div className="flex flex-row gap-10 ">
+                            {/* ///////////////////////////// */}
+                            <div>
+                                <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={userData.name}
+                                    onChange={handleInputChange}
+                                    className="w-md text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                    style={{
+                                        borderRadius: "8px",
+                                        paddingLeft: "8px",
+                                    }}
+                                    placeholder="Name"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={userData.name}
+                                    onChange={handleInputChange}
+                                    className="w-md text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                    style={{
+                                        borderRadius: "8px",
+                                        paddingLeft: "8px",
+                                    }}
+                                    placeholder="Name"
+                                    required
+                                />
+                            </div>
+                        </div>
                         <div>
                             <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
                             <input
@@ -109,15 +155,46 @@ const Register = () => {
                                 required
                             />
                         </div>
-
                         <div>
+                            <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
+                            <input
+                                type="text"
+                                name="name"
+                                value={userData.name}
+                                onChange={handleInputChange}
+                                className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                style={{
+                                    borderRadius: "8px",
+                                    paddingLeft: "8px",
+                                }}
+                                placeholder="Name"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
+                            <input
+                                type="text"
+                                name="name"
+                                value={userData.name}
+                                onChange={handleInputChange}
+                                className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                style={{
+                                    borderRadius: "8px",
+                                    paddingLeft: "8px",
+                                }}
+                                placeholder="Name"
+                                required
+                            />
+                        </div>
+                        <div className="w-[45%]">
                             <p className="text-[#2A6476] font-inter mb-[4px]">Email Address</p>
                             <input
                                 type="email"
                                 name="email"
                                 value={userData.email}
                                 onChange={handleInputChange}
-                                className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
                                 style={{
                                     borderRadius: "8px",
                                     paddingLeft: "8px",
