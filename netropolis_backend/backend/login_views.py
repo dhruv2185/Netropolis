@@ -21,7 +21,7 @@ class RegisterView(generics.ListCreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            print(type(user))
+
             refresh = RefreshToken.for_user(user)
             return Response({
                 'refresh': str(refresh),
