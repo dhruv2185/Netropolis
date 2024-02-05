@@ -9,9 +9,10 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../../utils/AppLoader";
 import { AppError } from "../../utils/AppError";
 
-const baseUrl = "http://localhost:8000"
 
+const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 const signUpRequest = async (userInfo) => {
+    
     const res = await fetch(`${baseUrl}/register/`, {
         method: "POST",
         headers: {
@@ -93,9 +94,9 @@ const Register = () => {
     return (
         <div className="flex w-full bg-white">
             {/* left side */}
-            <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center h-screen" style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp9422433.jpg")', position: 'relative' }}>
+            <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center " style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp9422433.jpg")', position: 'relative' }}>
                 <div className="flex flex-col h-[100vh] justify-between w-full flex-1">
-                    <div className="flex justify-end p-4">
+                    <div className="flex justify-end p-1">
                         <div
                             className="text-[#2A6476] cursor-pointer"
                             onClick={handleHomeNavigation}
@@ -115,9 +116,10 @@ const Register = () => {
 
                     <form
                         onSubmit={handleSubmit}
-                        className="flex flex-col gap-4 items-center justify-center"
+                        className="flex flex-col items-center justify-center"
                     >
-                        <div className="flex flex-row gap-10 ">
+                        <div className="flex flex-col gap-4 justify-center items-center">
+                        <div className="flex flex-row gap-10">
                             {/* ///////////////////////////// */}
                             <div>
                                 <p className="text-[#2A6476] font-inter mb-[4px]">First Name</p>
@@ -131,44 +133,44 @@ const Register = () => {
                                         borderRadius: "8px",
                                         paddingLeft: "8px",
                                     }}
-                                    placeholder="Name"
+                                    placeholder="First Name"
                                     required
                                 />
                             </div>
-                            <div>
+                            <div className="w-full">
                                 <p className="text-[#2A6476] font-inter mb-[4px]">Last Name</p>
                                 <input
                                     type="text"
                                     name="last_name"
                                     value={userData.last_name}
                                     onChange={handleInputChange}
-                                    className="w-md text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                    className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
                                     style={{
                                         borderRadius: "8px",
                                         paddingLeft: "8px",
                                     }}
-                                    placeholder="Name"
+                                    placeholder="Last Name"
                                     required
                                 />
                             </div>
                         </div>
-                        <div>
-                            <p className="text-[#2A6476] font-inter mb-[4px]">User Name</p>
+                        <div className="w-full">
+                            <p className="text-[#2A6476] font-inter mb-[4px]">Username</p>
                             <input
                                 type="text"
                                 name="username"
                                 value={userData.username}
                                 onChange={handleInputChange}
-                                className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
                                 style={{
                                     borderRadius: "8px",
                                     paddingLeft: "8px",
                                 }}
-                                placeholder="Name"
+                                placeholder="Username"
                                 required
                             />
                         </div>
-                        <div className="w-[45%]">
+                        <div className="w-full">
                             <p className="text-[#2A6476] font-inter mb-[4px]">Email Address</p>
                             <input
                                 type="email"
@@ -185,7 +187,7 @@ const Register = () => {
                             />
                         </div>
 
-                        <div>
+                        <div className="w-full">
                             <p className="text-[#2A6476] font-inter mb-[4px]">
                                 Set a new password
                             </p>
@@ -194,7 +196,7 @@ const Register = () => {
                                     type={visible ? "text" : "password"}
                                     name="password"
                                     value={userData.password}
-                                    className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px] relative pl-[40px] pr-[30px]"
+                                    className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px] relative pl-[40px] pr-[30px]"
                                     onChange={handleInputChange}
                                     style={{
                                         borderRadius: "8px",
@@ -222,7 +224,7 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <div>
+                        <div className="w-full">
                             <p className="text-[#2A6476] font-inter mb-[4px]">
                                 Confirm password
                             </p>
@@ -231,7 +233,7 @@ const Register = () => {
                                     type={visible ? "text" : "password"}
                                     name="password2"
                                     value={userData.password2}
-                                    className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px] relative pl-[40px] pr-[30px]"
+                                    className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px] relative pl-[40px] pr-[30px]"
                                     onChange={handleInputChange}
                                     style={{
                                         borderRadius: "8px",
@@ -259,7 +261,7 @@ const Register = () => {
                             </div>
                         </div>
 
-                        <div className="justify-center pb-12 flex gap-4 flex-col text-center items-center">
+                        <div className="justify-center pb-4 flex gap-4 flex-col text-center items-center">
                             <button
                                 className="w-[312px] h-[41px] text-white bg-[#2A6476]"
                                 style={{
@@ -270,8 +272,9 @@ const Register = () => {
                                 {isLoading && loading ? <AppLoader /> : "Sign Up"}
                             </button>
                         </div>
+                        </div>
                     </form>
-                    <p className=" text-center  mx-auto w-[305px] ">
+                    <p className=" text-center  mx-auto w-[305px] text-[white]">
                         By continuing you accept our standard
                         <span className="underline px-2 text-[var(--primary)]">
                             terms and conditions
@@ -281,7 +284,7 @@ const Register = () => {
                             privacy policy.
                         </span>
                     </p>
-                    <p className="text-center flex justify-center pb-12 ">
+                    <p className="text-center flex justify-center pt-2 text-[white] ">
                         Already have an account?&nbsp;
                         <Link to="/login" className="text-[var(--primary)]">
                             Sign In
