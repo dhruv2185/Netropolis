@@ -6,4 +6,5 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('register/', login_views.RegisterView.as_view(), name='auth_register'),
+    path('teams/', login_views.CreateTeamProfile.as_view(), name='team_profile_management'),
 ]

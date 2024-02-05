@@ -4,6 +4,7 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from six import text_type
+from .models import Teams, Community_Managers, Quests, Schedules, Applications
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -40,3 +41,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+    
+class TeamsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teams
+        fields = '__all__'

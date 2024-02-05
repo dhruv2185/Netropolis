@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class Teams(models.Model):
     id = models.AutoField(primary_key=True)
+    team_name = models.CharField(max_length=50)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=7, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -18,7 +19,7 @@ class Teams(models.Model):
     concerns = models.TextField()
 
     def __str__(self):
-        return self.id
+        return self.team_name
     
 
 class Community_Managers(models.Model):
