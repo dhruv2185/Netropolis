@@ -51,7 +51,7 @@ const Login = () => {
         {/* Left side */}
         {/* Right side */}
         <div className="w-full flex justify-center items-center bg-transparent">
-          <div className="max-w-full p-5 bg-transparent">
+          <div className="max-w-lg p-5 bg-transparent">
             <div className="text-center">
               <h2 className="font-fira text-medium text-4xl text-[var(--secondary)]">
                 Welcome Again
@@ -79,6 +79,7 @@ const Login = () => {
                 required
                 className="w-full rounded-lg placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
               />
+              
               <label
                 htmlFor="password"
                 className="text-[14px] font-inter text-[var(--tertiary)] mt-10"
