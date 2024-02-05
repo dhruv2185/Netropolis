@@ -9,14 +9,23 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../../utils/AppLoader";
 import { AppError } from "../../utils/AppError";
 
-const signUpRequest = async (userInfo) => {
-    const res = await fetch(`${baseUrl}/register`, {
+const baseUrl = "http://localhost:8000"
 
-    })
+const signUpRequest = async (userInfo) => {
+    const res = await fetch(`${baseUrl}/register/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+    });
+    return res;
 }
 
 const initialState = {
-    name: "",
+    username: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
     password2: "",
@@ -45,19 +54,19 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!userData.name || !userData.email || !userData.password) {
-            return toast.error("All fields are required");
-        }
-        if (userData.password.length < 6) {
-            return toast.error("Password must be up to 6 characters");
-        }
-        if (userData.password !== userData.password2) {
-            return toast.error("Passwords do not match");
-        }
+        // if (!userData.name || !userData.email || !userData.password) {
+        //     return toast.error("All fields are required");
+        // }
+        // if (userData.password.length < 6) {
+        //     return toast.error("Password must be up to 6 characters");
+        // }
+        // if (userData.password !== userData.password2) {
+        //     return toast.error("Passwords do not match");
+        // }
 
         const userInfo = {
-            first_name: userData.firstName,
-            last_name: userData.lastName,
+            first_name: userData.first_name,
+            last_name: userData.last_name,
             username: userData.username,
             email: userData.email,
             password: userData.password,
@@ -68,9 +77,13 @@ const Register = () => {
         try {
             console.log(userInfo);
             // const res = await signUp(userInfo).unwrap();
-            const res = userInfo;
-            dispatch(setCredentials({ ...res }));
-            navigate("/");
+            const res = await signUpRequest(userInfo);
+            // const res = userInfo;
+            const data = await res.json();
+            console.log(data);
+
+            dispatch(setCredentials(data));
+            // navigate("/");
             toast.success("Signup is successful");
         } catch (err) {
             setLoading(false);
@@ -107,11 +120,11 @@ const Register = () => {
                         <div className="flex flex-row gap-10 ">
                             {/* ///////////////////////////// */}
                             <div>
-                                <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
+                                <p className="text-[#2A6476] font-inter mb-[4px]">First Name</p>
                                 <input
                                     type="text"
-                                    name="name"
-                                    value={userData.name}
+                                    name="first_name"
+                                    value={userData.first_name}
                                     onChange={handleInputChange}
                                     className="w-md text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
                                     style={{
@@ -123,11 +136,11 @@ const Register = () => {
                                 />
                             </div>
                             <div>
-                                <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
+                                <p className="text-[#2A6476] font-inter mb-[4px]">Last Name</p>
                                 <input
                                     type="text"
-                                    name="name"
-                                    value={userData.name}
+                                    name="last_name"
+                                    value={userData.last_name}
                                     onChange={handleInputChange}
                                     className="w-md text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
                                     style={{
@@ -140,43 +153,11 @@ const Register = () => {
                             </div>
                         </div>
                         <div>
-                            <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
+                            <p className="text-[#2A6476] font-inter mb-[4px]">User Name</p>
                             <input
                                 type="text"
-                                name="name"
-                                value={userData.name}
-                                onChange={handleInputChange}
-                                className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
-                                style={{
-                                    borderRadius: "8px",
-                                    paddingLeft: "8px",
-                                }}
-                                placeholder="Name"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
-                            <input
-                                type="text"
-                                name="name"
-                                value={userData.name}
-                                onChange={handleInputChange}
-                                className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
-                                style={{
-                                    borderRadius: "8px",
-                                    paddingLeft: "8px",
-                                }}
-                                placeholder="Name"
-                                required
-                            />
-                        </div>
-                        <div>
-                            <p className="text-[#2A6476] font-inter mb-[4px]">Full Name</p>
-                            <input
-                                type="text"
-                                name="name"
-                                value={userData.name}
+                                name="username"
+                                value={userData.username}
                                 onChange={handleInputChange}
                                 className="w-[312px] text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
                                 style={{
