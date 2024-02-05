@@ -70,16 +70,6 @@ const Register = () => {
         <div className="flex w-full bg-white">
             {/* left side */}
             <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center h-screen" style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp9422433.jpg")', position: 'relative' }}>
-                {/* Glass-like overlay */}
-                {/* <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-
-        <div className="text-center relative z-10">
-          <img src='https://mywanderlustbucket.s3.eu-north-1.amazonaws.com/Black_and_Orange_Illustration_Company_Logo__2_-fotor-20240129151630-removebg-preview.png' alt="logo" />
-        </div> */}
-
-
-
-
                 <div className="flex flex-col h-[100vh] justify-between w-full flex-1">
                     <div className="flex justify-end p-4">
                         <div
