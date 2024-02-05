@@ -139,7 +139,7 @@ const Login = () => {
               </button>
             </form>
 
-            <p className="font-medium text-sm text-center mt-5 text-[var(--tertiary-dark)]">
+            <p className="font-medium text-sm text-center mt-5 text-[white]">
               Already have an account?{" "}
               <Link to="/register" className="text-[var(--primary)]">
                 Sign Up
