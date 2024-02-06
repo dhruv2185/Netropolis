@@ -23,6 +23,7 @@ import activityCategories from "./data/activitycategories.json";
 import destinationCategories from "./data/destinationcategories.json";
 import navigations from "./data/navigations.json";
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -32,13 +33,17 @@ const router = createBrowserRouter(
     </Route>
   )
 );
+let getUrl = window.location.pathname.substring(1)
+  let path = getUrl.charAt(0).toUpperCase() + getUrl.slice(1)
+  if (window.location.pathname === "/") path = "Home"
+const displayFooter=path!=="Register" && path!=="Login"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>
       <Header navigations={navigations} ></Header>
       <RouterProvider router={router} />
-      <Footer navigations={navigations} />
+      {displayFooter && <Footer navigations={navigations} />}
     </React.StrictMode>
   </Provider>
 );

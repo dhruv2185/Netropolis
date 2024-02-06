@@ -7,7 +7,8 @@ import AppLoader from "../../utils/AppLoader";
 import { validateEmail } from "../../utils/validateEmail";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useLoginMutation } from "../../features/slices/usersApiSlice";
-
+import Button from "../../components/globals/Button";
+import Title from "../../components/globals/Title";
 const Login = () => {
   const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
   const [username, setUsername] = useState("");
@@ -62,18 +63,14 @@ const Login = () => {
         {/* Right side */}
         <div className="w-full flex justify-center items-center bg-transparent">
           <div className="max-w-lg p-5 bg-transparent">
-            <div className="text-center">
-              <h2 className="font-fira text-medium text-4xl text-[var(--secondary)]">
-                Welcome Again
-              </h2>
-              <h2 className="mt-3 mb-10 text-[var(--secondary)]">
-                Unlock amazing travel experiences
-              </h2>
+            <div className="text-center mb-10">
+              <Title title="Welcome Again" subtitle={"Unlock amazing travel experiences"} titleClass={"text-[#faebd7]"} subtitleClass={"text-[#faebd7]"}/>
+              
             </div>
             <form onSubmit={submitHandler}>
               <label
                 htmlFor="email"
-                className="text-[14px] font-inter text-[var(--tertiary)]"
+                className="text-[14px] font-inter text-indigo-400   "
               >
                 Username
               </label>
@@ -87,12 +84,12 @@ const Login = () => {
                 }}
                 placeholder="Username"
                 required
-                className="w-full rounded-lg placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
+                className="w-full rounded-full placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
               />
               
               <label
                 htmlFor="password"
-                className="text-[14px] font-inter text-[var(--tertiary)] mt-10"
+                className="text-[14px] font-inter text-indigo-400 mt-10"
               >
                 Password
               </label>
@@ -107,7 +104,7 @@ const Login = () => {
                   }}
                   placeholder="Password"
                   required
-                  className="w-full rounded-lg placeholder-[var(--primary)] border border-[#94a3b8] px-[12px] py-[8px] pr-[40px]"
+                  className="w-full rounded-full placeholder-[var(--primary)] border border-[#94a3b8] px-[12px] py-[8px] pr-[40px]"
                 />
                 <span
                   style={{
@@ -127,21 +124,22 @@ const Login = () => {
                 </span>
               </div>
 
-              <p className="text-sm text-[var(--primary)] text-right mt-3">
+              <p className="text-sm text-right mt-3 text-indigo-100 pb-2 mb-3">
                 <Link to="/forgotpassword">Forgot Password</Link>
               </p>
-              <button
+              <Button text={isLoading ? <AppLoader /> : "Sign In"} customClass={"w-full"} loading={isLoading} ></Button>
+              {/* <button
                 type="submit"
                 className="bg-[var(--primary)] text-white rounded-lg py-2 px-4 w-full mt-12"
                 disabled={isLoading}
               >
                 {isLoading ? <AppLoader /> : "Sign In"}
-              </button>
+              </button> */}
             </form>
 
             <p className="font-medium text-sm text-center mt-5 text-[white]">
               Already have an account?{" "}
-              <Link to="/register" className="text-[var(--primary)]">
+              <Link to="/register" className="text-indigo-400">
                 Sign Up
               </Link>
             </p>

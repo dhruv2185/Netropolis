@@ -7,12 +7,13 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
+
 const Header = ({ navigations }) => {
+
   const [showMobileOption, setShowMobileOption] = useState(false);
   const [yScroll, setYScroll] = useState(0)
   let getUrl = window.location.pathname.substring(1)
   let path = getUrl.charAt(0).toUpperCase() + getUrl.slice(1)
-
   if (window.location.pathname === "/") path = "Home"
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const Header = ({ navigations }) => {
                   <li key={idx}>
                     <a
                       href={item.path}
-                      className={`${path === item.name ? "text-indigo-400 font-bold" : "text-neutral-600"} text-sm lg:text-base hover:font-semibold hover:text-indigo-400`}
+                      className={`${path === item.name ? "text-indigo-400 font-bold" : (path==="Login" || path==="Register") && yScroll<=0 ? "text-[#faebd7]":"text-neutral-600"} text-sm lg:text-base hover:font-semibold hover:text-indigo-400`}
                     >
                       {item.name}
                     </a>
@@ -67,7 +68,7 @@ const Header = ({ navigations }) => {
           </div>
         </div>
         <div className="flex justify-center items-center gap-4">
-          <div className="hidden lg:flex p-1 border rounded-full dark:border-neutral-800">
+          <div className="hidden bg-slate-100 lg:flex p-1 border rounded-full dark:border-neutral-800">
             <MagnifyingGlassIcon className="w-4 mx-1 dark:text-neutral-200" />
             <input
               type="text"
