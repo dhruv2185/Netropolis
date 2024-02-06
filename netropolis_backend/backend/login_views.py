@@ -21,11 +21,15 @@ class RegisterView(generics.ListCreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-
             refresh = RefreshToken.for_user(user)
+            print(refresh)
             return Response({
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -37,7 +41,7 @@ class FetchUser(APIView):
     def get(self, request, *args, **kwargs):
         user = get_user_model().objects.get(username=request.user)
         serializer = self.serializer_class(user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def put(self, request, *args, **kwargs):
         user = get_user_model().objects.get(username=request.user)
@@ -56,9 +60,10 @@ class FetchUser(APIView):
 
 class TeamProfile(APIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = TeamsSerializer
 
     def post(self, request, *args, **kwargs):
-        serialzer = TeamsSerializer(data=request.data)
+        serialzer = self.serializer_class(data=request.data)
         if serialzer.is_valid():
             serialzer.save()
             return Response(serialzer.data, status=status.HTTP_201_CREATED)
@@ -71,24 +76,26 @@ class TeamProfile(APIView):
             # user = get_user_model().objects.get(username=pk)
             try:
                 team = Teams.objects.get(created_by=pk)
-                serializer = TeamsSerializer(team, many=False)
+                serializer = self.serializer_class(team, many=False)
             except MultipleObjectsReturned:
                 teams = Teams.objects.filter(created_by=pk)
-                serializer = TeamsSerializer(teams, many=True)
+                serializer = self.serializer_class(teams, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    def put(self, request, pk):
+    def put(self, request):
+        pk = request.query_params.get('pk', None)
         teams = Teams.objects.get(id=pk)
-        serializer = TeamsSerializer(teams, data=request.data)
+        serializer = self.serializer_class(teams, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, pk):
+    def delete(self, request):
+        pk = request.query_params.get('pk', None)
         teams = Teams.objects.get(id=pk)
         teams.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
