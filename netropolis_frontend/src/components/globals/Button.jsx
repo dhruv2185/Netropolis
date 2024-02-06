@@ -1,11 +1,14 @@
-const Button = ({ text, path, customClass }) => {
+import { Link } from "react-router-dom";
+
+const Button = ({ text, path, customClass,loading }) => {
   return (
-    <a
+    <button
       className={`${customClass} text-base lg:text-lg text-white bg-indigo-400 font-bold w-auto py-2 px-4 rounded-full`}
-      href={path}
+      disabled={loading}
+      
     >
-      {text}
-    </a>
+      <Link to={path}>{text}</Link>
+    </button>
   );
 };
 
