@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { setCredentials } from "../../features/slices/authSlice";
+import { setCredentials, setTokens } from "../../features/slices/authSlice";
 import AppLoader from "../../utils/AppLoader";
 import { validateEmail } from "../../utils/validateEmail";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -22,6 +22,37 @@ const Login = () => {
   const navigate = useNavigate();
 
   const { userInfo } = useSelector((state) => state.auth);
+  const loginRequest = async (userData) => {
+    const res = await fetch(`${BASE_URL}/login/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+    if (!res.ok) {
+      throw new Error(data.message);
+    }
+    const data = await res.json();
+    return data;
+  }
+  const fetchUserProfile = async (tokens) => {
+    try {
+      const res = await fetch(`${baseUrl}/fetch_user/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokens.access}`,
+        },
+      });
+      const data = await res.json();
+      return data;
+    }
+    catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
 
   useEffect(() => {
     if (userInfo) {
@@ -34,22 +65,12 @@ const Login = () => {
     if (!username || !password) {
       return toast.error("All fields are required");
     }
-    
 
     try {
-      const res = await fetch(`${BASE_URL}/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      })
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message);
-      }
-      console.log(data);
-      dispatch(setCredentials({ ...res }));
+      const tokens = await loginRequest({ username, password });
+      dispatch(setTokens({ ...tokens }));
+      const user = await fetchUserProfile(tokens);
+      dispatch(setCredentials({ ...user }));
       navigate("/");
     } catch (err) {
       toast.error(err?.data?.message || err.error?.message);
@@ -64,8 +85,8 @@ const Login = () => {
         <div className="w-full flex justify-center items-center bg-transparent">
           <div className="max-w-lg p-5 bg-transparent">
             <div className="text-center mb-10">
-              <Title title="Welcome Again" subtitle={"Unlock amazing travel experiences"} titleClass={"text-[#faebd7]"} subtitleClass={"text-[#faebd7]"}/>
-              
+              <Title title="Welcome Again" subtitle={"Unlock amazing travel experiences"} titleClass={"text-[#faebd7]"} subtitleClass={"text-[#faebd7]"} />
+
             </div>
             <form onSubmit={submitHandler}>
               <label
@@ -86,7 +107,7 @@ const Login = () => {
                 required
                 className="w-full rounded-full placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
               />
-              
+
               <label
                 htmlFor="password"
                 className="text-[14px] font-inter text-indigo-400 mt-10"

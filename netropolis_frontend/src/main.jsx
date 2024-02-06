@@ -16,6 +16,8 @@ import Footer from "./components/globals/Footer.jsx";
 // import LandingPage from "./pages/landingPage/LandingPage.jsx";
 import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
+import DestinationPage from "./pages/DestinationPage.jsx";
+import ActivityPage from "./pages/ActivityPage.jsx";
 
 import destinations from "./data/destinations.json";
 import activities from "./data/activities.json";
@@ -30,13 +32,15 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<LandingPage destinations={destinations} activities={activities} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} />
+      <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} />
     </Route>
   )
 );
 let getUrl = window.location.pathname.substring(1)
-  let path = getUrl.charAt(0).toUpperCase() + getUrl.slice(1)
-  if (window.location.pathname === "/") path = "Home"
-const displayFooter=path!=="Register" && path!=="Login"
+let path = getUrl.charAt(0).toUpperCase() + getUrl.slice(1)
+if (window.location.pathname === "/") path = "Home"
+const displayFooter = path !== "Register" && path !== "Login"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>

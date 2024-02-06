@@ -30,7 +30,25 @@ const authSlice = createSlice({
   },
 });
 
-const refreshTokens = async () => {
+const fetchUserProfile = async (tokens) => {
+  try {
+    const res = await fetch(`${baseUrl}/fetch_user/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokens.access}`,
+      },
+    });
+    const data = await res.json();
+    return data;
+  }
+  catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+export const refreshTokens = async () => {
   const res = await fetch9(`${VITE_BASE_BACKEND_URL}/refresh`, {
     method: "POST",
     headers: {
@@ -38,6 +56,11 @@ const refreshTokens = async () => {
     },
     body: JSON.stringify({ refreshToken: localStorage.getItem("tokens").refresh }),
   });
+  const tokens = await res.json();
+  dispatch(setTokens({ ...tokens }));
+  const user = await fetchUserProfile(tokens);
+  dispatch(setCredentials({ ...user }));
+  return tokens;
 }
 
 export const { setCredentials, clearCredentials, setTokens, clearTokens } =
