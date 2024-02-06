@@ -4,7 +4,8 @@ import {
   MagnifyingGlassIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useRef, useState } from "react";
+import { useEffect,  useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 
@@ -32,12 +33,12 @@ const Header = ({ navigations }) => {
     >
       <nav className="w-full h-20 z-40 p-4 flex justify-between items-center">
         <div className="flex justify-center items-center gap-2">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="text-indigo-400 pr-2 text-base md:text-lg lg:text-xl font-bold"
           >
             {import.meta.env.VITE_APP}
-          </a>
+          </Link>
           <div className="border-l dark:border-neutral-800 px-3">
             {showMobileOption ? (
               <XMarkIcon
@@ -55,12 +56,12 @@ const Header = ({ navigations }) => {
               {navigations.map((item, idx) => {
                 return (
                   <li key={idx}>
-                    <a
-                      href={item.path}
+                    <Link
+                      to={item.path}
                       className={`${path === item.name ? "text-indigo-400 font-bold" : (path==="Login" || path==="Register") && yScroll<=0 ? "text-[#faebd7]":"text-neutral-600"} text-sm lg:text-base hover:font-semibold hover:text-indigo-400`}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
@@ -77,8 +78,8 @@ const Header = ({ navigations }) => {
           </div>
           <MagnifyingGlassIcon className="w-5 text-neutral-600 lg:hidden dark:text-neutral-200" />
         
-          {path!=="Login" && <a href="/login" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Login</a>}
-          {path!=="Register" && <a href="/register" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Register</a>}
+          {path!=="Login" && <Link to="/login" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Login</Link>}
+          {path!=="Register" && <Link to="/register" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Register</Link>}
         </div>
       </nav>
       <nav
@@ -90,9 +91,9 @@ const Header = ({ navigations }) => {
           {navigations.map((item, idx) => {
             return (
               <li key={idx}>
-                <a className={`text-sm text-white`} href={item.path}>
+                <Link className={`text-sm text-white`} to={item.path}>
                   {item.name}
-                </a>
+                </Link>
               </li>
             );
           })}

@@ -11,7 +11,7 @@ import Login from "./pages/auth/Login.jsx";
 import Register from "./pages/auth/Register.jsx";
 import store from "./store.js";
 import { Provider } from "react-redux";
-import Header from "./components/globals/Header.jsx";
+
 import Footer from "./components/globals/Footer.jsx";
 // import LandingPage from "./pages/landingPage/LandingPage.jsx";
 import "./index.css";
@@ -45,7 +45,7 @@ const displayFooter = path !== "Register" && path !== "Login"
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <React.StrictMode>
-      <Header navigations={navigations} ></Header>
+      
       <RouterProvider router={router} />
       {displayFooter && <Footer navigations={navigations} />}
     </React.StrictMode>

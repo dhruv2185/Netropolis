@@ -9,6 +9,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../../utils/AppLoader";
 import { AppError } from "../../utils/AppError";
 import Button from "../../components/globals/Button";
+import Header from "../../components/globals/Header";
+import navigations from "../../data/navigations.json";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const signUpRequest = async (userInfo) => {
@@ -114,7 +116,7 @@ const Register = () => {
             toast.error(err?.data?.message || err.error?.message);
         }
     };
-    return (
+    return (<><Header navigations={navigations} ></Header>
         <div className="flex w-full bg-white">
             {/* left side */}
             <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center " style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp9422433.jpg")', position: 'relative' }}>
@@ -298,7 +300,7 @@ const Register = () => {
                     </p>
                 </div>
             </div>
-        </div>
+        </div></>
     );
 };
 

@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setCredentials, setTokens } from "../../features/slices/authSlice";
 import AppLoader from "../../utils/AppLoader";
-import { validateEmail } from "../../utils/validateEmail";
+
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useLoginMutation } from "../../features/slices/usersApiSlice";
 import Button from "../../components/globals/Button";
 import Title from "../../components/globals/Title";
+import navigations from "../../data/navigations.json"; 
+import Header from "../../components/globals/Header";
 const Login = () => {
   const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
   const [username, setUsername] = useState("");
@@ -77,11 +79,11 @@ const Login = () => {
     }
   };
 
-  return (
+  return (<>
+  <Header navigations={navigations} ></Header>
     <div className="relative xs:flex justify-center items-center flex-1 w-full bg-cover bg-center h-screen" style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp9422433.jpg")', position: 'relative' }}>
       <div className="flex h-screen bg-transparent">
-        {/* Left side */}
-        {/* Right side */}
+        
         <div className="w-full flex justify-center items-center bg-transparent">
           <div className="max-w-lg p-5 bg-transparent">
             <div className="text-center mb-10">
@@ -173,7 +175,7 @@ const Login = () => {
           <img src='https://mywanderlustbucket.s3.eu-north-1.amazonaws.com/Black_and_Orange_Illustration_Company_Logo__2_-fotor-20240129151630-removebg-preview.png' alt="logo" />
         </div> */}
       </div>
-    </div>
+    </div></>
   );
 };
 
