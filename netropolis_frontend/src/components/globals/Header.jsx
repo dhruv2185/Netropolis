@@ -1,5 +1,4 @@
 import {
-  MoonIcon,
   ChevronDownIcon,
   MagnifyingGlassIcon,
   XMarkIcon,
@@ -7,10 +6,11 @@ import {
 import { useEffect,  useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import ProfileMenu from "./ProfileMenu";
 
 
 const Header = ({ navigations }) => {
-
+  
   const [showMobileOption, setShowMobileOption] = useState(false);
   const [yScroll, setYScroll] = useState(0)
   let getUrl = window.location.pathname.substring(1)
@@ -80,6 +80,7 @@ const Header = ({ navigations }) => {
         
           {path!=="Login" && <Link to="/login" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Login</Link>}
           {path!=="Register" && <Link to="/register" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Register</Link>}
+          {<ProfileMenu/>}
         </div>
       </nav>
       <nav
