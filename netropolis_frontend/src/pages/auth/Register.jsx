@@ -151,7 +151,7 @@ const Register = () => {
                                         name="first_name"
                                         value={userData.first_name}
                                         onChange={handleInputChange}
-                                        className="w-md text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                        className="w-md text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                         style={{
                                             borderRadius: "8px",
                                             paddingLeft: "8px",
@@ -167,7 +167,7 @@ const Register = () => {
                                         name="last_name"
                                         value={userData.last_name}
                                         onChange={handleInputChange}
-                                        className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                        className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                         style={{
                                             borderRadius: "8px",
                                             paddingLeft: "8px",
@@ -184,7 +184,7 @@ const Register = () => {
                                     name="username"
                                     value={userData.username}
                                     onChange={handleInputChange}
-                                    className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                    className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                     style={{
                                         borderRadius: "8px",
                                         paddingLeft: "8px",
@@ -200,7 +200,7 @@ const Register = () => {
                                     name="email"
                                     value={userData.email}
                                     onChange={handleInputChange}
-                                    className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px]"
+                                    className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                     style={{
                                         borderRadius: "8px",
                                         paddingLeft: "8px",
@@ -219,7 +219,7 @@ const Register = () => {
                                         type={visible ? "text" : "password"}
                                         name="password"
                                         value={userData.password}
-                                        className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px] relative pl-[40px] pr-[30px]"
+                                        className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative pl-[40px] pr-[30px]"
                                         onChange={handleInputChange}
                                         style={{
                                             borderRadius: "8px",
@@ -256,7 +256,7 @@ const Register = () => {
                                         type={visible ? "text" : "password"}
                                         name="password2"
                                         value={userData.password2}
-                                        className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[41px] relative pl-[40px] pr-[30px]"
+                                        className="w-full text-black placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative pl-[40px] pr-[30px]"
                                         onChange={handleInputChange}
                                         style={{
                                             borderRadius: "8px",
@@ -284,7 +284,7 @@ const Register = () => {
                                 </div>
                             </div>
 
-                            <div className="justify-center pb-4 flex gap-4 flex-col text-center items-center">
+                            <div className="justify-center pt-2 pb-3 flex gap-4 flex-col text-center items-center">
                                 <button
                                     className="w-[312px] h-[41px] text-white bg-[#2A6476]"
                                     style={{
@@ -297,7 +297,7 @@ const Register = () => {
                             </div>
                         </div>
                     </form>
-                    <p className=" text-center  mx-auto w-[305px] text-[white]">
+                    <p className=" text-center  mx-auto w-[350px] text-[white]">
                         By continuing you accept our standard
                         <span className="underline px-2 text-[var(--primary)]">
                             terms and conditions
@@ -307,7 +307,7 @@ const Register = () => {
                             privacy policy.
                         </span>
                     </p>
-                    <p className="text-center flex justify-center pt-2 text-[white] ">
+                    <p className="text-center font-medium flex justify-center pb-4 text-[white] ">
                         Already have an account?&nbsp;
                         <Link to="/login" className="text-[var(--primary)]">
                             Sign In
