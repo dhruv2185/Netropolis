@@ -207,7 +207,7 @@ const Register = () => {
                                         type={visible ? "text" : "password"}
                                         name="password"
                                         value={userData.password}
-                                        className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative pl-[40px] pr-[30px]"
+                                        className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative  pr-[30px]"
                                         onChange={handleInputChange}
                                         
                                         placeholder="Password"
@@ -241,7 +241,7 @@ const Register = () => {
                                         type={visible ? "text" : "password"}
                                         name="password2"
                                         value={userData.password2}
-                                        className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative pl-[40px] pr-[30px]"
+                                        className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative pr-[30px]"
                                         onChange={handleInputChange}
                                         
                                         placeholder="Confirm Password"
