@@ -7,12 +7,14 @@ import { useEffect,  useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import ProfileMenu from "./ProfileMenu";
+import { useSelector } from "react-redux";
 
 
 const Header = ({ navigations }) => {
   
   const [showMobileOption, setShowMobileOption] = useState(false);
-  const [yScroll, setYScroll] = useState(0)
+  const [yScroll, setYScroll] = useState(0);
+  const userData=useSelector(state=>state.auth.userInfo);
   let getUrl = window.location.pathname.substring(1)
   let path = getUrl.charAt(0).toUpperCase() + getUrl.slice(1)
   if (window.location.pathname === "/") path = "Home"
@@ -69,18 +71,18 @@ const Header = ({ navigations }) => {
           </div>
         </div>
         <div className="flex justify-center items-center gap-4">
-          <div className="hidden bg-slate-100 lg:flex p-1 border rounded-full dark:border-neutral-800">
+          {path!=="Login" && path!=="Register" && <><div className="hidden bg-slate-100 lg:flex p-1 border rounded-full dark:border-neutral-800">
             <MagnifyingGlassIcon className="w-4 mx-1 dark:text-neutral-200" />
             <input
               type="text"
               className="active:outline-none bg-transparent px-2 text-sm w-32 focus:outline-none outline-0"
             />
           </div>
-          <MagnifyingGlassIcon className="w-5 text-neutral-600 lg:hidden dark:text-neutral-200" />
+          <MagnifyingGlassIcon className="w-5 text-neutral-600 lg:hidden dark:text-neutral-200" /></>}
         
-          {path!=="Login" && <Link to="/login" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Login</Link>}
-          {path!=="Register" && <Link to="/register" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Register</Link>}
-          {<ProfileMenu/>}
+          {!userData && path!=="Login" && <Link to="/login" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Login</Link>}
+          {!userData && path!=="Register" && <Link to="/register" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Register</Link>}
+          {userData && <ProfileMenu/>}
         </div>
       </nav>
       <nav

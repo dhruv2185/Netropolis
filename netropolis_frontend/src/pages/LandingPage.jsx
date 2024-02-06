@@ -5,6 +5,7 @@ import Activity from "../components/homepage/Activity.jsx";
 import Map from "../components/homepage/Map.jsx";
 import Header from "../components/globals/Header.jsx";
 import navigations from "../data/navigations.json";
+import Footer from "../components/globals/Footer.jsx";
 const LandingPage = ({ destinations, activities }) => {
     return (
         <>
@@ -14,6 +15,7 @@ const LandingPage = ({ destinations, activities }) => {
             <Destination destinations={destinations} />
             <Activity activities={activities} />
             <Map destinations={destinations} />
+            <Footer navigations={navigations} />
         </>
     );
 };

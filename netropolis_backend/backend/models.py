@@ -13,11 +13,11 @@ class Teams(models.Model):
     number_of_people = models.IntegerField()
     # age = models.IntegerField()
     # gender = models.CharField(max_length=4)
-    # composition = models.TextField()
     # place_of_birth = models.TextField()
     # place_of_residence = models.TextField()
     # occupation = models.TextField()
-    teaminfo = models.TextField()
+    team_info = models.TextField()
+    composition = models.TextField()
     expectations_for_the_platform = models.TextField()
     concerns = models.TextField()
 

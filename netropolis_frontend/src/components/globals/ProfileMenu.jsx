@@ -2,9 +2,8 @@ import React from "react";
 import {
     UserCircleIcon,
     ChevronDownIcon,
-    Cog6ToothIcon,
-    InboxArrowDownIcon,
-    LifebuoyIcon,
+    UserGroupIcon,
+    NewspaperIcon,
     PowerIcon,
     
   } from "@heroicons/react/24/solid";
@@ -18,26 +17,28 @@ import {
     MenuItem,
     Avatar,
   } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
+
 const profileMenuItems = [
     {
       label: "My Profile",
       icon: UserCircleIcon,
+      link:"/profile",
     },
     {
-      label: "Edit Profile",
-      icon: Cog6ToothIcon,
+      label: "Teams",
+      icon: UserGroupIcon,
+      link:"/teams",
     },
     {
-      label: "Inbox",
-      icon: InboxArrowDownIcon,
-    },
-    {
-      label: "Help",
-      icon: LifebuoyIcon,
+      label: "Applications",
+      icon: NewspaperIcon,
+      link:"/applications",
     },
     {
       label: "Sign Out",
       icon: PowerIcon,
+      link:"/signout",
     },
   ];
 const ProfileMenu=()=> {
@@ -69,12 +70,11 @@ const ProfileMenu=()=> {
           </Button>
         </MenuHandler>
         <MenuList className="p-1">
-          {profileMenuItems.map(({ label, icon }, key) => {
+          {profileMenuItems.map(({ label, icon,link }, key) => {
             const isLastItem = key === profileMenuItems.length - 1;
             return (
               <MenuItem
                 key={label}
-                onClick={closeMenu}
                 className={`flex items-center gap-2 rounded ${
                   isLastItem
                     ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
@@ -90,8 +90,8 @@ const ProfileMenu=()=> {
                   variant="small"
                   className="font-normal"
                   color={isLastItem ? "red" : "inherit"}
-                >
-                  {label}
+                ><Link to={link}>{label}</Link>
+                  
                 </Typography>
               </MenuItem>
             );
