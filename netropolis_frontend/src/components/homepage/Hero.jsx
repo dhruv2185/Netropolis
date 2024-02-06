@@ -32,7 +32,7 @@ const Hero = () => {
             >
               {metadata.header}{" "}
               <span className="text-indigo-400">
-                {netropolis}
+                {import.meta.env.VITE_APP || netropolis}
               </span>
               <RocketLaunchIcon className="w-5 lg:w-8 mx-2 inline text-indigo-400" />
             </motion.h1>

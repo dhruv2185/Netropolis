@@ -143,7 +143,6 @@ const Register = () => {
                     >
                         <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
                             <div className="flex flex-row gap-10">
-                                {/* ///////////////////////////// */}
                                 <div>
                                     <p className="text-indigo-400 font-inter mb-[4px]">First Name</p>
                                     <input
@@ -151,8 +150,8 @@ const Register = () => {
                                         name="first_name"
                                         value={userData.first_name}
                                         onChange={handleInputChange}
-                                        className="w-md text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                        
+                                        className="w-md text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+
                                         placeholder="First Name"
                                         required
                                     />
@@ -164,8 +163,8 @@ const Register = () => {
                                         name="last_name"
                                         value={userData.last_name}
                                         onChange={handleInputChange}
-                                        className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                        
+                                        className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+
                                         placeholder="Last Name"
                                         required
                                     />
@@ -178,8 +177,8 @@ const Register = () => {
                                     name="username"
                                     value={userData.username}
                                     onChange={handleInputChange}
-                                    className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                    
+                                    className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+
                                     placeholder="Username"
                                     required
                                 />
@@ -191,8 +190,8 @@ const Register = () => {
                                     name="email"
                                     value={userData.email}
                                     onChange={handleInputChange}
-                                    className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                    
+                                    className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+
                                     placeholder="Enter Your Email"
                                     required
                                 />
@@ -207,9 +206,9 @@ const Register = () => {
                                         type={visible ? "text" : "password"}
                                         name="password"
                                         value={userData.password}
-                                        className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative  pr-[30px]"
+                                        className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative  pr-[30px]"
                                         onChange={handleInputChange}
-                                        
+
                                         placeholder="Password"
                                         required
                                     />
@@ -241,9 +240,9 @@ const Register = () => {
                                         type={visible ? "text" : "password"}
                                         name="password2"
                                         value={userData.password2}
-                                        className="w-full text-black rounded-full pl-2 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative pr-[30px]"
+                                        className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] relative pr-[30px]"
                                         onChange={handleInputChange}
-                                        
+
                                         placeholder="Confirm Password"
                                         required
                                     />
@@ -267,7 +266,7 @@ const Register = () => {
                             </div>
 
                             <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                            <Button text={isLoading && loading ? <AppLoader /> : "Sign Up"} customClass={"w-full"} loading={isLoading} ></Button>
+                                <Button text={isLoading && loading ? <AppLoader /> : "Sign Up"} customClass={"w-full"} loading={isLoading} ></Button>
                                 {/* <button
                                     className="w-[312px] h-[41px] text-white bg-[#2A6476]"
                                     style={{
