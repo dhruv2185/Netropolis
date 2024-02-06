@@ -84,7 +84,7 @@ const Login = () => {
                 }}
                 placeholder="Username"
                 required
-                className="w-full rounded-lg placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
+                className="w-full rounded-full placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
               />
               
               <label
@@ -104,7 +104,7 @@ const Login = () => {
                   }}
                   placeholder="Password"
                   required
-                  className="w-full rounded-lg placeholder-[var(--primary)] border border-[#94a3b8] px-[12px] py-[8px] pr-[40px]"
+                  className="w-full rounded-full placeholder-[var(--primary)] border border-[#94a3b8] px-[12px] py-[8px] pr-[40px]"
                 />
                 <span
                   style={{
