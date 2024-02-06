@@ -13,7 +13,6 @@ import { AppError } from "../../utils/AppError";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 const signUpRequest = async (userInfo) => {
     try {
-
         const res = await fetch(`${baseUrl}/register/`, {
             method: "POST",
             headers: {
@@ -31,8 +30,6 @@ const signUpRequest = async (userInfo) => {
 }
 
 const fetchUserProfile = async (tokens) => {
-    console.log("fetching user profile");
-    console.log(tokens.access);
     try {
         const res = await fetch(`${baseUrl}/fetch_user/`, {
             method: "GET",
