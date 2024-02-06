@@ -30,6 +30,16 @@ const authSlice = createSlice({
   },
 });
 
+const refreshTokens = async () => {
+  const res = await fetch9(`${VITE_BASE_BACKEND_URL}/refresh`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ refreshToken: localStorage.getItem("tokens").refresh }),
+  });
+}
+
 export const { setCredentials, clearCredentials, setTokens, clearTokens } =
   authSlice.actions;
 
