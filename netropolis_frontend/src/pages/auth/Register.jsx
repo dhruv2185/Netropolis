@@ -9,8 +9,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../../utils/AppLoader";
 import { AppError } from "../../utils/AppError";
 
-
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
+
 const signUpRequest = async (userInfo) => {
     try {
         const res = await fetch(`${baseUrl}/register/`, {
