@@ -8,7 +8,7 @@ import temple from "../../assets/images/temple.png";
 import { motion } from "framer-motion"
 
 const metadata = {
-  header: `Let's Enjoy Your Desired Trip in Bali With`,
+  header: `Let's Enjoy Your Desired Trip in Japan With`,
   subHeader:
     '"Man cannot discover new oceans unless he has the courage to lose sight of the shore"',
 };

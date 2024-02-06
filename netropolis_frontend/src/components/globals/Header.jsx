@@ -76,8 +76,9 @@ const Header = ({ navigations }) => {
             />
           </div>
           <MagnifyingGlassIcon className="w-5 text-neutral-600 lg:hidden dark:text-neutral-200" />
-          <MoonIcon className="w-5 dark:text-neutral-200" />
-          <a href="" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Login</a>
+        
+          {path!=="Login" && <a href="/login" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Login</a>}
+          {path!=="Register" && <a href="/register" className="text-white bg-indigo-400 py-1 px-3 rounded-full">Register</a>}
         </div>
       </nav>
       <nav
