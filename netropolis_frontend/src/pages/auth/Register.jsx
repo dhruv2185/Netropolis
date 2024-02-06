@@ -117,7 +117,7 @@ const Register = () => {
     return (
         <div className="flex w-full bg-white">
             {/* left side */}
-            <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center " style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp9422433.jpg")', position: 'relative' }}>
+            <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center " style={{ backgroundImage: 'url("https://wallpaperaccess.com/full/3422595.jpg")', position: 'relative' }}>
                 <div className="flex flex-col h-[100vh] justify-between w-full flex-1">
                     <div className="flex justify-end p-1">
                         {/* <div

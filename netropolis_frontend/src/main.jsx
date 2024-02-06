@@ -18,6 +18,7 @@ import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
 import ActivityPage from "./pages/ActivityPage.jsx";
+import TeamRegistrationPage from "./pages/TeamRegistrationPage.jsx";
 
 import destinations from "./data/destinations.json";
 import activities from "./data/activities.json";
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
       <Route path="/register" element={<Register />} />
       <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} />
       <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} />
+      <Route path="/team-registration" element={<TeamRegistrationPage />} />
     </Route>
   )
 );
