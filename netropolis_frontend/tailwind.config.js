@@ -5,19 +5,9 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Open Sans', 'sans-serif'],
-        montserrat: ['Montserrat', 'sans-serif'],
-        playfair: ['Playfair Display', 'serif'],
-        'fira': ['Fira Sans'],
-        'inter': ['Inter'],
-      },
-      fontWeight: {
-        semibold: '600',
-        regular: '400',
-      },
-    },
+    extend: {},
   },
+  darkMode: "class",
   plugins: [],
 }
+
