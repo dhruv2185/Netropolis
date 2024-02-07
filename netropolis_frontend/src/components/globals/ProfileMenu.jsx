@@ -18,7 +18,8 @@ import {
     Avatar,
   } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from 'react-redux';
+import { clearCredentials } from "../../features/slices/authSlice";
 const profileMenuItems = [
     {
       label: "My Profile",
@@ -42,6 +43,12 @@ const profileMenuItems = [
     },
   ];
 const ProfileMenu=()=> {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(clearCredentials());
+    // Perform any additional logout operations you need here
+  };
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
    
     const closeMenu = () => setIsMenuOpen(false);
@@ -90,8 +97,8 @@ const ProfileMenu=()=> {
                   variant="small"
                   className="font-normal"
                   color={isLastItem ? "red" : "inherit"}
-                ><Link to={link}>{label}</Link>
-                  
+                >{!isLastItem && <Link to={link}>{label}</Link>}
+                  {isLastItem && <p onClick={handleLogout}>{label}</p>}
                 </Typography>
               </MenuItem>
             );

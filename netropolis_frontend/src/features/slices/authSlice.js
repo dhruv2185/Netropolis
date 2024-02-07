@@ -49,7 +49,7 @@ const fetchUserProfile = async (tokens) => {
 }
 
 export const refreshTokens = async () => {
-  const res = await fetch9(`${VITE_BASE_BACKEND_URL}/refresh`, {
+  const res = await fetch(`${VITE_BASE_BACKEND_URL}/refresh`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
