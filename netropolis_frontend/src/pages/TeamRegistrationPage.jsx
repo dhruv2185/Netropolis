@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -9,66 +9,28 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../utils/AppLoader";
 import { AppError } from "../utils/AppError";
 import Button from "../components/globals/Button";
-const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
-
-const signUpRequest = async (userInfo) => {
-    try {
-        const res = await fetch(`${baseUrl}/register/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userInfo),
-        });
-        const data = await res.json();
-        return data;
-    }
-    catch (err) {
-        console.log(err);
-        return err;
-    }
-}
-
-const fetchUserProfile = async (tokens) => {
-    try {
-        const res = await fetch(`${baseUrl}/fetch_user/`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${tokens.access}`,
-            },
-        });
-        const data = await res.json();
-        return data;
-    }
-    catch (err) {
-        console.log(err);
-        return err;
-    }
-}
-
-const initialState = {
-    username: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    password2: "",
-};
 
 const TeamRegistrationPage = () => {
-    // const [userData, setUserData] = useState(initialState);
     const [loading, setLoading] = useState(false);
-    const [visible, setVisible] = useState(false);
     const [teamData, setTeamData] = useState({
         team_name: "",
         composition: "",
-        expectations: "",
+        expectations_for_the_platform: "",
         concerns: "",
     });
 
-    const dispatch = useDispatch();
+    const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userInfo === null) {
+            console.log("redirecting to login");
+            navigate('/login')
+        }
+    }, []);
+
+    const tokens = useSelector((state) => state.auth.tokens);
+    console.log("tokens", tokens);
 
     const [signUp, { isLoading }] = useSignUpMutation();
 
@@ -87,13 +49,43 @@ const TeamRegistrationPage = () => {
 
 
     const handleSubmit = async (e) => {
+        console.log("yeh chal gaya bc");
+        e.preventDefault();
+        try {
+            if (teamData.team_name === "" || teamData.composition === "" || teamData.expectations_for_the_platform === "" || teamData.concerns === "") {
+                throw new Error("Please fill all the fields");
+            }
+            inputFields.forEach((field) => {
+                if (field.name === "" || field.age === "" || field.gender === "" || field.place_of_residence === "" || field.occupation === "") {
+                    throw new Error("Please fill all the fields");
+                }
+            }
+            );
+            const b = { ...teamData, teamInfo: inputFields, number_of_people: inputFields.length };
+            console.log(b);
+            const res = await fetch(`${VITE_BASE_BACKEND_URL}/teams/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${tokens.access}`,
+                },
+                body: JSON.stringify({ ...teamData, teamInfo: inputFields, number_of_people: inputFields.length }),
+            });
+            if (!res.ok) {
+                throw new Error("Error in creating team");
+            }
+            const data = await res.json();
+            console.log(data);
+            toast.success("Team created successfully");
+            navigate("/");
+        }
+        catch (err) {
+            toast.error(err.message);
+            return;
+        }
+
+
     };
-
-    // team name
-    // number of people
-    // expectations from the platform
-    // concerns
-
 
     const [inputFields, setInputFields] = useState([
         { name: '', age: '', gender: '', place_of_residence: '', occupation: '' }
@@ -155,8 +147,8 @@ const TeamRegistrationPage = () => {
                                 <p className="text-indigo-400 font-inter mb-[4px]">Expectations from the platform</p>
                                 <input
                                     type="text"
-                                    name="expectations"
-                                    value={teamData.expectations}
+                                    name="expectations_for_the_platform"
+                                    value={teamData.expectations_for_the_platform}
                                     onChange={handlePrimaryInputChange}
                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                     placeholder="Expectations from the platform"
@@ -246,18 +238,22 @@ const TeamRegistrationPage = () => {
                         </div>
                         <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
                             <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                {/* <Button text="Add member" onClick={addFields} customClass={"w-full"} ></Button> */}
                                 <button
                                     onClick={addFields}
                                     className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
                                 >
-                                    Add User
+                                    Add Member
                                 </button>
                             </div>
                         </div>
                         <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
                             <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                <Button text={isLoading && loading ? <AppLoader /> : "Sign Up"} customClass={"w-full"} loading={isLoading} ></Button>
+                                <button
+                                    onClick={handleSubmit}
+                                    className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
+                                >
+                                    Submit Team
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -277,8 +273,7 @@ const TeamRegistrationPage = () => {
                             Sign In
                         </Link>
                     </p>
-                </div>
-            </div >
+                </div></div>
         </div >
     );
 };
