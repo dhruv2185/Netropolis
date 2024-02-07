@@ -9,7 +9,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useLoginMutation } from "../../features/slices/usersApiSlice";
 import Button from "../../components/globals/Button";
 import Title from "../../components/globals/Title";
-import navigations from "../../data/navigations.json"; 
+import navigations from "../../data/navigations.json";
 import Header from "../../components/globals/Header";
 const Login = () => {
   const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
@@ -79,103 +79,105 @@ const Login = () => {
     }
   };
 
-  return (<>
-  <Header navigations={navigations} ></Header>
-    <div className="relative xs:flex justify-center items-center flex-1 w-full bg-cover bg-center h-screen" style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp9422433.jpg")', position: 'relative' }}>
-      <div className="flex h-screen bg-transparent">
-        
-        <div className="w-full flex justify-center items-center bg-transparent">
-          <div className="max-w-lg p-5 bg-transparent">
-            <div className="text-center mb-10">
-              <Title title="Welcome Again" subtitle={"Unlock amazing travel experiences"} titleClass={"text-[#faebd7]"} subtitleClass={"text-[#faebd7]"} />
+  return (
+    <>
+      <Header navigations={navigations} ></Header>
+      <div className="relative xs:flex justify-center items-center flex-1 w-full bg-cover bg-center h-screen" style={{ backgroundImage: 'url("https://wallpaperaccess.com/full/3422583.jpg")', position: 'relative' }}>
+        <div className="flex h-screen bg-transparent">
 
-            </div>
-            <form onSubmit={submitHandler}>
-              <label
-                htmlFor="email"
-                className="text-[14px] font-inter text-indigo-400   "
-              >
-                Username
-              </label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                name="username"
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
-                placeholder="Username"
-                required
-                className="w-full rounded-full placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
-              />
+          <div className="w-full flex justify-center items-center bg-transparent">
+            <div className="max-w-lg p-5 bg-transparent">
+              <div className="text-center mb-10">
+                <Title title="Welcome Again" subtitle={"Unlock amazing travel experiences"} titleClass={"text-[#faebd7]"} subtitleClass={"text-[#faebd7]"} />
 
-              <label
-                htmlFor="password"
-                className="text-[14px] font-inter text-indigo-400 mt-10"
-              >
-                Password
-              </label>
-              <div style={{ position: "relative" }}>
-                <input
-                  type={visible ? "text" : "password"}
-                  id="password"
-                  value={password}
-                  name="password"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                  placeholder="Password"
-                  required
-                  className="w-full rounded-full placeholder-[var(--primary)] border border-[#94a3b8] px-[12px] py-[8px] pr-[40px]"
-                />
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    right: "10px",
-                    transform: "translateY(-50%)",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => setVisible(!visible)}
-                >
-                  {visible ? (
-                    <AiOutlineEye size={25} />
-                  ) : (
-                    <AiOutlineEyeInvisible size={25} />
-                  )}
-                </span>
               </div>
+              <form onSubmit={submitHandler}>
+                <label
+                  htmlFor="email"
+                  className="text-[14px] font-inter text-indigo-400   "
+                >
+                  Username
+                </label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  name="username"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
+                  placeholder="Username"
+                  required
+                  className="w-full rounded-full placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
+                />
 
-              <p className="text-sm text-right mt-3 text-indigo-100 pb-2 mb-3">
-                <Link to="/forgotpassword">Forgot Password</Link>
-              </p>
-              <Button text={isLoading ? <AppLoader /> : "Sign In"} customClass={"w-full"} loading={isLoading} ></Button>
-              {/* <button
+                <label
+                  htmlFor="password"
+                  className="text-[14px] font-inter text-indigo-400 mt-10"
+                >
+                  Password
+                </label>
+                <div style={{ position: "relative" }}>
+                  <input
+                    type={visible ? "text" : "password"}
+                    id="password"
+                    value={password}
+                    name="password"
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
+                    placeholder="Password"
+                    required
+                    className="w-full rounded-full placeholder-[var(--primary)] border border-[#94a3b8] px-[12px] py-[8px] pr-[40px]"
+                  />
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      right: "10px",
+                      transform: "translateY(-50%)",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => setVisible(!visible)}
+                  >
+                    {visible ? (
+                      <AiOutlineEye size={25} />
+                    ) : (
+                      <AiOutlineEyeInvisible size={25} />
+                    )}
+                  </span>
+                </div>
+
+                <p className="text-sm text-right mt-3 text-indigo-100 pb-2 mb-3">
+                  <Link to="/forgotpassword">Forgot Password</Link>
+                </p>
+                <Button text={isLoading ? <AppLoader /> : "Sign In"} customClass={"w-full"} loading={isLoading} ></Button>
+                {/* <button
                 type="submit"
                 className="bg-[var(--primary)] text-white rounded-lg py-2 px-4 w-full mt-12"
                 disabled={isLoading}
               >
                 {isLoading ? <AppLoader /> : "Sign In"}
               </button> */}
-            </form>
+              </form>
 
-            <p className="font-medium text-sm text-center mt-5 text-[white]">
-              Already have an account?{" "}
-              <Link to="/register" className="text-indigo-400">
-                Sign Up
-              </Link>
-            </p>
+              <p className="font-medium text-sm text-center mt-5 text-[white]">
+                Already have an account?{" "}
+                <Link to="/register" className="text-indigo-400">
+                  Sign Up
+                </Link>
+              </p>
+            </div>
           </div>
-        </div>
-        {/* Glass-like overlay */}
-        {/* <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+          {/* Glass-like overlay */}
+          {/* <div className="absolute inset-0 bg-black bg-opacity-60"></div>
 
         <div className="text-center relative z-10">
           <img src='https://mywanderlustbucket.s3.eu-north-1.amazonaws.com/Black_and_Orange_Illustration_Company_Logo__2_-fotor-20240129151630-removebg-preview.png' alt="logo" />
         </div> */}
+        </div>
       </div>
-    </div></>
+    </>
   );
 };
 
