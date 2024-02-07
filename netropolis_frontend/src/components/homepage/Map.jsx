@@ -8,7 +8,8 @@ const metadata = {
   title: "Bali Map's Guide",
   subtitle: "Are you lost? We have a map of the island of Bali",
   map: {
-    centerMap: [-8.409518, 115.188919],
+    
+    centerMap: [34.40535859962245, 132.45033708766664],
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",

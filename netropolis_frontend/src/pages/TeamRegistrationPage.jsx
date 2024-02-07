@@ -9,6 +9,10 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../utils/AppLoader";
 import { AppError } from "../utils/AppError";
 import Button from "../components/globals/Button";
+import mesh from "../assets/images/mesh.png";
+import Footer from "../components/globals/Footer";
+import Header from "../components/globals/Header";
+import navigations from "../data/navigations.json";
 
 const TeamRegistrationPage = () => {
     const [loading, setLoading] = useState(false);
@@ -22,12 +26,12 @@ const TeamRegistrationPage = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (userInfo === null) {
-            console.log("redirecting to login");
-            navigate('/login')
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (userInfo === null) {
+    //         console.log("redirecting to login");
+    //         navigate('/login')
+    //     }
+    // }, []);
 
     const tokens = useSelector((state) => state.auth.tokens);
     console.log("tokens", tokens);
@@ -99,17 +103,18 @@ const TeamRegistrationPage = () => {
     }
 
     return (
-        <div className="flex w-full bg-white">
+        <><Header navigations={navigations}/>
+        <div className="flex bg-transparent h-auto w-full" >
             {/* left side */}
-            <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center " style={{ backgroundImage: 'url("https://wallpaperaccess.com/full/3422583.jpg")', position: 'relative' }}>
-                <div className="flex flex-col h-[100vh] justify-between w-full flex-1">
+            <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
+                <div className="flex flex-col h-auto justify-between w-full flex-1 mt-20">
                     <div className="flex justify-end p-1"></div>
 
                     <div className="justify-center flex gap-2 flex-col text-center items-center">
-                        <p className="font-fira text-medium text-4xl text-[#faebd7]">
-                            Create Account
+                        <p className="font-fira text-medium text-4xl text-indigo-400">
+                            Create Team
                         </p>
-                        <p className=" text-[#faebd7] mb-2">Unlock amazing travel experiences</p>
+                        <p className="mb-2">Embark on your quest with a TEAM or go SOLO  </p>
                     </div>
 
                     {<AppError />}
@@ -118,8 +123,9 @@ const TeamRegistrationPage = () => {
                         onSubmit={handleSubmit}
                         className="flex flex-col items-center justify-center"
                     >
-                        <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                            <div className="w-full" >
+                        <div className="flex pr-2 pl-2 justify-center items-center w-full">
+                            <div className="w-[50%]">
+                            <div className="w-8/12" >
                                 <p className="text-indigo-400 font-inter mb-[4px]">Team Name</p>
                                 <input
                                     type="text"
@@ -131,7 +137,7 @@ const TeamRegistrationPage = () => {
                                     required
                                 />
                             </div>
-                            <div className="w-full" >
+                            <div className="w-8/12" >
                                 <p className="text-indigo-400 font-inter mb-[4px]">Composition</p>
                                 <input
                                     type="text"
@@ -143,7 +149,7 @@ const TeamRegistrationPage = () => {
                                     required
                                 />
                             </div>
-                            <div className="w-full" >
+                            <div className="w-8/12" >
                                 <p className="text-indigo-400 font-inter mb-[4px]">Expectations from the platform</p>
                                 <input
                                     type="text"
@@ -155,7 +161,7 @@ const TeamRegistrationPage = () => {
                                     required
                                 />
                             </div>
-                            <div className="w-full" >
+                            <div className="w-8/12" >
                                 <p className="text-indigo-400 font-inter mb-[4px]">Concerns</p>
                                 <input
                                     type="text"
@@ -166,10 +172,12 @@ const TeamRegistrationPage = () => {
                                     placeholder="Concerns"
                                     required
                                 />
-                            </div>
+                            </div></div>
+                            <div></div>
+                            <div className="w-[50%] gap-5" style={{display:"grid", gridTemplateColumns:"45% 45%"}}>
                             {inputFields.map((inputField, index) => {
                                 return (
-                                    <div key={index}>
+                                    <div  key={index} style={{border:"1px solid #A6A6A6", borderRadius:"8px", padding:"15px"}}>
                                         <div className="w-full" >
                                             <p className="text-indigo-400 font-inter mb-[4px]">Name</p>
                                             <input
@@ -235,7 +243,7 @@ const TeamRegistrationPage = () => {
                                     </div>
                                 )
                             })}
-                        </div>
+                        </div></div>
                         <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
                             <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
                                 <button
@@ -257,24 +265,11 @@ const TeamRegistrationPage = () => {
                             </div>
                         </div>
                     </form>
-                    <p className=" text-center  mx-auto w-[350px] text-[white]">
-                        By continuing you accept our standard
-                        <span className="underline px-2 text-indigo-400">
-                            terms and conditions
-                        </span>
-                        and our{" "}
-                        <span className=" px-2 underline text-indigo-400">
-                            privacy policy.
-                        </span>
-                    </p>
-                    <p className="text-center font-medium flex justify-center pb-4 text-[white] ">
-                        Already have an account?&nbsp;
-                        <Link to="/login" className="text-indigo-400">
-                            Sign In
-                        </Link>
-                    </p>
+                    
                 </div></div>
         </div >
+        <Footer navigations={navigations}/>
+        </>
     );
 };
 
