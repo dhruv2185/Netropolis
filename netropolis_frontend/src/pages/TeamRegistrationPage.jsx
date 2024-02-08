@@ -8,8 +8,8 @@ import { setCredentials, setTokens } from "../features/slices/authSlice";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../utils/AppLoader";
 import { AppError } from "../utils/AppError";
-import Button from "../components/globals/Button";
-import { PlusIcon } from "@heroicons/react/24/solid";
+
+import { PlusIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
 import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
@@ -96,11 +96,22 @@ const TeamRegistrationPage = () => {
         { name: '', age: '', gender: '', place_of_residence: '', occupation: '' }
     ])
 
-    const addFields = () => {
+    const addFields = (e) => {
+        e.preventDefault();
         console.log("chal toh raha hai");
         console.log(inputFields);
         setInputFields([...inputFields, { name: '', age: '', gender: '', place_of_residence: '', occupation: '' }
         ])
+    }
+    const removeFields = (e,index) => {
+        e.preventDefault();
+        if (inputFields.length === 1) {
+            toast.error("You cannot remove the only member of the team.");
+            return;
+        }
+        const values = [...inputFields];
+        values.splice(index, 1);
+        setInputFields(values);
     }
 
     return (
@@ -108,10 +119,10 @@ const TeamRegistrationPage = () => {
         <div className="flex bg-transparent h-auto w-full" >
             {/* left side */}
             <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
-                <div className="flex flex-col h-auto min-h-[100vh] w-full flex-1 mb-10 mt-32">
+                <div className="flex flex-col h-auto min-h-[100vh] w-full flex-1 mb-5 mt-32">
                     {/* <div className="flex justify-end p-1"></div> */}
 
-                    <div className="justify-center flex gap-2 flex-col text-center items-center">
+                    <div className="justify-center flex gap-2 flex-col text-center items-center mb-10">
                         <p className="font-fira text-medium text-4xl text-indigo-400">
                             Create Team
                         </p>
@@ -124,8 +135,8 @@ const TeamRegistrationPage = () => {
                         onSubmit={handleSubmit}
                         className="flex flex-col items-center justify-center"
                     >
-                        <div className="flex pr-2 pl-2 justify-center items-center w-full">
-                            <div className="w-[40%] flex flex-col items-center self-start">
+                        <div className="flex flex-col xl:flex-row pr-2 pl-2 justify-center items-center w-full">
+                            <div className="xl:w-[50%] lg:w-[50%] w-full flex flex-col items-center justify-center xl:self-start gap-4">
                             <div className="w-8/12 " >
                                 <p className="text-indigo-400 font-inter mb-[4px]">Team Name</p>
                                 <input
@@ -177,17 +188,28 @@ const TeamRegistrationPage = () => {
                             <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
                                 <button
                                     onClick={handleSubmit}
-                                    className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
+                                    className={"w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
                                 >
                                     Submit Team
                                 </button>
                             </div>
                         </div></div>
                             
-                            <div className="w-[60%] gap-5" style={{display:"grid", gridTemplateColumns:"45% 45%"}}>
+                            <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 lg:grid-cols-2 gap-5 auto-rows-fr " >
                             {inputFields.map((inputField, index) => {
                                 return (
                                     <div  key={index} style={{border:"1px solid #A6A6A6", borderRadius:"8px", padding:"15px"}}>
+                                        <div className="w-full flex justify-between">
+                                        <p className="text-black font-bold mb-[4px]">Member {index+1}</p>
+                                        <button
+                                    onClick={(e) => removeFields(e,index)}
+                                    className={"text-base lg:text-lg font-bold rounded-full"}
+                                >
+                                    <MinusCircleIcon className="h-7 w-7 text-red-500 "/>
+                                </button>
+                                        </div>
+                                        
+                                        
                                         <div className="w-full" >
                                             <p className="text-indigo-400 font-inter mb-[4px]">Name</p>
                                             <input
@@ -208,7 +230,7 @@ const TeamRegistrationPage = () => {
                                                     name="age"
                                                     value={inputField.age}
                                                     onChange={event => handleInputChange(event, index)}
-                                                    className="w-md text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                    className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                     placeholder="Age"
                                                     required
                                                 />
@@ -258,7 +280,8 @@ const TeamRegistrationPage = () => {
                             <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
                                 <button
                                     onClick={addFields}
-                                    className={`text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
+                                    type="button"
+                                    className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
                                 >
                                     <PlusIcon className="h-10 w-10"/>
                                 </button>
