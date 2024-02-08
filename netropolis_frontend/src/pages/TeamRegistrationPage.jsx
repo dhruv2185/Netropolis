@@ -9,6 +9,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../utils/AppLoader";
 import { AppError } from "../utils/AppError";
 import Button from "../components/globals/Button";
+import { PlusIcon } from "@heroicons/react/24/solid";
 import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
@@ -107,8 +108,8 @@ const TeamRegistrationPage = () => {
         <div className="flex bg-transparent h-auto w-full" >
             {/* left side */}
             <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
-                <div className="flex flex-col h-auto justify-between w-full flex-1 mt-20">
-                    <div className="flex justify-end p-1"></div>
+                <div className="flex flex-col h-auto min-h-[100vh] w-full flex-1 mb-10 mt-32">
+                    {/* <div className="flex justify-end p-1"></div> */}
 
                     <div className="justify-center flex gap-2 flex-col text-center items-center">
                         <p className="font-fira text-medium text-4xl text-indigo-400">
@@ -124,8 +125,8 @@ const TeamRegistrationPage = () => {
                         className="flex flex-col items-center justify-center"
                     >
                         <div className="flex pr-2 pl-2 justify-center items-center w-full">
-                            <div className="w-[50%]">
-                            <div className="w-8/12" >
+                            <div className="w-[40%] flex flex-col items-center self-start">
+                            <div className="w-8/12 " >
                                 <p className="text-indigo-400 font-inter mb-[4px]">Team Name</p>
                                 <input
                                     type="text"
@@ -172,9 +173,18 @@ const TeamRegistrationPage = () => {
                                     placeholder="Concerns"
                                     required
                                 />
-                            </div></div>
-                            <div></div>
-                            <div className="w-[50%] gap-5" style={{display:"grid", gridTemplateColumns:"45% 45%"}}>
+                            </div><div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
+                            <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
+                                <button
+                                    onClick={handleSubmit}
+                                    className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
+                                >
+                                    Submit Team
+                                </button>
+                            </div>
+                        </div></div>
+                            
+                            <div className="w-[60%] gap-5" style={{display:"grid", gridTemplateColumns:"45% 45%"}}>
                             {inputFields.map((inputField, index) => {
                                 return (
                                     <div  key={index} style={{border:"1px solid #A6A6A6", borderRadius:"8px", padding:"15px"}}>
@@ -243,27 +253,21 @@ const TeamRegistrationPage = () => {
                                     </div>
                                 )
                             })}
-                        </div></div>
-                        <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
+                            <div  style={{border:"1px solid #A6A6A6", borderRadius:"8px", padding:"15px", borderStyle:"dashed"}} className="flex justify-center items-center">
+                                        <div className="w-full" ><div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
                             <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
                                 <button
                                     onClick={addFields}
-                                    className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
+                                    className={`text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
                                 >
-                                    Add Member
+                                    <PlusIcon className="h-10 w-10"/>
                                 </button>
                             </div>
-                        </div>
-                        <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                            <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                <button
-                                    onClick={handleSubmit}
-                                    className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
-                                >
-                                    Submit Team
-                                </button>
-                            </div>
-                        </div>
+                        </div></div></div>
+                            
+                        </div></div>
+                        
+                        
                     </form>
                     
                 </div></div>
