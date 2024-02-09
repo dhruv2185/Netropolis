@@ -21,7 +21,8 @@ const RegisterQuest = () => {
         region: "",
         genre_tags: "",
         rewards: "",
-        other_information: ""
+        other_information: "",
+        available_till: "",
     });
     const [naturalActivities, setNaturalActivities] = useState([
         {
@@ -68,7 +69,7 @@ const RegisterQuest = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // validation
-        if (questData.quest_name === "" || questData.region === "" || questData.rewards === "" || questData.other_information === "" || questData.genre_tags === "") {
+        if (questData.quest_name === "" || questData.region === "" || questData.rewards === "" || questData.other_information === "" || questData.genre_tags === "" || questData.available_till === "") {
             toast.error("Please fill in all the fields.");
             return;
         }
@@ -210,6 +211,17 @@ const RegisterQuest = () => {
                                                 onChange={handlePrimaryInputChange}
                                                 className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                 placeholder="Concerns"
+                                            />
+                                        </div>
+                                        <div className="w-8/12" >
+                                            <p className="text-indigo-400 font-inter mb-[4px]">Available Till</p>
+                                            <input
+                                                type="date"
+                                                name="available_till"
+                                                value={questData.available_till}
+                                                onChange={handlePrimaryInputChange}
+                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                placeholder="Available Till"
                                             />
                                         </div>
                                         <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
@@ -361,11 +373,9 @@ const RegisterQuest = () => {
                                     </div>
                                 </div>
                             </div>
-
-
                         </form>
-
-                    </div></div>
+                    </div>
+                </div>
             </div>
             <Footer navigations={navigations} />
         </>

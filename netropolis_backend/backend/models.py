@@ -43,16 +43,6 @@ class Quests(models.Model):
     region = models.TextField()
     genre_tags = models.TextField()
     rewards = models.IntegerField()
-
-
-class Schedules(models.Model):
-    id = models.AutoField(primary_key=True)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
-    quest_id = models.ForeignKey(Quests, on_delete=models.CASCADE)
-    day_to_day_schedule = models.TextField()
-
-
 class Applications(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(Teams, on_delete=models.CASCADE, default=7)
@@ -64,3 +54,12 @@ class Applications(models.Model):
         Community_Managers, on_delete=models.CASCADE)
     duration_of_stay = models.CharField(max_length=30, null=True)
     special_note = models.TextField(null=True)
+    
+class Schedules(models.Model):
+    id = models.AutoField(primary_key=True)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    application_id = models.ForeignKey(
+        Applications, on_delete=models.CASCADE)
+    quest_id = models.ForeignKey(Quests, on_delete=models.CASCADE)
+    day_to_day_schedule = models.TextField()

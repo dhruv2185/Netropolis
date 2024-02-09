@@ -96,8 +96,6 @@ const TeamRegistrationPage = () => {
 
     const addFields = (e) => {
         e.preventDefault();
-        console.log("chal toh raha hai");
-        console.log(inputFields);
         setInputFields([...inputFields, { name: '', age: '', gender: '', place_of_residence: '', occupation: '' }
         ])
     }
@@ -265,19 +263,22 @@ const TeamRegistrationPage = () => {
                                         )
                                     })}
                                     <div style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }} className="flex justify-center items-center">
-                                        <div className="w-full" ><div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                                            <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                                <button
-                                                    onClick={addFields}
-                                                    type="button"
-                                                    className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
-                                                >
-                                                    <PlusIcon className="h-10 w-10" />
-                                                </button>
+                                        <div className="w-full" >
+                                            <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
+                                                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
+                                                    <button
+                                                        onClick={addFields}
+                                                        type="button"
+                                                        className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
+                                                    >
+                                                        <PlusIcon className="h-10 w-10" />
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div></div></div>
-
-                                </div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
                         </form>
