@@ -18,11 +18,13 @@ import DestinationPage from "./pages/DestinationPage.jsx";
 import ActivityPage from "./pages/ActivityPage.jsx";
 import TeamRegistrationPage from "./pages/TeamRegistrationPage.jsx";
 import ApplicationPage from "./pages/ApplicationPage.jsx";
+import RegisterQuest from "./pages/RegisterQuest.jsx";
 
 import destinations from "./data/destinations.json";
 import activities from "./data/activities.json";
 import activityCategories from "./data/activitycategories.json";
 import destinationCategories from "./data/destinationcategories.json";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +36,7 @@ const router = createBrowserRouter(
       <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} />
       <Route path="/team-registration" element={<TeamRegistrationPage />} />
       <Route path="/application/:questId" element={<ApplicationPage />} />
+      <Route path="/registerquest" element={<RegisterQuest />} />
     </Route>
   )
 );

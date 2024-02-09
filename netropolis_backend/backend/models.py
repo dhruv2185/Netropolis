@@ -35,6 +35,7 @@ class Community_Managers(models.Model):
 
 class Quests(models.Model):
     id = models.AutoField(primary_key=True)
+    quest_name = models.TextField()
     labour_shortage_activities = models.TextField()
     natural_activities = models.TextField()
     local_activities = models.TextField()

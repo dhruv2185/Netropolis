@@ -66,7 +66,7 @@ const ApplicationPage = () => {
     }, []);
 
 
-    const teams = [
+    let teams = [
         {
             id: 1,
             name: "Team 1"
