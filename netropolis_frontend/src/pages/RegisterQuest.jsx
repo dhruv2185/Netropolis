@@ -67,6 +67,54 @@ const RegisterQuest = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // validation
+        if (questData.quest_name === "" || questData.region === "" || questData.rewards === "" || questData.other_information === "" || questData.genre_tags === "") {
+            toast.error("Please fill in all the fields.");
+            return;
+        }
+        naturalActivities.forEach((naturalActivity) => {
+            if (naturalActivity.activity === "") {
+                toast.error("Please fill in all the fields.");
+                return;
+            }
+        })
+        localActivities.forEach((naturalActivity) => {
+            if (naturalActivity.activity === "") {
+                toast.error("Please fill in all the fields.");
+                return;
+            }
+        })
+        labourShortageActivities.forEach((naturalActivity) => {
+            if (naturalActivity.activity === "") {
+                toast.error("Please fill in all the fields.");
+                return;
+            }
+        })
+        const toBeSent = {
+            ...questData,
+            natural_activities: naturalActivities,
+            local_activities: localActivities,
+            labour_shortage_activities: labourShortageActivities
+        }
+        try {
+            const res = await fetch("http://localhost:8000/quest", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + tokens.access
+                },
+                body: JSON.stringify(toBeSent)
+            }
+            )
+            if (!res.ok) {
+                throw Error("Error in creating quest. Please Try Again");
+            }
+            const data = await res.json();
+            console.log(data);
+        } catch (err) {
+            toast.error("An error occurred. Please try again.");
+        }
+
     };
 
     const addFields = (e, activities, setActivities) => {
@@ -107,153 +155,104 @@ const RegisterQuest = () => {
                             className="flex flex-col items-center justify-center"
                         >
                             <div className="flex flex-col xl:flex-row pr-2 pl-2 justify-center items-center w-full">
-                                <div className="xl:w-[50%] lg:w-[50%] w-full flex flex-col items-center justify-center xl:self-start gap-4">
-                                    <div className="w-8/12 " >
-                                        <p className="text-indigo-400 font-inter mb-[4px]">Quest Name</p>
-                                        <input
-                                            type="text"
-                                            name="quest_name"
-                                            value={questData.quest_name}
-                                            onChange={handlePrimaryInputChange}
-                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                            placeholder="Quest Name"
-                                        />
-                                    </div>
-                                    <div className="w-8/12 " >
-                                        <p className="text-indigo-400 font-inter mb-[4px]">Region</p>
-                                        <input
-                                            type="text"
-                                            name="region"
-                                            value={questData.region}
-                                            onChange={handlePrimaryInputChange}
-                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                            placeholder="Region"
-                                        />
-                                    </div>
-                                    <div className="w-8/12" >
-                                        <p className="text-indigo-400 font-inter mb-[4px]">Rewards</p>
-                                        <input
-                                            type="text"
-                                            name="rewards"
-                                            value={questData.rewards}
-                                            onChange={handlePrimaryInputChange}
-                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                            placeholder="Rewards"
-                                        />
-                                    </div>
-                                    <div className="w-8/12" >
-                                        <p className="text-indigo-400 font-inter mb-[4px]">Other Information</p>
-                                        <input
-                                            type="text"
-                                            name="other_information"
-                                            value={questData.other_information}
-                                            onChange={handlePrimaryInputChange}
-                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                            placeholder="Other Information"
-                                        />
-                                    </div>
-                                    <div className="w-8/12" >
-                                        <p className="text-indigo-400 font-inter mb-[4px]">Genre Tags</p>
-                                        <input
-                                            type="text"
-                                            name="genre_tags"
-                                            value={questData.genre_tags}
-                                            onChange={handlePrimaryInputChange}
-                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                            placeholder="Concerns"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                                        <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                            <button
-                                                onClick={handleSubmit}
-                                                className={"w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
-                                            >
-                                                Submit Team
-                                            </button>
+                                <div>
+                                    <div className=" w-full flex flex-col items-center justify-center xl:self-start gap-4">
+                                        <div className="w-8/12 " >
+                                            <p className="text-indigo-400 font-inter mb-[4px]">Quest Name</p>
+                                            <input
+                                                type="text"
+                                                name="quest_name"
+                                                value={questData.quest_name}
+                                                onChange={handlePrimaryInputChange}
+                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                placeholder="Quest Name"
+                                            />
+                                        </div>
+                                        <div className="w-8/12 " >
+                                            <p className="text-indigo-400 font-inter mb-[4px]">Region</p>
+                                            <input
+                                                type="text"
+                                                name="region"
+                                                value={questData.region}
+                                                onChange={handlePrimaryInputChange}
+                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                placeholder="Region"
+                                            />
+                                        </div>
+                                        <div className="w-8/12" >
+                                            <p className="text-indigo-400 font-inter mb-[4px]">Rewards</p>
+                                            <input
+                                                type="text"
+                                                name="rewards"
+                                                value={questData.rewards}
+                                                onChange={handlePrimaryInputChange}
+                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                placeholder="Rewards"
+                                            />
+                                        </div>
+                                        <div className="w-8/12" >
+                                            <p className="text-indigo-400 font-inter mb-[4px]">Other Information</p>
+                                            <input
+                                                type="text"
+                                                name="other_information"
+                                                value={questData.other_information}
+                                                onChange={handlePrimaryInputChange}
+                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                placeholder="Other Information"
+                                            />
+                                        </div>
+                                        <div className="w-8/12" >
+                                            <p className="text-indigo-400 font-inter mb-[4px]">Genre Tags</p>
+                                            <input
+                                                type="text"
+                                                name="genre_tags"
+                                                value={questData.genre_tags}
+                                                onChange={handlePrimaryInputChange}
+                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                placeholder="Concerns"
+                                            />
+                                        </div>
+                                        <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
+                                            <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
+                                                <button
+                                                    onClick={handleSubmit}
+                                                    className={"w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
+                                                >
+                                                    Create Quest
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="w-full flex justify-between">
-                                    <p className="text-black font-bold mb-[4px]">Natural Activities</p>
-                                </div>
-                                <div className="w-full flex justify-between">
-                                    <p className="text-black font-bold mb-[4px]">Local Activities</p>
-                                </div>
-                                <div className="w-full flex justify-between">
-                                    <p className="text-black font-bold mb-[4px]">Labour Shortage Activities</p>
-                                </div>
-                                <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 lg:grid-cols-2 gap-5 auto-rows-fr " >
-                                    {naturalActivities.map((naturalActivity, index) => {
-                                        return (
-                                            <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
-                                                <button
-                                                    onClick={(e) => removeFields(e, index, naturalActivities, setNaturalActivities)}
-                                                    className={"text-base lg:text-lg font-bold rounded-full"}
-                                                >
-                                                    <MinusCircleIcon className="h-7 w-7 text-red-500 " />
-                                                </button>
-                                                <div className="w-full" >
-                                                    <p className="text-indigo-400 font-inter mb-[4px]">Natural Activity {index + 1}</p>
-                                                    <input
-                                                        type="text"
-                                                        name="activity"
-                                                        value={naturalActivity.activity}
-                                                        onChange={event => handleDynamicActivityInputChange(event, index, naturalActivities, setNaturalActivities)}
-                                                        className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                                        placeholder="Place of Residence"
-                                                    />
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                    {localActivities.map((localActivity, index) => {
-                                        return (
+                                    <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 gap-5 auto-rows-fr " >
 
-                                            <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
-                                                <button
-                                                    onClick={(e) => removeFields(e, index, localActivities, setLocalActivities)}
-                                                    className={"text-base lg:text-lg font-bold rounded-full"}
-                                                >
-                                                    <MinusCircleIcon className="h-7 w-7 text-red-500 " />
-                                                </button>
-                                                <div className="w-full" >
-                                                    <p className="text-indigo-400 font-inter mb-[4px]">Local Activity {index + 1}</p>
-                                                    <input
-                                                        type="text"
-                                                        name="activity"
-                                                        value={localActivity.activity}
-                                                        onChange={event => handleDynamicActivityInputChange(event, index, localActivities, setLocalActivities)}
-                                                        className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                                        placeholder="Place of Residence"
-                                                    />
+                                        {naturalActivities.map((naturalActivity, index) => {
+                                            return (
+                                                <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
+                                                    <div className="w-full flex justify-between">
+                                                        <p className="text-black font-bold mb-[4px]">Natural Activities</p>
+                                                        <button
+                                                            onClick={(e) => removeFields(e, index, naturalActivities, setNaturalActivities)}
+                                                            className={"text-base lg:text-lg font-bold rounded-full"}
+                                                        >
+                                                            <MinusCircleIcon className="h-7 w-7 text-red-500 " />
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="w-full" >
+                                                        <p className="text-indigo-400 font-inter mb-[4px]">Natural Activity {index + 1}</p>
+                                                        <input
+                                                            type="text"
+                                                            name="activity"
+                                                            value={naturalActivity.activity}
+                                                            onChange={event => handleDynamicActivityInputChange(event, index, naturalActivities, setNaturalActivities)}
+                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                            placeholder="Place of Residence"
+                                                        />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    })}
-                                    {labourShortageActivities.map((labourShortageActivity, index) => {
-                                        return (
-                                            <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
-                                                <button
-                                                    onClick={(e) => removeFields(e, index, labourShortageActivities, setLabourShortageActivities)}
-                                                    className={"text-base lg:text-lg font-bold rounded-full"}
-                                                >
-                                                    <MinusCircleIcon className="h-7 w-7 text-red-500 " />
-                                                </button>
-                                                <div className="w-full" >
-                                                    <p className="text-indigo-400 font-inter mb-[4px]">Labour Shortage Activity {index + 1}</p>
-                                                    <input
-                                                        type="text"
-                                                        name="activity"
-                                                        value={labourShortageActivity.activity}
-                                                        onChange={event => handleDynamicActivityInputChange(event, index, labourShortageActivities, setLabourShortageActivities)}
-                                                        className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                                        placeholder="Place of Residence"
-                                                    />
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
+                                            )
+                                        })}
+                                    </div>
                                     <div style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }} className="flex justify-center items-center">
                                         <div className="w-full" >
                                             <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
@@ -263,11 +262,42 @@ const RegisterQuest = () => {
                                                         type="button"
                                                         className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
                                                     >
-                                                        <PlusIcon className="h-10 w-10" /> Add Natural Activity
+                                                        <PlusIcon className="h-10 w-10" />
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 gap-5 auto-rows-fr " >
+
+                                        {localActivities.map((localActivity, index) => {
+                                            return (
+
+                                                <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
+                                                    <div className="w-full flex justify-between">
+                                                        <p className="text-black font-bold mb-[4px]">Local Activities</p>
+                                                        <button
+                                                            onClick={(e) => removeFields(e, index, localActivities, setLocalActivities)}
+                                                            className={"text-base lg:text-lg font-bold rounded-full"}
+                                                        >
+                                                            <MinusCircleIcon className="h-7 w-7 text-red-500 " />
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="w-full" >
+                                                        <p className="text-indigo-400 font-inter mb-[4px]">Local Activity {index + 1}</p>
+                                                        <input
+                                                            type="text"
+                                                            name="activity"
+                                                            value={localActivity.activity}
+                                                            onChange={event => handleDynamicActivityInputChange(event, index, localActivities, setLocalActivities)}
+                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                            placeholder="Place of Residence"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                     <div style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }} className="flex justify-center items-center">
                                         <div className="w-full" >
@@ -278,11 +308,41 @@ const RegisterQuest = () => {
                                                         type="button"
                                                         className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
                                                     >
-                                                        <PlusIcon className="h-10 w-10" /> Add Local Activity
+                                                        <PlusIcon className="h-10 w-10" />
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 gap-5 auto-rows-fr " >
+
+                                        {labourShortageActivities.map((labourShortageActivity, index) => {
+                                            return (
+                                                <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
+                                                    <div className="w-full flex justify-between">
+                                                        <p className="text-black font-bold mb-[4px]">Labour Shortage Activities</p>
+                                                        <button
+                                                            onClick={(e) => removeFields(e, index, labourShortageActivities, setLabourShortageActivities)}
+                                                            className={"text-base lg:text-lg font-bold rounded-full"}
+                                                        >
+                                                            <MinusCircleIcon className="h-7 w-7 text-red-500 " />
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="w-full" >
+                                                        <p className="text-indigo-400 font-inter mb-[4px]">Labour Shortage Activity {index + 1}</p>
+                                                        <input
+                                                            type="text"
+                                                            name="activity"
+                                                            value={labourShortageActivity.activity}
+                                                            onChange={event => handleDynamicActivityInputChange(event, index, labourShortageActivities, setLabourShortageActivities)}
+                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                            placeholder="Place of Residence"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                     <div style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }} className="flex justify-center items-center">
                                         <div className="w-full" >
@@ -293,7 +353,7 @@ const RegisterQuest = () => {
                                                         type="button"
                                                         className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
                                                     >
-                                                        <PlusIcon className="h-10 w-10" /> Add Labour Shortage Activity
+                                                        <PlusIcon className="h-10 w-10" />
                                                     </button>
                                                 </div>
                                             </div>
