@@ -22,12 +22,12 @@ const TeamRegistrationPage = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (userInfo === null) {
-            console.log("redirecting to login");
-            navigate('/login')
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (userInfo === null) {
+    //         console.log("redirecting to login");
+    //         navigate('/login')
+    //     }
+    // }, []);
 
     const tokens = useSelector((state) => state.auth.tokens);
     console.log("tokens", tokens);
@@ -53,11 +53,11 @@ const TeamRegistrationPage = () => {
         e.preventDefault();
         try {
             if (teamData.team_name === "" || teamData.composition === "" || teamData.expectations_for_the_platform === "" || teamData.concerns === "") {
-                throw new Error("Please fill all the fields");
+                return toast.error("All fields are required");
             }
             inputFields.forEach((field) => {
                 if (field.name === "" || field.age === "" || field.gender === "" || field.place_of_residence === "" || field.occupation === "") {
-                    throw new Error("Please fill all the fields");
+                    return toast.error("All fields are required");
                 }
             }
             );
@@ -128,7 +128,6 @@ const TeamRegistrationPage = () => {
                                     onChange={handlePrimaryInputChange}
                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                     placeholder="Team Name"
-                                    required
                                 />
                             </div>
                             <div className="w-full" >
@@ -140,7 +139,6 @@ const TeamRegistrationPage = () => {
                                     onChange={handlePrimaryInputChange}
                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                     placeholder="Composition"
-                                    required
                                 />
                             </div>
                             <div className="w-full" >
@@ -152,7 +150,6 @@ const TeamRegistrationPage = () => {
                                     onChange={handlePrimaryInputChange}
                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                     placeholder="Expectations from the platform"
-                                    required
                                 />
                             </div>
                             <div className="w-full" >
@@ -164,7 +161,6 @@ const TeamRegistrationPage = () => {
                                     onChange={handlePrimaryInputChange}
                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                     placeholder="Concerns"
-                                    required
                                 />
                             </div>
                             {inputFields.map((inputField, index) => {
@@ -179,20 +175,18 @@ const TeamRegistrationPage = () => {
                                                 onChange={event => handleInputChange(event, index)}
                                                 className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                 placeholder="Name"
-                                                required
                                             />
                                         </div>
                                         <div className="flex flex-row gap-10">
                                             <div>
                                                 <p className="text-indigo-400 font-inter mb-[4px]">Age</p>
                                                 <input
-                                                    type="text"
+                                                    type="number"
                                                     name="age"
                                                     value={inputField.age}
                                                     onChange={event => handleInputChange(event, index)}
                                                     className="w-md text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                     placeholder="Age"
-                                                    required
                                                 />
                                             </div>
                                             <div className="w-full">
@@ -204,7 +198,6 @@ const TeamRegistrationPage = () => {
                                                     onChange={event => handleInputChange(event, index)}
                                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                     placeholder="Gender"
-                                                    required
                                                 />
                                             </div>
                                         </div>
@@ -217,7 +210,6 @@ const TeamRegistrationPage = () => {
                                                 onChange={event => handleInputChange(event, index)}
                                                 className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                 placeholder="Occupation"
-                                                required
                                             />
                                         </div>
                                         <div className="w-full" >
@@ -229,7 +221,6 @@ const TeamRegistrationPage = () => {
                                                 onChange={event => handleInputChange(event, index)}
                                                 className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                 placeholder="Place of Residence"
-                                                required
                                             />
                                         </div>
                                     </div>

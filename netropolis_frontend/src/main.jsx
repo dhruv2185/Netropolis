@@ -12,8 +12,6 @@ import Register from "./pages/auth/Register.jsx";
 import store from "./store.js";
 import { Provider } from "react-redux";
 
-
-// import LandingPage from "./pages/landingPage/LandingPage.jsx";
 import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
@@ -25,8 +23,6 @@ import destinations from "./data/destinations.json";
 import activities from "./data/activities.json";
 import activityCategories from "./data/activitycategories.json";
 import destinationCategories from "./data/destinationcategories.json";
-
-
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,7 +37,6 @@ const router = createBrowserRouter(
     </Route>
   )
 );
-
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
