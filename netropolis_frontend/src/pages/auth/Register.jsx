@@ -343,7 +343,7 @@ const Register = () => {
                                     className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
                                     disabled={loading}
                                     onClick={() => login()}
-                                > Sign In with Google
+                                > Sign Up with Google
                                 </button>
                             </div>
                         </div>
