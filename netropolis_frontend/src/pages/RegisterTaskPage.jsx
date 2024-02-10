@@ -56,7 +56,7 @@ const RegisterTaskPage = () => {
                 tasks: tasks,
             }
             console.log(toBeSent);
-            // const res = await fetch("http://localhost:8000/quest", {
+            // const res = await fetch("http://localhost:8000/task", {
             //     method: "POST",
             //     headers: {
             //         "Content-Type": "application/json",
