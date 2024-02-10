@@ -168,7 +168,6 @@ const Login = () => {
                     setUsername(e.target.value);
                   }}
                   placeholder="Username"
-                  required
                   className="w-full rounded-full placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
                 />
 
@@ -188,7 +187,6 @@ const Login = () => {
                       setPassword(e.target.value);
                     }}
                     placeholder="Password"
-                    required
                     className="w-full rounded-full placeholder-[var(--primary)] border border-[#94a3b8] px-[12px] py-[8px] pr-[40px]"
                   />
                   <span
