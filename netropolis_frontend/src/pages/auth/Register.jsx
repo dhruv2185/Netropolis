@@ -20,6 +20,7 @@ const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 // }
 
 const signUpRequest = async (userInfo) => {
+    console.log("userInfo", userInfo);
     try {
         const res = await fetch(`${baseUrl}/register/`, {
             method: "POST",
@@ -89,57 +90,61 @@ const Register = () => {
         navigate("/");
     }
 
+    const success = async (codeResponse) => {
+        console.log('Login Success:', codeResponse);
+        const newTokens = {
+            ...tokens,
+            access_google: codeResponse.access_token,
+        };
+        console.log("newTokens", newTokens);
+        dispatch(setTokens({ ...newTokens }));
+        const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${codeResponse.access_token}`,
+                Accept: 'application/json'
+            }
+        }
+        )
+        if (!res.ok) {
+            throw Error('Failed to get user profile')
+        }
+        const data = await res.json();
+        console.log(data);
+        // split email before @
+        const username = data.email.split('@')[0];
+        const pwd = data.sub + "@" + username;
+        console.log("username", username);
+        const userProfile = {
+            first_name: data.given_name,
+            last_name: data.family_name,
+            username: username,
+            email: data.email,
+            password: pwd,
+            password2: pwd
+        };
+        try {
+            const currData = await signUpRequest(userProfile);
+            const ag = tokens.access_google;
+            console.log("ag", ag);
+            const currTokens = {
+                access_google: ag,
+                access: currData.access,
+                refresh: currData.refresh,
+            };
+            dispatch(setTokens({ ...currTokens }));
+            const user = await fetchUserProfile(currTokens);
+            dispatch(setCredentials({ ...user }));
+            navigate("/");
+            toast.success("Signup is successful");
+        } catch (err) {
+            setLoading(false);
+            toast.error(err?.data?.message || err.error?.message);
+        }
+    }
+
     const login = useGoogleLogin({
-        onSuccess: async (codeResponse) => {
-            console.log('Login Success:', codeResponse);
-            const newTokens = {
-                ...tokens,
-                access_google: codeResponse.access_token,
-            };
-            console.log("newTokens", newTokens);
-            dispatch(setTokens({ ...newTokens }));
-            const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${codeResponse.access_token}`,
-                    Accept: 'application/json'
-                }
-            }
-            )
-            if (!res.ok) {
-                throw Error('Failed to get user profile')
-            }
-            const data = await res.json();
-            console.log(data);
-            // split email before @
-            const username = data.email.split('@')[0];
-            const userProfile = {
-                first_name: data.given_name,
-                last_name: data.family_name,
-                username: username,
-                email: data.email,
-                password: data.sub,
-                password2: data.sub
-            };
-            try {
-                const currData = await signUpRequest(userProfile);
-                const ag = tokens.access_google;
-                console.log("ag", ag);
-                const currTokens = {
-                    access_google: ag,
-                    access: currData.access,
-                    refresh: currData.refresh,
-                };
-                dispatch(setTokens({ ...currTokens }));
-                const user = await fetchUserProfile(currTokens);
-                dispatch(setCredentials({ ...user }));
-                navigate("/");
-                toast.success("Signup is successful");
-            } catch (err) {
-                setLoading(false);
-                toast.error(err?.data?.message || err.error?.message);
-            }
-        },
+        onSuccess: success,
         onError: (error) => {
             console.log('Login Failed:', error)
             toast.error("Login Failed");
@@ -224,7 +229,6 @@ const Register = () => {
                                         className="w-md text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
 
                                         placeholder="First Name"
-                                        required
                                     />
                                 </div>
                                 <div className="w-full">
@@ -237,7 +241,6 @@ const Register = () => {
                                         className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
 
                                         placeholder="Last Name"
-                                        required
                                     />
                                 </div>
                             </div>
@@ -251,7 +254,6 @@ const Register = () => {
                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
 
                                     placeholder="Username"
-                                    required
                                 />
                             </div>
                             <div className="w-full">
@@ -264,7 +266,6 @@ const Register = () => {
                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
 
                                     placeholder="Enter Your Email"
-                                    required
                                 />
                             </div>
 
@@ -281,7 +282,6 @@ const Register = () => {
                                         onChange={handleInputChange}
 
                                         placeholder="Password"
-                                        required
                                     />
                                     <span
                                         style={{
@@ -315,7 +315,6 @@ const Register = () => {
                                         onChange={handleInputChange}
 
                                         placeholder="Confirm Password"
-                                        required
                                     />
                                     <span
                                         style={{
