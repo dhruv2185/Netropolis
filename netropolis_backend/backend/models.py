@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 # Create your models here.
 
 
 class Teams(models.Model):
     id = models.AutoField(primary_key=True)
     team_name = models.CharField(max_length=50)
-    created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, default=7, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=7, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     number_of_people = models.IntegerField()
@@ -27,10 +27,19 @@ class Teams(models.Model):
 
 class Community_Managers(models.Model):
     id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
     password = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    def save(self, *args, **kwargs):
+        self.password = make_password(self.password)
+        super(Community_Managers, self).save(*args,**kwargs)
+        
+    def __str__(self):
+        return self.first_name
 
 
 class Quests(models.Model):
@@ -43,23 +52,25 @@ class Quests(models.Model):
     region = models.TextField()
     genre_tags = models.TextField()
     rewards = models.IntegerField()
+    created_by = models.ForeignKey(Community_Managers, on_delete=models.CASCADE, default=7)
+    
+
 class Applications(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(Teams, on_delete=models.CASCADE, default=7)
     quest_id = models.ForeignKey(Quests, on_delete=models.CASCADE)
     status = models.CharField(max_length=30)
-    application_date = models.DateTimeField()
+    application_date = models.DateTimeField(auto_now=True)
     approval_status = models.BooleanField()
-    community_manager = models.ForeignKey(
-        Community_Managers, on_delete=models.CASCADE)
-    duration_of_stay = models.CharField(max_length=30, null=True)
+    stay_start_date = models.DateField(null=True)
+    stay_end_date = models.DateField(null=True)
     special_note = models.TextField(null=True)
+    desired_tasks = models.TextField(null = True)
     
 class Schedules(models.Model):
     id = models.AutoField(primary_key=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    application_id = models.ForeignKey(
-        Applications, on_delete=models.CASCADE)
+    application_id = models.ForeignKey(Applications, on_delete=models.CASCADE)
     quest_id = models.ForeignKey(Quests, on_delete=models.CASCADE)
     day_to_day_schedule = models.TextField()
