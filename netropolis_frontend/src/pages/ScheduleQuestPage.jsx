@@ -56,6 +56,7 @@ const ScheduleQuestPage = () => {
     ])
 
     useEffect(() => {
+        // application id bhi
         // Application Data from props
         // Quest Data - fetchQuestData
         // questId - miljayegi useParams se HOPEFULLY
@@ -128,6 +129,20 @@ const ScheduleQuestPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const bodyToBeSent = {
+            ...schedule,
+            application_id: 14597,
+            day_to_day_schedule: days,
+        }
+        console.log(bodyToBeSent);
+        // const response = await fetch(`${BASE_URL}/api/v1/quests/${questId}/schedules`, {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Authorization": `Bearer ${tokens.access}`
+        //     },
+        //     body: JSON.stringify(bodyToBeSent)
+        // });
     };
 
     return (
