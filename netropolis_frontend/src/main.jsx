@@ -11,6 +11,7 @@ import Login from "./pages/auth/Login.jsx";
 import Register from "./pages/auth/Register.jsx";
 import store from "./store.js";
 import { Provider } from "react-redux";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
@@ -43,12 +44,16 @@ const router = createBrowserRouter(
   )
 );
 
+const clientId = "1064200584812-8fttm5kfnbojukbvh44qf103sa4skqd8.apps.googleusercontent.com"
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <React.StrictMode>
+  <GoogleOAuthProvider clientId={clientId}>
+    <Provider store={store}>
+      <React.StrictMode>
 
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
 
-    </React.StrictMode>
-  </Provider>
+      </React.StrictMode>
+    </Provider>
+  </GoogleOAuthProvider>
 );
