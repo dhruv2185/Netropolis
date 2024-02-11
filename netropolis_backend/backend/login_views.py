@@ -73,10 +73,10 @@ class TeamProfile(APIView):
         if pk is not None:
             pk = get_user_model().objects.get(username=pk)
             try:
-                team = Teams.objects.get(created_by=pk)
+                team = Team.objects.get(created_by=pk)
                 serializer = self.serializer_class(team, many=False)
             except MultipleObjectsReturned:
-                teams = Teams.objects.filter(created_by=pk)
+                teams = Team.objects.filter(created_by=pk)
                 serializer = self.serializer_class(teams, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -84,7 +84,7 @@ class TeamProfile(APIView):
 
     def put(self, request):
         pk = request.query_params.get('pk', None)
-        teams = Teams.objects.get(id=pk)
+        teams = Team.objects.get(id=pk)
         serializer = self.serializer_class(teams, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -94,6 +94,6 @@ class TeamProfile(APIView):
 
     def delete(self, request):
         pk = request.query_params.get('pk', None)
-        teams = Teams.objects.get(id=pk)
+        teams = Team.objects.get(id=pk)
         teams.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
