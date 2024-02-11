@@ -38,7 +38,14 @@ const ApplicationPage = () => {
         teamId: "",
         daily_time_span: ""
     });
-
+    const quest_data={
+        quest_name: "Pokemon Quest",
+        region: "Kanto",
+        genre_tags: ["Pikachu","Bulbasaur", "Charizard", "Squirtle","Mewtwo"],
+        rewards: "$8000",
+        other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
+        available_till: Date.now(),
+    }
     const fetchTeams = async () => {
         try {
             const response = await fetch(`${BASE_URL}/teams`, {
@@ -141,16 +148,35 @@ const ApplicationPage = () => {
             <Header navigations={navigations} ></Header>
             <div className="flex bg-transparent h-auto w-full" >
             <div className="justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center" style={{ backgroundImage: `url(${mesh})` }}>
-                <div className="sm:flex flex-1 w-full mt-14">
-                    <div className="sm:w-full max-w-[50%] mt-20">
-                    <div className="text-center mb-10 mt-22">
+                <div className="md:flex flex-1 w-full max-md:mt-20 mt-14 min-h-[120vh]">
+                    <div className="sm:w-full lg:max-w-[60%]  flex flex-col justify-center items-center">
+                    <div className="text-center mb-10">
                                 <Title title="Quest Summary" subtitle={"Please check all details carefully"} titleClass={"text-indigo-400"} />
+                            </div><div className="flex flex-col gap-2 md:max-w-lg md:pl-[5%] w-full max-md:items-center max-md:justify-center max-md:p-10">
+                            <h2 className="font-medium text-indigo-400 font-inter "> Quest Name</h2>
+                            <p className="text-black font-inter mb-4">{quest_data.quest_name}</p>
+                            <h2 className="font-medium text-indigo-400 font-inter "> Region</h2>
+                            <p className="text-black font-inter mb-4">{quest_data.region}</p>
+                            <h2 className="font-medium text-indigo-400 font-inter "> Genre Tags</h2>
+                            <div className="flex flex-wrap gap-2 mb-4 max-md:justify-center max-md:items-center">
+                                {
+                                    quest_data.genre_tags.map((tag, index) => (
+                                        <p key={index} className="text-white font-inter bg-indigo-400 px-2 py-1 rounded-full ">{tag}</p>
+                                    ))
+                                }
+                                </div>
+                            <h2 className="font-medium text-indigo-400 font-inter "> Rewards</h2>
+                            <p className="text-black font-inter mb-4">{quest_data.rewards}</p>
+                            <h2 className="font-medium text-indigo-400 font-inter"> Other Information</h2>
+                            <p className="text-black font-inter mb-4">{quest_data.other_information}</p>
+                            <h2 className="font-medium text-indigo-400 font-inter "> Available Till</h2>
+                            <p className="text-black font-inter mb-4">{new Date(quest_data.available_till).toDateString()}</p>
+
                             </div>
-                            
                             
 
                 </div>
-                <div className="flex h-screen bg-transparent min-h-[120vh] sm:w-full max-w-[50%]">
+                <div className="flex bg-transparent sm:w-full lg:max-w-[40%]">
 
                     <div className="w-full flex justify-center items-center bg-transparent">
                         <div className="max-w-lg p-5 bg-transparent">
@@ -158,7 +184,7 @@ const ApplicationPage = () => {
                                 <Title title="Quest Application" subtitle={"Get one step closer to embark on your QUEST"} titleClass={"text-indigo-400"} />
                             </div>
                             {/* Yaha quest Id , quest Name, userInfo display honi chahiye uske baad form start hoga -> IMPORTANT */}
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-2 max-w-md">
+                            <form onSubmit={handleSubmit} className=" flex flex-col gap-2 lg:max-w-md">
                                 <h2 className="font-medium text-indigo-400 font-inter mb-[4px]"> Duration of Stay</h2>
                                 <div className="grid grid-cols-2 gap-10">
                                     <div>
