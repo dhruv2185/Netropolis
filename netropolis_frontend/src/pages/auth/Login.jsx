@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setCredentials, setTokens } from "../../features/slices/authSlice";
 import AppLoader from "../../utils/AppLoader";
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useLoginMutation } from "../../features/slices/usersApiSlice";
@@ -11,21 +12,12 @@ import Button from "../../components/globals/Button";
 import Title from "../../components/globals/Title";
 import navigations from "../../data/navigations.json";
 import Header from "../../components/globals/Header";
-const Login = () => {
-  const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const BASE_URL = "http://localhost:8000"
+const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
-  const [visible, setVisible] = useState(false);
-
-  const [login, { isLoading }] = useLoginMutation();
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { userInfo } = useSelector((state) => state.auth);
-  const loginRequest = async (userData) => {
-    const res = await fetch(`${BASE_URL}/login/`, {
+const loginRequest = async (userData) => {
+  try {
+    const res = await fetch(`${baseUrl}/login/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,28 +25,97 @@ const Login = () => {
       body: JSON.stringify(userData),
     })
     if (!res.ok) {
-      throw new Error(data.message);
+      throw new Error(res.message);
     }
     const data = await res.json();
     return data;
   }
-  const fetchUserProfile = async (tokens) => {
-    try {
-      const res = await fetch(`${baseUrl}/fetch_user/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tokens.access}`,
-        },
-      });
-      const data = await res.json();
-      return data;
+  catch (err) {
+    toast.error(err?.data?.message || err.error?.message);
+    console.log(err);
+  }
+}
+const fetchUserProfile = async (tokens) => {
+  try {
+    const res = await fetch(`${baseUrl}/fetch_user/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokens.access}`,
+      },
+    });
+    if (!res.ok) {
+      throw new Error(res.message);
     }
-    catch (err) {
-      console.log(err);
-      return err;
+    const data = await res.json();
+    return data;
+  }
+  catch (err) {
+    toast.error(err?.data?.message || err.error?.message);
+    console.log(err);
+    return err;
+  }
+}
+
+const Login = () => {
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [visible, setVisible] = useState(false);
+
+  const [{ isLoading }] = useLoginMutation();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { userInfo, tokens } = useSelector((state) => state.auth);
+
+  const success = async (codeResponse) => {
+    const newTokens = {
+      ...tokens,
+      access_google: codeResponse.access_token,
+    };
+    console.log("newTokens", newTokens);
+    dispatch(setTokens({ ...newTokens }));
+
+    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${codeResponse.access_token}`,
+        Accept: 'application/json'
+      }
+    }
+    )
+    if (!res.ok) {
+      throw Error('Failed to get user profile')
+    }
+    const data = await res.json();
+    console.log(data);
+
+    const username = data.email.split('@')[0];
+    const pwd = data.sub + "@" + username;
+
+    try {
+      const currTokens = await loginRequest({ username, password: pwd });
+      const userTokens = { ...currTokens, access_google: codeResponse.access_token };
+      dispatch(setTokens(userTokens));
+      const user = await fetchUserProfile(userTokens);
+      dispatch(setCredentials({ ...user }));
+      navigate("/");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error?.message);
     }
   }
+
+  const login = useGoogleLogin({
+    onSuccess: success,
+    onError: (error) => {
+      console.log('Login Failed:', error)
+      toast.error("Login Failed");
+    },
+    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events',
+  });
 
   useEffect(() => {
     if (userInfo) {
@@ -107,7 +168,6 @@ const Login = () => {
                     setUsername(e.target.value);
                   }}
                   placeholder="Username"
-                  required
                   className="w-full rounded-full placeholder-[var(--primary)] mb-5 border border-[#94a3b8] px-[12px] py-[8px]"
                 />
 
@@ -127,7 +187,6 @@ const Login = () => {
                       setPassword(e.target.value);
                     }}
                     placeholder="Password"
-                    required
                     className="w-full rounded-full placeholder-[var(--primary)] border border-[#94a3b8] px-[12px] py-[8px] pr-[40px]"
                   />
                   <span
@@ -152,13 +211,14 @@ const Login = () => {
                   <Link to="/forgotpassword">Forgot Password</Link>
                 </p>
                 <Button text={isLoading ? <AppLoader /> : "Sign In"} customClass={"w-full"} loading={isLoading} ></Button>
-                {/* <button
-                type="submit"
-                className="bg-[var(--primary)] text-white rounded-lg py-2 px-4 w-full mt-12"
-                disabled={isLoading}
-              >
-                {isLoading ? <AppLoader /> : "Sign In"}
-              </button> */}
+                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
+                  <button
+                    className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
+                    disabled={isLoading}
+                    onClick={() => login()}
+                  > Sign In with Google
+                  </button>
+                </div>
               </form>
 
               <p className="font-medium text-sm text-center mt-5 text-[white]">
@@ -169,12 +229,6 @@ const Login = () => {
               </p>
             </div>
           </div>
-          {/* Glass-like overlay */}
-          {/* <div className="absolute inset-0 bg-black bg-opacity-60"></div>
-
-        <div className="text-center relative z-10">
-          <img src='https://mywanderlustbucket.s3.eu-north-1.amazonaws.com/Black_and_Orange_Illustration_Company_Logo__2_-fotor-20240129151630-removebg-preview.png' alt="logo" />
-        </div> */}
         </div>
       </div>
     </>

@@ -11,21 +11,22 @@ import Login from "./pages/auth/Login.jsx";
 import Register from "./pages/auth/Register.jsx";
 import store from "./store.js";
 import { Provider } from "react-redux";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
-
-// import LandingPage from "./pages/landingPage/LandingPage.jsx";
 import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
 import DestinationPage from "./pages/DestinationPage.jsx";
 import ActivityPage from "./pages/ActivityPage.jsx";
 import TeamRegistrationPage from "./pages/TeamRegistrationPage.jsx";
 import ApplicationPage from "./pages/ApplicationPage.jsx";
+import RegisterQuest from "./pages/RegisterQuest.jsx";
+import ScheduleQuestPage from "./pages/ScheduleQuestPage.jsx";
+import RegisterTaskPage from "./pages/RegisterTaskPage.jsx";
 
 import destinations from "./data/destinations.json";
 import activities from "./data/activities.json";
 import activityCategories from "./data/activitycategories.json";
 import destinationCategories from "./data/destinationcategories.json";
-
 
 
 const router = createBrowserRouter(
@@ -34,21 +35,27 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<LandingPage destinations={destinations} activities={activities} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} />
-      <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} />
+      {/* <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} /> */}
+      {/* <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} /> */}
       <Route path="/team-registration" element={<TeamRegistrationPage />} />
       <Route path="/application/:questId" element={<ApplicationPage />} />
+      <Route path="/registerquest" element={<RegisterQuest />} />
+      <Route path="/schedulequest" element={<ScheduleQuestPage />} />
+      <Route path="/registertask" element={<RegisterTaskPage />} />
     </Route>
   )
 );
 
+const clientId = "1064200584812-8fttm5kfnbojukbvh44qf103sa4skqd8.apps.googleusercontent.com"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Provider store={store}>
-    <React.StrictMode>
+  <GoogleOAuthProvider clientId={clientId}>
+    <Provider store={store}>
+      <React.StrictMode>
 
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
 
-    </React.StrictMode>
-  </Provider>
+      </React.StrictMode>
+    </Provider>
+  </GoogleOAuthProvider>
 );

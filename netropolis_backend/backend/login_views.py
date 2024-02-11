@@ -35,6 +35,7 @@ class FetchUser(APIView):
 
     def get(self, request, *args, **kwargs):
         user = get_user_model().objects.get(username=request.user)
+        print(user.id)
         serializer = self.serializer_class(user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -68,7 +69,7 @@ class TeamProfile(APIView):
     def get(self, request, format=None):
         pk = request.query_params.get('pk', None)
         if pk is not None:
-            # user = get_user_model().objects.get(username=pk)
+            pk = get_user_model().objects.get(username=pk)
             try:
                 team = Teams.objects.get(created_by=pk)
                 serializer = self.serializer_class(team, many=False)
