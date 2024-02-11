@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth.models import User
 from .serializers import RegisterSerializer, TeamsSerializer, UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Teams
+from .models import Team
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
 
@@ -37,7 +37,9 @@ class FetchUser(APIView):
         user = get_user_model().objects.get(username=request.user)
         print(user.id)
         serializer = self.serializer_class(user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(
+            { "user_profile": serializer.data, 
+             "user_id": str(user.id)}, status=status.HTTP_201_CREATED)
 
     def put(self, request, *args, **kwargs):
         user = get_user_model().objects.get(username=request.user)
