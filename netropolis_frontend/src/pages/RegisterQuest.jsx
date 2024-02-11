@@ -9,7 +9,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../utils/AppLoader";
 import { AppError } from "../utils/AppError";
 
-import { PlusIcon, MinusCircleIcon, ClipboardDocumentCheckIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, MinusCircleIcon, ClipboardDocumentCheckIcon,XMarkIcon } from "@heroicons/react/24/solid";
 import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
@@ -19,7 +19,7 @@ const RegisterQuest = () => {
     const [questData, setQuestData] = useState({
         quest_name: "",
         region: "",
-        genre_tags: "",
+        genre_tags: [],
         rewards: "",
         other_information: "",
         available_till: "",
@@ -29,6 +29,7 @@ const RegisterQuest = () => {
             activity: "",
         }
     ])
+    const [currTag, setCurrTag] = useState("");
     const [labourShortageActivities, setLabourShortageActivities] = useState([
         {
             activity: "",
@@ -100,6 +101,24 @@ const RegisterQuest = () => {
         values[index][e.target.name] = e.target.value;
         setActivities(values);
     }
+    const genreTagsInputChange=(e,tag)=>{
+        
+        e.preventDefault();
+        if(tag==="" && questData.genre_tags.length===0){
+            toast.error("Please enter a tag");
+            return;
+        }
+        setQuestData({...questData,genre_tags:[...questData.genre_tags,tag]})
+        setCurrTag("");
+
+    }
+    const genreTagDelete=(e,index)=>{
+        e.preventDefault();
+        const values = [...questData.genre_tags];
+        values.splice(index, 1);
+        setQuestData({...questData,genre_tags:values});
+    }
+
 
     const handlePrimaryInputChange = (e) => {
         setQuestData(
@@ -278,15 +297,30 @@ const RegisterQuest = () => {
                                             />
                                         </div>
                                         <div className="w-8/12" >
+                                        <div className="flex justify-center items-center gap-4 mb-2">
                                             <p className="text-indigo-400 font-inter mb-[4px]">Genre Tags</p>
-                                            <input
-                                                type="text"
-                                                name="genre_tags"
-                                                value={questData.genre_tags}
-                                                onChange={handlePrimaryInputChange}
-                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                                placeholder="Concerns"
-                                            />
+                                            <button
+                                                        onClick={(e) => genreTagsInputChange(e, currTag)}
+                                                        className={"text-white lg:text-lg font-bold rounded-full bg-indigo-400 px-2"}
+                                                    >
+                                                        ADD
+                                                    </button></div>
+                                                    {questData.genre_tags.length>0 && questData.genre_tags.map((tag,index)=>{
+                                                        return(
+                                                            <span key={index} className="inline-flex justify-center items-center ml-4 rounded-full bg-indigo-400 p-1 px-2 tracking-wide m-1">
+                                                            <p className="text-white font-inter">{tag}</p> <button
+                                                        onClick={(e) => genreTagDelete(e, index)}
+                                                        className={"text-base lg:text-lg font-bold rounded-full" }
+                                                    >
+                                                        <XMarkIcon className="h-5 w-5 text-white " />
+                                                    </button></span>
+                                                            
+                                                    
+                                                        )
+                                                    })
+                                                    }
+                                                    <input type="text" name="genre_tags" value={currTag} onChange={(e)=>{setCurrTag(e.target.value)}} className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] mt-2" placeholder="Genre Tags" />
+                                            
                                         </div>
                                         <div className="w-8/12" >
                                             <p className="text-indigo-400 font-inter mb-[4px]">Available Till</p>
