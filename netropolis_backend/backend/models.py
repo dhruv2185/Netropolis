@@ -35,13 +35,14 @@ class Community_Managers(models.Model):
 
 class Quests(models.Model):
     id = models.AutoField(primary_key=True)
+    quest_name = models.TextField()
     labour_shortage_activities = models.TextField()
     natural_activities = models.TextField()
     local_activities = models.TextField()
     other_information = models.TextField()
     region = models.TextField()
     genre_tags = models.TextField()
-    rewards = models.IntegerField()
+    rewards = models.TextField()
 
 
 class Schedules(models.Model):
