@@ -7,7 +7,8 @@ from django.contrib.auth.hashers import make_password
 class Team(models.Model):
     id = models.AutoField(primary_key=True)
     team_name = models.CharField(max_length=50)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, default=7, null=True)
+    created_by = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=7, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     number_of_people = models.IntegerField()
@@ -33,7 +34,7 @@ class Community_Manager(models.Model):
     password = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def save(self, *args, **kwargs):
         self.password = make_password(self.password)
         super(Community_Manager, self).save(*args,**kwargs)

@@ -21,6 +21,7 @@ import TeamRegistrationPage from "./pages/TeamRegistrationPage.jsx";
 import ApplicationPage from "./pages/ApplicationPage.jsx";
 import RegisterQuest from "./pages/RegisterQuest.jsx";
 import ScheduleQuestPage from "./pages/ScheduleQuestPage.jsx";
+import RegisterTaskPage from "./pages/RegisterTaskPage.jsx";
 
 import destinations from "./data/destinations.json";
 import activities from "./data/activities.json";
@@ -34,12 +35,13 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<LandingPage destinations={destinations} activities={activities} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} />
-      <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} />
+      {/* <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} /> */}
+      {/* <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} /> */}
       <Route path="/team-registration" element={<TeamRegistrationPage />} />
       <Route path="/application/:questId" element={<ApplicationPage />} />
       <Route path="/registerquest" element={<RegisterQuest />} />
       <Route path="/schedulequest" element={<ScheduleQuestPage />} />
+      <Route path="/registertask" element={<RegisterTaskPage />} />
     </Route>
   )
 );
