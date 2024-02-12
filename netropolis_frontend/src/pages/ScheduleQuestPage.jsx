@@ -15,6 +15,30 @@ import Header from "../components/globals/Header";
 import mesh from "../assets/images/mesh.png";
 import { AppError } from "../utils/AppError";
 import Footer from "../components/globals/Footer";
+const timeZone = "Asia/Tokyo"
+
+const convertToEvent = (eventIfo, date) => {
+    const toBeReturned = {
+        summary: eventIfo.name,
+        location: eventIfo.location,
+        description: eventIfo.description,
+        start: {
+            dateTime: `${date}T${eventIfo.from}:00`,
+            timeZone: timeZone,
+        },
+        end: {
+            dateTime: `${date}T${eventIfo.to}:00`,
+            timeZone: timeZone,
+        },
+        reminders: {
+            useDefault: false,
+            overrides: [
+                { method: 'popup', minutes: 10 },
+            ],
+        }
+    }
+    return toBeReturned;
+}
 
 const ScheduleQuestPage = () => {
 
@@ -110,7 +134,6 @@ const ScheduleQuestPage = () => {
         setDays(newDays);
     }
 
-
     const handleMainInputChange = (e) => {
         setSchedule({ ...schedule, [e.target.name]: e.target.value });
     }
@@ -135,14 +158,49 @@ const ScheduleQuestPage = () => {
             day_to_day_schedule: days,
         }
         console.log(bodyToBeSent);
-        // const response = await fetch(`${BASE_URL}/api/v1/quests/${questId}/schedules`, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Authorization": `Bearer ${tokens.access}`
-        //     },
-        //     body: JSON.stringify(bodyToBeSent)
-        // });
+        try {
+            for (let i = 0; i < days.length; i++) {
+                const currDate = days[i].date;
+                for (let j = 0; j < days[i].events.length; j++) {
+                    const eventInfo = days[i].events[j];
+                    const event = convertToEvent(eventInfo, currDate);
+                    const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Accept: 'application/json',
+                            Authorization: `Bearer ${tokens.access_google}`
+                        },
+                        body: JSON.stringify(event)
+                    }
+                    )
+                    if (!response.ok) {
+                        throw new Error('Something went wrong');
+                    }
+                    const data = await response.json();
+                    console.log(data);
+                }
+            }
+            const response = await fetch(`${BASE_URL}/quest/schedule`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${tokens.access}`
+                },
+                body: JSON.stringify(bodyToBeSent)
+            }
+            )
+            if (!response.ok) {
+                throw new Error('Something went wrong');
+            }
+            const data = await response.json();
+            console.log(data);
+        }
+        catch (err) {
+            toast.error(err.message);
+        }
+
     };
 
     return (

@@ -4,7 +4,8 @@ CreateTaskPage -> Completed Logic
 Display Task and Create Quest on same page -> Completed quest logic , fetching task remaining and display remaining
 Display quests page - Notstarted -> Search function on same page -> remaining
 Apply for a quest with quest info on one side and form on the other -> Logic Completed , style remaining
-View Applications Page -> Not Started
+View Applications Page for both user and community Manager -> Not Started -> Give an option to Approve and Schedule OR Reject the application
 Create Schedule for an application -> with quest and application info on one side and Form on other side -> Logic Complete , Style remaining
-
+To add fee field in register quest page
+Genre Tags UI to be made
 
