@@ -9,7 +9,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../utils/AppLoader";
 import { AppError } from "../utils/AppError";
 
-import { PlusIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, MinusCircleIcon, ClipboardDocumentCheckIcon,XMarkIcon } from "@heroicons/react/24/solid";
 import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
@@ -19,7 +19,7 @@ const RegisterQuest = () => {
     const [questData, setQuestData] = useState({
         quest_name: "",
         region: "",
-        genre_tags: "",
+        genre_tags: [],
         rewards: "",
         other_information: "",
         available_till: "",
@@ -29,6 +29,7 @@ const RegisterQuest = () => {
             activity: "",
         }
     ])
+    const [currTag, setCurrTag] = useState("");
     const [labourShortageActivities, setLabourShortageActivities] = useState([
         {
             activity: "",
@@ -42,7 +43,48 @@ const RegisterQuest = () => {
 
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
-
+    const tasks=[
+        {
+            task:"Choose your first Pokemon"},
+        {
+            task:"Catch 5 Pokemons"},
+        {
+            task:"Win 5 battles"},
+        {
+            task:"Defeat Team Rocket"},
+        {
+            task:"Defeat Gym Leader"},
+        {
+            task:"Defeat Elite Four"},
+        {
+            task:"Defeat Champion"},
+        {
+            task:"Catch Legendary Pokemon"},
+        {
+            task:"Catch Mythical Pokemon"},
+        {
+            task:"Complete Pokedex and start new game plus. Padhai Likhai karo IAS VAIS bano aur desh ko sambhalo"},
+            {
+                task:"Choose your first Pokemon"},
+            {
+                task:"Catch 5 Pokemons"},
+            {
+                task:"Win 5 battles"},
+            {
+                task:"Defeat Team Rocket"},
+            {
+                task:"Defeat Gym Leader"},
+            {
+                task:"Defeat Elite Four"},
+            {
+                task:"Defeat Champion"},
+            {
+                task:"Catch Legendary Pokemon"},
+            {
+                task:"Catch Mythical Pokemon"},
+            {
+                task:"Complete Pokedex and start new game plus. Padhai Likhai karo IAS VAIS bano aur desh ko sambhalo"}
+    ]
     // useEffect(() => {
     //     if (userInfo === null) {
     //         console.log("redirecting to login");
@@ -59,6 +101,24 @@ const RegisterQuest = () => {
         values[index][e.target.name] = e.target.value;
         setActivities(values);
     }
+    const genreTagsInputChange=(e,tag)=>{
+        
+        e.preventDefault();
+        if(tag==="" && questData.genre_tags.length===0){
+            toast.error("Please enter a tag");
+            return;
+        }
+        setQuestData({...questData,genre_tags:[...questData.genre_tags,tag]})
+        setCurrTag("");
+
+    }
+    const genreTagDelete=(e,index)=>{
+        e.preventDefault();
+        const values = [...questData.genre_tags];
+        values.splice(index, 1);
+        setQuestData({...questData,genre_tags:values});
+    }
+
 
     const handlePrimaryInputChange = (e) => {
         setQuestData(
@@ -124,29 +184,63 @@ const RegisterQuest = () => {
     }
     const removeFields = (e, index, activities, setActivities) => {
         e.preventDefault();
-        console.log("remove karne ki koshish");
-        if (activities.length === 1) {
-            toast.error("You cannot remove the only member of the team.");
-            return;
-        }
         const values = [...activities];
         values.splice(index, 1);
         setActivities(values);
     }
 
     return (
-        <><Header navigations={navigations} />
-            <div className="flex bg-transparent h-auto w-full" >
+        <><Header navigations={navigations} /><div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
+        <div className=" flex flex-auto max-md:flex-col flex-shrink-0 antialiased bg-transparent">
+    <div className=" md:sticky max-md:mt-20 flex flex-col top-20 left-0 max-md:w-[100%] md:w-[20%] xl:w-[30%] min-h-[100vh] max-h-[100vh] bg-white h-full border">
+      <div className=" overflow-auto flex-grow">
+        <ul className="flex flex-col py-4 space-y-1">
+          <li className="px-5">
+            <div className="flex flex-row items-center h-8">
+            <p
+                            
+                            className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6 font-bold"
+                        >
+              <span className="inline-flex justify-center items-center ml-4">
+                                <ClipboardDocumentCheckIcon className="h-5 w-5"/>
+                            </span>
+                            <span className="ml-2 text-sm tracking-wide text-wrap">
+                                Available Tasks/Events
+                            </span>
+              </p>
+            </div>
+          </li>
+            {tasks.map((task, index) => {
+                return (
+                    <li key={index}>
+                        <p
+                            
+                            className="relative flex flex-row items-center min-h-11 h-auto focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                        >
+                            
+                            <span className="ml-2 text-sm tracking-wide text-wrap">
+                                {task.task}
+                            </span>
+                        </p>
+                    </li>
+                )
+            })}
+        </ul>
+      </div>
+    </div>
+    <div className="flex bg-transparent h-auto w-full justify-center items-center">
                 {/* left side */}
-                <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
-                    <div className="flex flex-col h-auto min-h-[100vh] w-full flex-1 mb-5 mt-32">
+                
+                    <div className="flex flex-col h-auto min-h-[100vh] max-md:max-w-full max-w-[50%] flex-1 mb-5 mt-32">
                         {/* <div className="flex justify-end p-1"></div> */}
 
                         <div className="justify-center flex gap-2 flex-col text-center items-center mb-10">
                             <p className="font-fira text-medium text-4xl text-indigo-400">
-                                Create Team
+                                Create Quest
                             </p>
-                            <p className="mb-2">Embark on your quest with a TEAM or go SOLO  </p>
+                            <p className="mb-2">
+                            Create a quest and let the world know about it.
+                            </p>
                         </div>
 
                         {<AppError />}
@@ -156,7 +250,7 @@ const RegisterQuest = () => {
                             className="flex flex-col items-center justify-center"
                         >
                             <div className="flex flex-col xl:flex-row pr-2 pl-2 justify-center items-center w-full">
-                                <div>
+                                <div className="w-full">
                                     <div className=" w-full flex flex-col items-center justify-center xl:self-start gap-4">
                                         <div className="w-8/12 " >
                                             <p className="text-indigo-400 font-inter mb-[4px]">Quest Name</p>
@@ -203,15 +297,30 @@ const RegisterQuest = () => {
                                             />
                                         </div>
                                         <div className="w-8/12" >
+                                        <div className="flex justify-center items-center gap-4 mb-2">
                                             <p className="text-indigo-400 font-inter mb-[4px]">Genre Tags</p>
-                                            <input
-                                                type="text"
-                                                name="genre_tags"
-                                                value={questData.genre_tags}
-                                                onChange={handlePrimaryInputChange}
-                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                                placeholder="Concerns"
-                                            />
+                                            <button
+                                                        onClick={(e) => genreTagsInputChange(e, currTag)}
+                                                        className={"text-white lg:text-lg font-bold rounded-full bg-indigo-400 px-2"}
+                                                    >
+                                                        ADD
+                                                    </button></div>
+                                                    {questData.genre_tags.length>0 && questData.genre_tags.map((tag,index)=>{
+                                                        return(
+                                                            <span key={index} className="inline-flex justify-center items-center ml-4 rounded-full bg-indigo-400 p-1 px-2 tracking-wide m-1">
+                                                            <p className="text-white font-inter">{tag}</p> <button
+                                                        onClick={(e) => genreTagDelete(e, index)}
+                                                        className={"text-base lg:text-lg font-bold rounded-full" }
+                                                    >
+                                                        <XMarkIcon className="h-5 w-5 text-white " />
+                                                    </button></span>
+                                                            
+                                                    
+                                                        )
+                                                    })
+                                                    }
+                                                    <input type="text" name="genre_tags" value={currTag} onChange={(e)=>{setCurrTag(e.target.value)}} className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px] mt-2" placeholder="Genre Tags" />
+                                            
                                         </div>
                                         <div className="w-8/12" >
                                             <p className="text-indigo-400 font-inter mb-[4px]">Available Till</p>
@@ -224,7 +333,139 @@ const RegisterQuest = () => {
                                                 placeholder="Available Till"
                                             />
                                         </div>
-                                        <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
+                                       
+                                    </div>
+                                    <div className=" w-full grid grid-cols-1 gap-5 mt-4" >
+                                        <div className="flex justify-center items-center gap-4">
+                                    <p className="text-black font-bold text-center">Natural Activities</p><button
+                                                        onClick={(e) => addFields(e, naturalActivities, setNaturalActivities)}
+                                                        className={"text-white lg:text-lg font-bold rounded-full bg-indigo-400 px-2"}
+                                                    >
+                                                        ADD
+                                                    </button></div>
+                                    {naturalActivities.length>0 && <div className="flex flex-col gap-2" style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
+                                        {naturalActivities.map((naturalActivity, index) => {
+                                            return (
+                                                
+                                                    <div key={index}  className="w-full">
+                                                    <div className="w-full flex justify-between" >
+                                                    
+                            <span className="inline-flex justify-center items-center ml-4">
+                                                        <p className="text-indigo-400 font-inter mb-[4px]">Natural Activity {index + 1}</p></span>
+                                                        <span className="w-[60%] ml-2 text-sm tracking-wide text-wrap ">
+                                                        <input
+                                                            type="text"
+                                                            name="activity"
+                                                            value={naturalActivity.activity}
+                                                            onChange={event => handleDynamicActivityInputChange(event, index, naturalActivities, setNaturalActivities)}
+                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                            placeholder="Enter Natural Activity"
+                                                        /></span><button
+                                                        onClick={(e) => removeFields(e, index, naturalActivities, setNaturalActivities)}
+                                                        className={"text-base lg:text-lg font-bold rounded-full"}
+                                                    >
+                                                        <MinusCircleIcon className="h-7 w-7 text-red-500 " />
+                                                    </button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>}</div>
+                                    
+                                        
+                                    
+                                    <div className=" w-full grid grid-cols-1 gap-5 mt-4" >
+                                        <div className="flex justify-center items-center gap-4">
+                                    <p className="text-black font-bold text-center">Labour Shortage Activities</p><button
+                                                        onClick={(e) => addFields(e, labourShortageActivities, setLabourShortageActivities)}
+                                                        className={"text-white lg:text-lg font-bold rounded-full bg-indigo-400 px-2"}
+                                                    >
+                                                        ADD
+                                                    </button></div>
+                                    {labourShortageActivities.length>0 && <div className="flex flex-col gap-2" style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
+                                        {labourShortageActivities.map((labourShortageActivity, index) => {
+                                            return (
+                                                
+                                                    <div key={index}  className="w-full">
+                                                        
+                                                        
+                                                    
+
+                                                    <div className="w-full flex justify-between" >
+
+                            <span className="inline-flex justify-center items-center ml-4">
+                                                        <p className="text-indigo-400 font-inter mb-[4px]">Labour Activity {index + 1}</p></span>
+                                                        <span className="w-[60%] ml-2 text-sm tracking-wide text-wrap ">
+                                                        <input
+                                                            type="text"
+                                                            name="activity"
+                                                            value={labourShortageActivity.activity}
+                                                            onChange={event => handleDynamicActivityInputChange(event, index, labourShortageActivities, setLabourShortageActivities)}
+                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                            placeholder="Enter Labour Shortage Activity"
+                                                        /></span><button
+                                                        onClick={(e) => removeFields(e, index, labourShortageActivities, setLabourShortageActivities)}
+                                                        className={"text-base lg:text-lg font-bold rounded-full"}
+                                                    >
+                                                        <MinusCircleIcon className="h-7 w-7 text-red-500 " />
+                                                    </button>
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+                                        )}
+                                    </div>}</div>
+
+                                    <div className=" w-full grid grid-cols-1 gap-5 mt-4 mb-4" >
+                                        <div className="flex justify-center items-center gap-4">
+                                    <p className="text-black font-bold text-center">Local Activities</p><button
+                                                        onClick={(e) => addFields(e, localActivities, setLocalActivities)}
+                                                        className={"text-white lg:text-lg font-bold rounded-full bg-indigo-400 px-2"}
+                                                    >
+                                                        ADD
+                                                    </button></div>
+                                    {localActivities.length>0 &&<div className="flex flex-col gap-2" style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
+                                        {localActivities.map((localActivity, index) => {
+                                            return (
+                                                
+                                                    <div key={index}  className="w-full">
+                                                        
+                                                        
+                                                    
+
+                                                    <div className="w-full flex justify-between" >
+
+                            <span className="inline-flex justify-center items-center ml-4">
+                                                
+                                                        <p className="text-indigo-400 font-inter mb-[4px]">Local Activity {index + 1}</p></span>
+                                                        <span className="w-[60%] ml-2 text-sm tracking-wide text-wrap ">
+                                                        <input
+                                                        
+                                                            type="text"
+                                                            name="activity"
+                                                            value={localActivity.activity}
+                                                            onChange={event => handleDynamicActivityInputChange(event, index, localActivities, setLocalActivities)}
+                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                            placeholder="Enter Local Activity"
+                                                        /></span><button
+                                                        onClick={(e) => removeFields(e, index, localActivities, setLocalActivities)}
+                                                        className={"text-base lg:text-lg font-bold rounded-full"}
+                                                    >
+                                                        <MinusCircleIcon className="h-7 w-7 text-red-500 " />
+                                                    </button>
+
+                                                    </div>
+                                                    </div>
+                                            )
+                                        }
+                                        )}
+                                    </div>}</div>
+
+                                    
+                                </div>
+                                
+                            </div>
+                            <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
                                             <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
                                                 <button
                                                     onClick={handleSubmit}
@@ -234,149 +475,12 @@ const RegisterQuest = () => {
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 gap-5 auto-rows-fr " >
-
-                                        {naturalActivities.map((naturalActivity, index) => {
-                                            return (
-                                                <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
-                                                    <div className="w-full flex justify-between">
-                                                        <p className="text-black font-bold mb-[4px]">Natural Activities</p>
-                                                        <button
-                                                            onClick={(e) => removeFields(e, index, naturalActivities, setNaturalActivities)}
-                                                            className={"text-base lg:text-lg font-bold rounded-full"}
-                                                        >
-                                                            <MinusCircleIcon className="h-7 w-7 text-red-500 " />
-                                                        </button>
-                                                    </div>
-
-                                                    <div className="w-full" >
-                                                        <p className="text-indigo-400 font-inter mb-[4px]">Natural Activity {index + 1}</p>
-                                                        <input
-                                                            type="text"
-                                                            name="activity"
-                                                            value={naturalActivity.activity}
-                                                            onChange={event => handleDynamicActivityInputChange(event, index, naturalActivities, setNaturalActivities)}
-                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                                            placeholder="Place of Residence"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                    <div style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }} className="flex justify-center items-center">
-                                        <div className="w-full" >
-                                            <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                                                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                                    <button
-                                                        onClick={(e) => addFields(e, naturalActivities, setNaturalActivities)}
-                                                        type="button"
-                                                        className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
-                                                    >
-                                                        <PlusIcon className="h-10 w-10" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 gap-5 auto-rows-fr " >
-
-                                        {localActivities.map((localActivity, index) => {
-                                            return (
-
-                                                <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
-                                                    <div className="w-full flex justify-between">
-                                                        <p className="text-black font-bold mb-[4px]">Local Activities</p>
-                                                        <button
-                                                            onClick={(e) => removeFields(e, index, localActivities, setLocalActivities)}
-                                                            className={"text-base lg:text-lg font-bold rounded-full"}
-                                                        >
-                                                            <MinusCircleIcon className="h-7 w-7 text-red-500 " />
-                                                        </button>
-                                                    </div>
-
-                                                    <div className="w-full" >
-                                                        <p className="text-indigo-400 font-inter mb-[4px]">Local Activity {index + 1}</p>
-                                                        <input
-                                                            type="text"
-                                                            name="activity"
-                                                            value={localActivity.activity}
-                                                            onChange={event => handleDynamicActivityInputChange(event, index, localActivities, setLocalActivities)}
-                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                                            placeholder="Place of Residence"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                    <div style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }} className="flex justify-center items-center">
-                                        <div className="w-full" >
-                                            <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                                                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                                    <button
-                                                        onClick={(e) => addFields(e, localActivities, setLocalActivities)}
-                                                        type="button"
-                                                        className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
-                                                    >
-                                                        <PlusIcon className="h-10 w-10" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 gap-5 auto-rows-fr " >
-
-                                        {labourShortageActivities.map((labourShortageActivity, index) => {
-                                            return (
-                                                <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
-                                                    <div className="w-full flex justify-between">
-                                                        <p className="text-black font-bold mb-[4px]">Labour Shortage Activities</p>
-                                                        <button
-                                                            onClick={(e) => removeFields(e, index, labourShortageActivities, setLabourShortageActivities)}
-                                                            className={"text-base lg:text-lg font-bold rounded-full"}
-                                                        >
-                                                            <MinusCircleIcon className="h-7 w-7 text-red-500 " />
-                                                        </button>
-                                                    </div>
-
-                                                    <div className="w-full" >
-                                                        <p className="text-indigo-400 font-inter mb-[4px]">Labour Shortage Activity {index + 1}</p>
-                                                        <input
-                                                            type="text"
-                                                            name="activity"
-                                                            value={labourShortageActivity.activity}
-                                                            onChange={event => handleDynamicActivityInputChange(event, index, labourShortageActivities, setLabourShortageActivities)}
-                                                            className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
-                                                            placeholder="Place of Residence"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                    <div style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }} className="flex justify-center items-center">
-                                        <div className="w-full" >
-                                            <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                                                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                                    <button
-                                                        onClick={(e) => addFields(e, labourShortageActivities, setLabourShortageActivities)}
-                                                        type="button"
-                                                        className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
-                                                    >
-                                                        <PlusIcon className="h-10 w-10" />
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>
             </div>
+  </div>
+            
             <Footer navigations={navigations} />
         </>
     );

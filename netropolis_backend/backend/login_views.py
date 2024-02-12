@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth.models import User
 from .serializers import RegisterSerializer, TeamsSerializer, UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Teams
+from .models import Team
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
 
@@ -37,7 +37,9 @@ class FetchUser(APIView):
         user = get_user_model().objects.get(username=request.user)
         print(user.id)
         serializer = self.serializer_class(user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(
+            { "user_profile": serializer.data, 
+             "user_id": str(user.id)}, status=status.HTTP_201_CREATED)
 
     def put(self, request, *args, **kwargs):
         user = get_user_model().objects.get(username=request.user)
@@ -71,10 +73,10 @@ class TeamProfile(APIView):
         if pk is not None:
             pk = get_user_model().objects.get(username=pk)
             try:
-                team = Teams.objects.get(created_by=pk)
+                team = Team.objects.get(created_by=pk)
                 serializer = self.serializer_class(team, many=False)
             except MultipleObjectsReturned:
-                teams = Teams.objects.filter(created_by=pk)
+                teams = Team.objects.filter(created_by=pk)
                 serializer = self.serializer_class(teams, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -82,7 +84,7 @@ class TeamProfile(APIView):
 
     def put(self, request):
         pk = request.query_params.get('pk', None)
-        teams = Teams.objects.get(id=pk)
+        teams = Team.objects.get(id=pk)
         serializer = self.serializer_class(teams, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -92,6 +94,6 @@ class TeamProfile(APIView):
 
     def delete(self, request):
         pk = request.query_params.get('pk', None)
-        teams = Teams.objects.get(id=pk)
+        teams = Team.objects.get(id=pk)
         teams.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
