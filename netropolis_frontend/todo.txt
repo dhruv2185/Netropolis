@@ -14,3 +14,4 @@ Genre Tags UI to be made -> done
 display quest -> search quest
 Request NotificationView Applications page for user along with Schedule and status
 
+Add descriptions to quest (WADU)
