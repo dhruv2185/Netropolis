@@ -104,7 +104,7 @@ const RegisterQuest = () => {
     const genreTagsInputChange=(e,tag)=>{
         
         e.preventDefault();
-        if(tag==="" && questData.genre_tags.length===0){
+        if(tag===""){
             toast.error("Please enter a tag");
             return;
         }
