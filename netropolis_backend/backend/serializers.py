@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from six import text_type
-from .models import Teams, Community_Managers, Quests, Schedules, Applications
+from .models import Team, Community_Manager, Quest, Schedule, Application
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -53,31 +53,31 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class TeamsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Teams
+        model = Team
         fields = '__all__'
 
 
 class CommunityManagersSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Community_Managers
+        model = Community_Manager
         fields = '__all__'
 
 
 class QuestsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Quests
+        model = Quest
         fields = '__all__'
 
 
 class SchedulesSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Schedules
+        model = Schedule
         fields = '__all__'
 
 
 class ApplicationsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Applications
+        model = Application
         fields = '__all__'
 
 

@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Teams, Community_Managers, Quests, Schedules, Applications
+from .models import Team, Community_Manager, Quest, Schedule, Application
 
 # Register your models here.
-admin.site.register(Teams)
-admin.site.register(Community_Managers)
-admin.site.register(Quests)
-admin.site.register(Schedules)
-admin.site.register(Applications)
+admin.site.register(Team)
+admin.site.register(Community_Manager)
+admin.site.register(Quest)
+admin.site.register(Schedule)
+admin.site.register(Application)
