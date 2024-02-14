@@ -9,9 +9,10 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-
+import Button from "./Button";
+const tags=["beach","mountain","hill","forest","desert"];
 const Article = ({ data, categories }) => {
-  const getData = data.slice(0, 4);
+  const getData = data;
   return (
     <article className="w-full flex justify-center items-center">
       <div className="w-full flex flex-col py-10 gap-16 lg:gap-0 lg:py-20 lg:flex-row-reverse lg:items-start max-w-7xl">
@@ -103,37 +104,40 @@ const ArticleCard = ({ data }) => {
       </main>
       <footer className="w-full mt-2 flex justify-between items-center">
         <div className="flex justify-center items-center gap-2">
-          <a
-            href={`/`}
-            className="bg-neutral-200 hover:bg-indigo-400 text-sm hover:text-white text-neutral-600 py-1 px-3 rounded-full"
-          >
-            Category
-          </a>
-          <span className="text-sm text-neutral-600 hidden sm:inline">
-            6 min read
-          </span>
+          {tags.map((item, idx) => (
+            <a
+              href={`/`}
+              key={idx}
+              className="bg-neutral-200 hover:bg-indigo-400 text-sm hover:text-white text-neutral-600 py-1 px-3 rounded-full"
+            >
+              {item}
+            </a>
+          ))}
+          
+          
         </div>
         <div className="flex justify-center items-center gap-2">
           <div className="flex justify-center items-center gap-1 mx-2">
             <EyeIcon className="w-5 text-neutral-600 cursor-pointer" />
             <span className="text-neutral-600 lg:text-sm text-xs">
-              {data.viewCount}
+              {Math.floor(Math.random() * 100) + 1}k
             </span>
           </div>
           <div className="flex justify-center items-center gap-1 mx-2">
             <HandThumbUpIcon className="w-5 text-neutral-600 cursor-pointer" />
             <span className="text-neutral-600 lg:text-sm text-xs">
-              {data.likeCount}
+              {Math.floor(Math.random() * 10) + 1}k
             </span>
           </div>
           <BookmarkIcon className="w-5 text-neutral-600 cursor-pointer" />
-          <MinusCircleIcon className="w-5 text-neutral-600 cursor-pointer" />
-          <EllipsisHorizontalIcon className="w-5 text-neutral-600 cursor-pointer" />
+          <Button text="Apply Now" path="/" customClass={"mx-4"}/>
         </div>
       </footer>
     </article>
   );
 };
+
+
 
 const Pagination = () => {
   return (
