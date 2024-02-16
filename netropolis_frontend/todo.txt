@@ -16,18 +16,18 @@ Request NotificationView Applications page for user along with Schedule and stat
 
 Add descriptions to quest (WADU)
 
-Get teams by user id
+Get teams by user id(Done)
 Create Tasks by Community Manager
 Get tasks for a specific Community Manager -> by CM id
-Create Quest
+Create Quest(Done)                                                                                         
 Get all quests using search
 Pagination from backend
 Explore quests
-Apply for a quest -> POST 
+Apply for a quest -> POST(Done) 
 Notify the CM -> maintain variable for that
-Get applications by user id
+Get applications by user id(Done)
 Get applications by CM id
-Create Schedule -> POST
+Create Schedule -> POST(Done)
 
 
 

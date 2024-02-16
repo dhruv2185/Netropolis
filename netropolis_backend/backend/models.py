@@ -31,7 +31,7 @@ class Community_Manager(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, unique=True)
-    password = models.CharField(max_length=50)
+    password = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -75,3 +75,8 @@ class Schedule(models.Model):
     application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
     quest_id = models.ForeignKey(Quest, on_delete=models.CASCADE)
     day_to_day_schedule = models.TextField()
+    
+class TaskProblem(models.Model):
+    id= models.AutoField(primary_key=True)
+    description = models.TextField()
+    created_by = models.ForeignKey(Community_Manager, on_delete=models.CASCADE, default=7) 

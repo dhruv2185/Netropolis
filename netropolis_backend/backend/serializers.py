@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from six import text_type
-from .models import Team, Community_Manager, Quest, Schedule, Application
+from .models import Team, Community_Manager, Quest, Schedule, Application, TaskProblem
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -85,3 +85,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name')
+        
+class TasksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaskProblem
+        fields = '__all__'
