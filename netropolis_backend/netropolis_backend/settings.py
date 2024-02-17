@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -119,11 +122,11 @@ DATABASES = {
 
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'netropolis',
-    #     'USER': 'dhruvghevariya2002',
-    #     'PASSWORD': 'fEb6ZrXNld1U',
-    #     'HOST': 'ep-fragrant-forest-a1swnx40-pooler.ap-southeast-1.aws.neon.tech',
-    #     'PORT': '5432',
+    #     'NAME': os.getenv('DB_NAME'),
+    #     'USER': os.getenv('DB_USER'),
+    #     'PASSWORD': os.getenv('DB_PASS'),
+    #     'HOST': os.getenv('DB_HOST'),
+    #     'PORT': os.getenv('DB_PORT'),
     #     'OPTIONS': {'sslmode': 'require'},
     #     'DISABLE_SERVER_SIDE_CURSORS': True,
     # }

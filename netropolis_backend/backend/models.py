@@ -37,8 +37,8 @@ class Community_Manager(models.Model):
 
     def save(self, *args, **kwargs):
         self.password = make_password(self.password)
-        super(Community_Manager, self).save(*args,**kwargs)
-        
+        super(Community_Manager, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.first_name
 
@@ -53,8 +53,11 @@ class Quest(models.Model):
     region = models.TextField()
     genre_tags = models.TextField()
     rewards = models.IntegerField()
-    created_by = models.ForeignKey(Community_Manager, on_delete=models.CASCADE, default=7)
-    
+    created_at = models.DateTimeField(auto_now_add=True)
+    description = models.TextField()
+    created_by = models.ForeignKey(
+        Community_Manager, on_delete=models.CASCADE, default=7)
+
 
 class Application(models.Model):
     id = models.AutoField(primary_key=True)
@@ -66,8 +69,9 @@ class Application(models.Model):
     stay_start_date = models.DateField(null=True)
     stay_end_date = models.DateField(null=True)
     special_note = models.TextField(null=True)
-    desired_tasks = models.TextField(null = True)
-    
+    desired_tasks = models.TextField(null=True)
+
+
 class Schedule(models.Model):
     id = models.AutoField(primary_key=True)
     start_date = models.DateTimeField()
@@ -75,8 +79,10 @@ class Schedule(models.Model):
     application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
     quest_id = models.ForeignKey(Quest, on_delete=models.CASCADE)
     day_to_day_schedule = models.TextField()
-    
+
+
 class TaskProblem(models.Model):
-    id= models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
-    created_by = models.ForeignKey(Community_Manager, on_delete=models.CASCADE, default=7) 
+    created_by = models.ForeignKey(
+        Community_Manager, on_delete=models.CASCADE, default=7)
