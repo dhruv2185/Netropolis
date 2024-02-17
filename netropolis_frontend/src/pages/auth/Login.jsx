@@ -4,58 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { setCredentials, setTokens } from "../../features/slices/authSlice";
 import AppLoader from "../../utils/AppLoader";
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-
+import { useGoogleLogin } from '@react-oauth/google';
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useLoginMutation } from "../../features/slices/usersApiSlice";
 import Button from "../../components/globals/Button";
 import Title from "../../components/globals/Title";
 import navigations from "../../data/navigations.json";
 import Header from "../../components/globals/Header";
-const BASE_URL = "http://localhost:8000"
+import { loginRequest, fetchUserProfile } from "../../features/userFunctions";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
-const loginRequest = async (userData) => {
-  try {
-    const res = await fetch(`${baseUrl}/login/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    })
-    if (!res.ok) {
-      throw new Error(res.message);
-    }
-    const data = await res.json();
-    return data;
-  }
-  catch (err) {
-    toast.error(err?.data?.message || err.error?.message);
-    console.log(err);
-  }
-}
-const fetchUserProfile = async (tokens) => {
-  try {
-    const res = await fetch(`${baseUrl}/fetch_user/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${tokens.access}`,
-      },
-    });
-    if (!res.ok) {
-      throw new Error(res.message);
-    }
-    const data = await res.json();
-    return data;
-  }
-  catch (err) {
-    toast.error(err?.data?.message || err.error?.message);
-    console.log(err);
-    return err;
-  }
-}
 
 const Login = () => {
 
@@ -71,43 +29,13 @@ const Login = () => {
 
   const { userInfo, tokens } = useSelector((state) => state.auth);
 
-  const success = async (codeResponse) => {
-    const newTokens = {
-      ...tokens,
-      access_google: codeResponse.access_token,
-    };
-    console.log("newTokens", newTokens);
-    dispatch(setTokens({ ...newTokens }));
-
-    const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${codeResponse.access_token}`,
-        Accept: 'application/json'
-      }
-    }
-    )
-    if (!res.ok) {
-      throw Error('Failed to get user profile')
-    }
-    const data = await res.json();
-    console.log(data);
-
-    const username = data.email.split('@')[0];
-    const pwd = data.sub + "@" + username;
-
-    try {
-      const currTokens = await loginRequest({ username, password: pwd });
-      const userTokens = { ...currTokens, access_google: codeResponse.access_token };
-      dispatch(setTokens(userTokens));
-      const user = await fetchUserProfile(userTokens);
-      dispatch(setCredentials({ ...user }));
+  useEffect(() => {
+    if (userInfo) {
       navigate("/");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error?.message);
     }
-  }
+  }, [navigate, userInfo]);
 
+  // Login with Google
   const login = useGoogleLogin({
     onSuccess: success,
     onError: (error) => {
@@ -117,24 +45,70 @@ const Login = () => {
     scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events',
   });
 
-  useEffect(() => {
-    if (userInfo) {
+  const success = async (codeResponse) => {
+    try {
+      const newTokens = {
+        ...tokens,
+        access_google: codeResponse.access_token,
+      };
+      console.log("newTokens", newTokens);
+      dispatch(setTokens({ ...newTokens }));
+
+      // fetch user profile stored in google
+      const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${codeResponse.access_token}`,
+          Accept: 'application/json'
+        }
+      }
+      )
+      if (!res.ok) {
+        throw Error('Failed to get user profile')
+      }
+      const data = await res.json();
+      console.log(data);
+
+      const username = data.email.split('@')[0];
+      const pwd = data.sub + "@" + username;
+
+      // logging In with username and password obtained from google
+      const currTokens = await loginRequest({ username, password: pwd });
+      if (currTokens.error?.message) {
+        throw new Error(currTokens.error.message)
+      }
+      const userTokens = { ...currTokens, access_google: codeResponse.access_token };
+      const user = await fetchUserProfile(userTokens);
+      if (user.error?.message) {
+        throw new Error(user.error.message)
+      }
+      dispatch(setTokens(userTokens));
+      dispatch(setCredentials({ ...user }));
       navigate("/");
+    } catch (err) {
+      toast.error(err?.data?.message || err.error?.message);
     }
-  }, [navigate, userInfo]);
+  }
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!username || !password) {
       return toast.error("All fields are required");
     }
-
     try {
       const tokens = await loginRequest({ username, password });
-      dispatch(setTokens({ ...tokens }));
+      if (tokens.error?.message) {
+        throw new Error(tokens.error.message)
+      }
       const user = await fetchUserProfile(tokens);
-      dispatch(setCredentials({ ...user }));
-      navigate("/");
+      if (user.error?.message) {
+        throw new Error(user.error.message)
+      }
+      else {
+        dispatch(setTokens({ ...tokens }));
+        dispatch(setCredentials({ ...user }));
+        navigate("/");
+      }
     } catch (err) {
       toast.error(err?.data?.message || err.error?.message);
     }
@@ -217,7 +191,8 @@ const Login = () => {
                     disabled={isLoading}
                     onClick={(e) => {
                       e.preventDefault();
-                      login();}}
+                      login();
+                    }}
                   > Sign In with Google
                   </button>
                 </div>

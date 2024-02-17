@@ -19,6 +19,7 @@ const RegisterTaskPage = () => {
     const [tasks, setTasks] = useState([
         {
             description: "",
+            createdBy: "",
         }
     ])
 
@@ -48,9 +49,9 @@ const RegisterTaskPage = () => {
         try {
             tasks.forEach((task) => {
                 if (task.description === "") {
-                    toast.error("Please fill in all the fields.");
                     throw Error("Please fill in all the fields.");
                 }
+                task.createdBy = userInfo.id;
             })
             const toBeSent = {
                 tasks: tasks,
@@ -104,38 +105,27 @@ const RegisterTaskPage = () => {
 
                         <div className="justify-center flex gap-2 flex-col text-center items-center mb-10">
                             <p className="font-fira text-medium text-4xl text-indigo-400">
-                                Create Team
+                                Create Tasks
                             </p>
-                            <p className="mb-2">Embark on your quest with a TEAM or go SOLO  </p>
+                            <p className="mb-2">Welcome to the Task Creation Interface!   </p>
                         </div>
 
                         {<AppError />}
 
                         <form
                             onSubmit={handleSubmit}
-                            className="flex flex-col items-center justify-center"
+                            className="flex flex-col items-center justify-center w-full"
                         >
-                            <div className="flex flex-col xl:flex-row pr-2 pl-2 justify-center items-center w-full">
-                                <div>
-                                    <div className=" w-full flex flex-col items-center justify-center xl:self-start gap-4">
-                                        <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                                            <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                                                <button
-                                                    onClick={handleSubmit}
-                                                    className={"w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
-                                                >
-                                                    Create Quest
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div className="flex flex-col xl:flex-row pr-2 pl-2 justify-center items-center w-[50%] max-md:w-full lg:w-[70%]">
+                                <div className="w-full flex-col flex justify-center items-center">
+
                                     <div className="xl:[60%] lg:w-[70%] w-[90%] grid grid-cols-1 gap-5 auto-rows-fr " >
 
                                         {tasks.map((task, index) => {
                                             return (
                                                 <div key={index} style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px" }}>
-                                                    <div className="w-full flex justify-between">
-                                                        <p className="text-black font-bold mb-[4px]">Tasks</p>
+                                                    <div className="w-full flex justify-between pb-2">
+                                                        <p className="text-indigo-400 font-inter mb-[4px]">Task {index + 1}</p>
                                                         <button
                                                             onClick={(e) => removeFields(e, index, tasks, setTasks)}
                                                             className={"text-base lg:text-lg font-bold rounded-full"}
@@ -145,7 +135,6 @@ const RegisterTaskPage = () => {
                                                     </div>
 
                                                     <div className="w-full" >
-                                                        <p className="text-indigo-400 font-inter mb-[4px]">Task {index + 1}</p>
                                                         <input
                                                             type="text"
                                                             name="description"
@@ -158,23 +147,29 @@ const RegisterTaskPage = () => {
                                                 </div>
                                             )
                                         })}
-                                    </div>
-                                    <div style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }} className="flex justify-center items-center">
-                                        <div className="w-full" >
-                                            <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center">
-                                                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
+                                        <div className=" w-full flex flex-col items-center justify-center xl:self-start gap-4">
+                                            <div className="flex flex-col pr-2 pl-2 gap-4 justify-center items-center w-80">
+                                                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-row text-center items-center">
                                                     <button
-                                                        onClick={(e) => addFields(e, tasks, setTasks)}
-                                                        type="button"
-                                                        className={"text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
+                                                        onClick={handleSubmit}
+                                                        className={"w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
                                                     >
-                                                        <PlusIcon className="h-10 w-10" />
+                                                        Submit
+                                                    </button>
+                                                    <button
+                                                        onClick={addFields}
+                                                        className={"w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
+                                                    >
+                                                        Add Task
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
+
                             </div>
                         </form>
                     </div>
