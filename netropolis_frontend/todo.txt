@@ -16,5 +16,22 @@ Create Schedule for an application -> with quest and application info on one sid
 Apply for a quest with quest info on one side and form on the other.
 Display Task and Create Quest on same page 
 User Login and Signup
+Add descriptions to quest (WADU)
+
+Get teams by user id(Done)
+Create Tasks by Community Manager
+Get tasks for a specific Community Manager -> by CM id
+Create Quest(Done)                                                                                         
+Get all quests using search
+Pagination from backend
+Explore quests
+Apply for a quest -> POST(Done) 
+Notify the CM -> maintain variable for that
+Get applications by user id(Done)
+Get applications by CM id
+Create Schedule -> POST(Done)
+
+
+
 
 

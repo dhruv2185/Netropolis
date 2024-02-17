@@ -55,6 +55,7 @@ const RegisterTaskPage = () => {
             })
             const toBeSent = {
                 tasks: tasks,
+                // created by : CMInfo.username
             }
             console.log(toBeSent);
             // const res = await fetch("http://localhost:8000/task", {

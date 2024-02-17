@@ -4,45 +4,19 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth.models import User
-from .serializers import QuestsSerializer
-from .models import Quest
+from .serializers import  ApplicationsSerializer
+from .models import Application
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
-from qdrant_client import QdrantClient
-from qdrant_client.http import models
-from sentence_transformers import SentenceTransformer
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
-
-class QuestRegistrationView(APIView):
-    # permission_classes = (IsAuthenticated,)
-    serializer_class = QuestsSerializer
-    encoder = SentenceTransformer("all-MiniLM-L6-v2")
-    qdrant = QdrantClient(
-        url=os.getenv("QDRANT_HOST"),
-        api_key=os.getenv("QDRANT_API_KEY"),
-    )
+class ApplicationsView(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ApplicationsSerializer
 
     def post(self, request, *args, **kwargs):
         serialzer = self.serializer_class(data=request.data)
-
         if serialzer.is_valid():
             serialzer.save()
-            newQuest = dict(serialzer.data)
-            try:
-                self.qdrant.upload_records(
-                    collection_name="quests",
-                    records=[
-                        models.Record(
-                            id=newQuest['id'], vector=self.encoder.encode(newQuest["description"][0]).tolist(), payload=newQuest
-                        )
-
-                    ],
-                )
-            except:
-                print("Error in uploading to qdrant")
             return Response(serialzer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -52,19 +26,19 @@ class QuestRegistrationView(APIView):
         if pk is not None:
             pk = get_user_model().objects.get(username=pk)
             try:
-                quest = Quest.objects.get(created_by=pk)
-                serializer = self.serializer_class(quest, many=False)
+                application = Application.objects.get(created_by=pk)
+                serializer = self.serializer_class(application, many=False)
             except MultipleObjectsReturned:
-                quests = Quest.objects.filter(created_by=pk)
-                serializer = self.serializer_class(quests, many=True)
+                applications = Application.objects.filter(created_by=pk)
+                serializer = self.serializer_class(applications, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
         pk = request.query_params.get('pk', None)
-        quests = Quest.objects.get(id=pk)
-        serializer = self.serializer_class(quests, data=request.data)
+        applications = Application.objects.get(id=pk)
+        serializer = self.serializer_class(applications, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -73,6 +47,6 @@ class QuestRegistrationView(APIView):
 
     def delete(self, request):
         pk = request.query_params.get('pk', None)
-        quests = Quest.objects.get(id=pk)
-        quests.delete()
+        applications = Application.objects.get(id=pk)
+        applications.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
