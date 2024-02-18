@@ -27,12 +27,12 @@ const TeamRegistrationPage = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     if (userInfo === null) {
-    //         console.log("redirecting to login");
-    //         navigate('/login')
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (userInfo === null) {
+            console.log("redirecting to login");
+            navigate('/login')
+        }
+    }, []);
 
     const tokens = useSelector((state) => state.auth.tokens);
     console.log("tokens", tokens);
@@ -50,8 +50,8 @@ const TeamRegistrationPage = () => {
         setTeamData({ ...teamData, [e.target.name]: e.target.value });
     };
 
-
     const handleSubmit = async (e) => {
+
         console.log("yeh chal gaya bc");
         e.preventDefault();
         try {
@@ -64,6 +64,7 @@ const TeamRegistrationPage = () => {
                 }
             }
             );
+            setLoading(true);
             const b = { ...teamData, teamInfo: inputFields, number_of_people: inputFields.length };
             console.log(b);
             const res = await fetch(`${VITE_BASE_BACKEND_URL}/teams/`, {
@@ -80,14 +81,13 @@ const TeamRegistrationPage = () => {
             const data = await res.json();
             console.log(data);
             toast.success("Team created successfully");
+            setLoading(false);
             navigate("/");
         }
         catch (err) {
             toast.error(err.message);
             return;
         }
-
-
     };
 
     const [inputFields, setInputFields] = useState([

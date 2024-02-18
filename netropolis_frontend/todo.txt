@@ -3,6 +3,8 @@ Display quests page - Notstarted -> Search function on same page -> remaining
 View Applications Page for both user and community Manager for CM with options to approve/Schedule/reject-> Not Started -> Give an option to Approve and Schedule OR Reject the application
 To add fee field in register quest page
 
+// Schedule main createdby dala
+
 2 FLows
 display quest -> search quest
 Request NotificationView Applications page for user along with Schedule and status

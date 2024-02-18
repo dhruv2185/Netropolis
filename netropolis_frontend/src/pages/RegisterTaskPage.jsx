@@ -26,12 +26,12 @@ const RegisterTaskPage = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     if (userInfo === null) {
-    //         console.log("redirecting to login");
-    //         navigate('/login')
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (userInfo === null) {
+            console.log("redirecting to login");
+            navigate('/login')
+        }
+    }, []);
 
     const tokens = useSelector((state) => state.auth.tokens);
     // console.log("tokens", tokens);

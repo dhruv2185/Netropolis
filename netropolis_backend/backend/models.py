@@ -70,6 +70,7 @@ class Application(models.Model):
     stay_end_date = models.DateField(null=True)
     special_note = models.TextField(null=True)
     desired_tasks = models.TextField(null=True)
+    teamId = models.ForeignKey(Quest, on_delete=models.CASCADE)
 
 
 class Schedule(models.Model):
@@ -79,6 +80,7 @@ class Schedule(models.Model):
     application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
     quest_id = models.ForeignKey(Quest, on_delete=models.CASCADE)
     day_to_day_schedule = models.TextField()
+    createdBy = models.ForeignKey(Community_Manager, on_delete=models.CASCADE)
 
 
 class TaskProblem(models.Model):

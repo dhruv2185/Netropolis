@@ -15,6 +15,10 @@ import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
 
+const fetchTasks = () => {
+
+}
+
 const RegisterQuest = () => {
     const [questData, setQuestData] = useState({
         quest_name: "",
@@ -106,12 +110,13 @@ const RegisterQuest = () => {
             task: "Complete Pokedex and start new game plus. Padhai Likhai karo IAS VAIS bano aur desh ko sambhalo"
         }
     ]
-    // useEffect(() => {
-    //     if (userInfo === null) {
-    //         console.log("redirecting to login");
-    //         navigate('/login')
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (userInfo === null) {
+            console.log("redirecting to login");
+            navigate('/login')
+        }
+        fetchTasks();
+    }, []);
 
     const tokens = useSelector((state) => state.auth.tokens);
     // console.log("tokens", tokens);

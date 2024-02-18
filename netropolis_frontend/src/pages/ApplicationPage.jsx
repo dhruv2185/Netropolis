@@ -13,13 +13,15 @@ import navigations from "../data/navigations.json";
 import Header from "../components/globals/Header";
 import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
-const ApplicationPage = () => {
 
-    // useEffect(() => {
-    //     if (userInfo) {
-    //         navigate("/");
-    //     }
-    // }, [navigate, userInfo]);
+const ApplicationPage = (props) => {
+    // route : /quests/questId
+    useEffect(() => {
+        if (userInfo) {
+            navigate("/");
+        }
+        fetchTeams();
+    }, [navigate, userInfo]);
 
     const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
 
@@ -29,7 +31,7 @@ const ApplicationPage = () => {
     const { userInfo, tokens } = useSelector((state) => state.auth);
 
     const [appInfo, setAppInfo] = useState({
-        userId: "",
+        userId: userInfo.id,
         questId: questId,
         from_date: "",
         to_date: "",
@@ -38,6 +40,7 @@ const ApplicationPage = () => {
         teamId: "",
         daily_time_span: ""
     });
+    //  quest data props se ayega
     const quest_data = {
         quest_name: "Pokemon Quest",
         region: "Kanto",
@@ -68,10 +71,6 @@ const ApplicationPage = () => {
             toast.error(err.message);
         }
     }
-
-    useEffect(() => {
-        // fetchTeams();
-    }, []);
 
 
     let teams = [
