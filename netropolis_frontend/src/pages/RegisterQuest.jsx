@@ -14,10 +14,9 @@ import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
+const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
-const fetchTasks = () => {
 
-}
 
 const RegisterQuest = () => {
     const [questData, setQuestData] = useState({
@@ -46,9 +45,36 @@ const RegisterQuest = () => {
         }
     ])
 
-    const userInfo = useSelector((state) => state.auth.userInfo);
+    const [tasks, setTasks] = useState([]);
+
+    const fetchTasks = () => {
+        try {
+            const res = fetch(`${baseUrl}/tasks`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": "Bearer " + tokens.access
+                },
+            });
+            if (!res.ok) {
+                setTasks(dummyTasks);
+                throw new Error('Something went wrong. Please try again later.')
+            }
+            else {
+                const data = res.json();
+                console.log(data);
+                setTasks(data);
+            }
+        }
+        catch (err) {
+            toast.error("Failed to fetch tasks. Please check your connection and try again later.");
+        }
+    }
+
+    const userInfo = useSelector((state) => state.auth);
     const navigate = useNavigate();
-    const tasks = [
+    let dummyTasks = [
         {
             task: "Choose your first Pokemon"
         },

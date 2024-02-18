@@ -40,30 +40,6 @@ const convertToEvent = (eventIfo, date) => {
     return toBeReturned;
 }
 
-const fetchQuestData = (questId) => {
-
-}
-
-const fetchTeamData = (teamId) => {
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const ScheduleQuestPage = (props) => {
     // route : baseUrl/applications/applicationId
@@ -72,14 +48,62 @@ const ScheduleQuestPage = (props) => {
             navigate("/");
         }
         fetchQuestData(questId)
+        fetchTeamData(teamId)
     }, [navigate, userInfo]);
 
-    const [appInfo, setAppInfo] = useState({})
+    const fetchQuestData = async (questId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/quest/${questId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${tokens.access}`
+                }
+            }
+            )
+            if (!response.ok) {
+                throw new Error('Failed to fetch quest data. Please try again later.');
+            }
+            const data = await response.json();
+            console.log(data);
+            setQuestData(data);
+        }
+        catch (err) {
+            toast.error(err.message);
+        }
+    }
+
+    const fetchTeamData = async (teamId) => {
+        try {
+            const response = await fetch(`${BASE_URL}/team/${teamId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${tokens.access}`
+                }
+            }
+            )
+            if (!response.ok) {
+                throw new Error('Failed to fetch team data. Please try again later.');
+            }
+            const data = await response.json();
+            setTeamData(data);
+            console.log(data);
+        }
+        catch (err) {
+            toast.error(err.message);
+        }
+    }
+
+    const [team_data, setTeamData] = useState(dummy_team_data)
+    const [quest_data, setQuestData] = useState(dummy_quest_data)
 
     const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
 
     const { applicationId } = useParams();
-    const { questId } = props;
+    const { questId, teamId } = props.appInfo;
     const navigate = useNavigate();
 
     const { userInfo, tokens } = useSelector((state) => state.auth);
@@ -106,13 +130,6 @@ const ScheduleQuestPage = (props) => {
             ]
         }
     ])
-
-    useEffect(() => {
-        // application id bhi
-        // Application Data from props
-        // Quest Data - fetchQuestData
-        // questId - miljayegi useParams se HOPEFULLY
-    }, []);
 
     // start date 
     // end date
@@ -177,7 +194,39 @@ const ScheduleQuestPage = (props) => {
         newDays[index].events[ind][e.target.name] = e.target.value;
         setDays(newDays);
     }
-    const quest_data = {
+    const dummy_team_data = {
+
+        team_name: "Team Rocket",
+        compostion: "Jessie, James, Meowth",
+        expectations_for_the_platform: "To blast off at the speed of light!",
+        concerns: "To protect the world from devastation!",
+        members: [
+            {
+                name: "Jessie",
+                age: 25,
+                gender: "Female",
+                place_of_residence: "Kanto",
+                occupation: "Pokemon Trainer",
+            }
+            ,
+            {
+                name: "James",
+                age: 25,
+                gender: "Male",
+                place_of_residence: "Kanto",
+                occupation: "Pokemon Trainer",
+            },
+            {
+                name: "Meowth",
+                age: 25,
+                gender: "Male",
+                place_of_residence: "Kanto",
+                occupation: "Pokemon",
+            }
+        ]
+
+    }
+    const dummy_quest_data = {
         quest_name: "Pokemon Quest",
         region: "Kanto",
         genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
@@ -342,7 +391,7 @@ const ScheduleQuestPage = (props) => {
                             <h3 className="font-bold text-xl text-indigo-400 font-inter "> Members</h3>
                             <div className="gap-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 m-3">
                                 {
-                                    quest_data.team.members.map((member, index) => (
+                                    team_data.map((member, index) => (
                                         <div key={index} className="flex flex-col gap-5 min-w-[300px]" style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }}>
                                             <div className="flex justify-between gap-16">
                                                 <div>

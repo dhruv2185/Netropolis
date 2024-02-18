@@ -26,6 +26,7 @@ const ApplicationPage = (props) => {
     const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
 
     const { questId } = useParams();
+    const { questData } = props;
     const navigate = useNavigate();
 
     const { userInfo, tokens } = useSelector((state) => state.auth);
@@ -33,8 +34,8 @@ const ApplicationPage = (props) => {
     const [appInfo, setAppInfo] = useState({
         userId: userInfo.id,
         questId: questId,
-        from_date: "",
-        to_date: "",
+        stay_start_date: "",
+        stay_end_date: "",
         special_note: "",
         desired_tasks: "",
         teamId: "",
@@ -105,41 +106,37 @@ const ApplicationPage = (props) => {
     // team id
 
     const handleSubmit = async (e) => {
-        // validation lagana hai
-        // validate from_date is less than to_date
-        // validate all fields are filled
         e.preventDefault();
-        // if from_date is less than today's date return
         const today = new Date();
-        if (appInfo.from_date > appInfo.to_date || new Date(appInfo.from_date) < today || new Date(appInfo.to_date) < today) {
+        if (appInfo.stay_start_date > appInfo.stay_end_date || new Date(appInfo.stay_start_date) < today || new Date(appInfo.stay_end_date) < today) {
             return toast.error("Oops! I guess you mixed up your dates. Please check again.");
         }
-        if (appInfo.from_date === "" || appInfo.to_date === "" || appInfo.special_note === "" || appInfo.desired_tasks === "" || appInfo.teamId === "" || appInfo.daily_time_span === "") {
+        if (appInfo.stay_start_date === "" || appInfo.stay_end_date === "" || appInfo.special_note === "" || appInfo.desired_tasks === "" || appInfo.teamId === "" || appInfo.daily_time_span === "") {
             return toast.error("All fields are required");
         }
         console.log(appInfo);
-        // appInfo.userId = userInfo.id;
-        // try {
-        //     const response = await fetch(`${BASE_URL}/applications`, {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             "Authorization": `Bearer ${tokens.access}`
-        //         },
-        //         body: JSON.stringify(appInfo)
-        //     });
-        //     const data = await response.json();
-        //     console.log(data);
-        //     if (response.ok) {
-        //         toast.success("Application submitted successfully");
-        //         navigate("/");
-        //     } else {
-        //         throw new Error(data.message);
-        //     }
-        // }
-        // catch (err) {
-        //     toast.error(err.message);
-        // }
+        appInfo.userId = userInfo.id;
+        try {
+            const response = await fetch(`${BASE_URL}/applications`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${tokens.access}`
+                },
+                body: JSON.stringify(appInfo)
+            });
+            const data = await response.json();
+            console.log(data);
+            if (response.ok) {
+                toast.success("Application submitted successfully");
+                navigate("/");
+            } else {
+                throw new Error(data.message);
+            }
+        }
+        catch (err) {
+            toast.error(err.message);
+        }
     };
 
     return (
@@ -190,8 +187,8 @@ const ApplicationPage = (props) => {
                                                 <p className=" text-indigo-400 font-inter mb-[4px]">From</p>
                                                 <input
                                                     type="date"
-                                                    name="from_date"
-                                                    value={appInfo.from_date}
+                                                    name="stay_start_date"
+                                                    value={appInfo.stay_start_date}
                                                     onChange={handleInputChange}
                                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                 />
@@ -200,8 +197,8 @@ const ApplicationPage = (props) => {
                                                 <p className=" text-indigo-400 font-inter mb-[4px]">To</p>
                                                 <input
                                                     type="date"
-                                                    name="to_date"
-                                                    value={appInfo.to_date}
+                                                    name="stay_end_date"
+                                                    value={appInfo.stay_end_date}
                                                     onChange={handleInputChange}
                                                     className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                 />
