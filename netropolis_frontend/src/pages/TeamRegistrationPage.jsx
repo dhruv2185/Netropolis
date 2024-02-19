@@ -30,6 +30,7 @@ const TeamRegistrationPage = () => {
     useEffect(() => {
         if (userInfo === null) {
             console.log("redirecting to login");
+            toast.error("Please login to create a team.")
             navigate('/login')
         }
     }, []);
@@ -82,6 +83,7 @@ const TeamRegistrationPage = () => {
             console.log(data);
             toast.success("Team created successfully");
             setLoading(false);
+            // yahape view teams wale pe redirect karna hai
             navigate("/");
         }
         catch (err) {

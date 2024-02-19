@@ -61,7 +61,7 @@ class Quest(models.Model):
 
 class Application(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(Team, on_delete=models.CASCADE, default=7)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=7)
     quest_id = models.ForeignKey(Quest, on_delete=models.CASCADE)
     status = models.CharField(max_length=30)
     application_date = models.DateTimeField(auto_now=True)
@@ -70,7 +70,7 @@ class Application(models.Model):
     stay_end_date = models.DateField(null=True)
     special_note = models.TextField(null=True)
     desired_tasks = models.TextField(null=True)
-    teamId = models.ForeignKey(Quest, on_delete=models.CASCADE)
+    teamId = models.ForeignKey(Team, on_delete=models.CASCADE)
 
 
 class Schedule(models.Model):

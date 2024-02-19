@@ -45,10 +45,13 @@ const ScheduleQuestPage = (props) => {
     // route : baseUrl/applications/applicationId
     useEffect(() => {
         if (userInfo) {
+            toast.error("Please login to continue.")
             navigate("/");
         }
-        fetchQuestData(questId)
-        fetchTeamData(teamId)
+        else {
+            fetchQuestData(questId)
+            fetchTeamData(teamId)
+        }
     }, [navigate, userInfo]);
 
     const fetchQuestData = async (questId) => {

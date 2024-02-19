@@ -35,16 +35,6 @@ const Login = () => {
     }
   }, [navigate, userInfo]);
 
-  // Login with Google
-  const login = useGoogleLogin({
-    onSuccess: success,
-    onError: (error) => {
-      console.log('Login Failed:', error)
-      toast.error("Login Failed");
-    },
-    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events',
-  });
-
   const success = async (codeResponse) => {
     try {
       const newTokens = {
@@ -89,6 +79,16 @@ const Login = () => {
       toast.error(err?.data?.message || err.error?.message);
     }
   }
+
+  // Login with Google
+  const login = useGoogleLogin({
+    onSuccess: success,
+    onError: (error) => {
+      console.log('Login Failed:', error)
+      toast.error("Login Failed");
+    },
+    scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events',
+  });
 
   const submitHandler = async (e) => {
     e.preventDefault();

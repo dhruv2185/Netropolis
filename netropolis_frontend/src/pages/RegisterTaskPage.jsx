@@ -29,7 +29,8 @@ const RegisterTaskPage = () => {
     useEffect(() => {
         if (userInfo === null) {
             console.log("redirecting to login");
-            navigate('/login')
+            toast.error("Please login to continue.")
+            navigate('/')
         }
     }, []);
 

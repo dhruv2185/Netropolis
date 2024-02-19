@@ -18,9 +18,11 @@ const ApplicationPage = (props) => {
     // route : /quests/questId
     useEffect(() => {
         if (userInfo) {
+            toast.error("Please login to continue.")
             navigate("/");
         }
-        fetchTeams();
+        else
+            fetchTeams();
     }, [navigate, userInfo]);
 
     const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
@@ -28,6 +30,7 @@ const ApplicationPage = (props) => {
     const { questId } = useParams();
     const { questData } = props;
     const navigate = useNavigate();
+    const [teams, setTeams] = useState(dummyTeams);
 
     const { userInfo, tokens } = useSelector((state) => state.auth);
 
@@ -59,11 +62,10 @@ const ApplicationPage = (props) => {
                     "Authorization": `Bearer ${tokens.access}`
                 }
             });
-            const data = await response.json();
-            console.log(data);
-            teams = data;
             if (response.ok) {
-                return data;
+                const data = await response.json();
+                console.log(data);
+                setTeams(data);
             } else {
                 throw new Error(data.message);
             }
@@ -74,7 +76,7 @@ const ApplicationPage = (props) => {
     }
 
 
-    let teams = [
+    let dummyTeams = [
         {
             id: 1,
             team_name: "Team 1"

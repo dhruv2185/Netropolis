@@ -7,7 +7,7 @@ const App = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   useEffect(() => {
-    if (userInfo) {
+    if (userInfo === null) {
       navigate("/");
     }
   }, [navigate, userInfo]);

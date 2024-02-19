@@ -139,9 +139,11 @@ const RegisterQuest = () => {
     useEffect(() => {
         if (userInfo === null) {
             console.log("redirecting to login");
-            navigate('/login')
+            toast.error("Please login to continue.")
+            navigate('/')
         }
-        fetchTasks();
+        else
+            fetchTasks();
     }, []);
 
     const tokens = useSelector((state) => state.auth.tokens);

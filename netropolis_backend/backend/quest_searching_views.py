@@ -20,11 +20,11 @@ class QuestSearchingView(APIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = QuestsSerializer
     serializer_class2 = CommunityManagersSerializer
-    encoder = SentenceTransformer("all-MiniLM-L6-v2")
-    qdrant = QdrantClient(
-        url=os.getenv("QDRANT_HOST"),
-        api_key=os.getenv("QDRANT_API_KEY"),
-    )
+    # encoder = SentenceTransformer("all-MiniLM-L6-v2")
+    # qdrant = QdrantClient(
+    #     url=os.getenv("QDRANT_HOST"),
+    #     api_key=os.getenv("QDRANT_API_KEY"),
+    # )
 
     def get(self, request, format=None):
         query = request.query_params.get('query', None)
@@ -33,17 +33,17 @@ class QuestSearchingView(APIView):
             # code to get all quests
             # quests = Quest.objects.all()
             # sqldb_results = list(quests.values())
-            search = self.qdrant.search(
-                collection_name="quests",
-                query_vector=self.encoder.encode(query).tolist(),
-                limit=6,)
-            vectordb_results = [hit.payload for hit in search]
+            # search = self.qdrant.search(
+            #     collection_name="quests",
+            #     query_vector=self.encoder.encode(query).tolist(),
+            #     limit=6,)
+            # vectordb_results = [hit.payload for hit in search]
             # final_results = [x for x in vectordb_results if x in sqldb_results]
             # pk = Community_Manager.objects.get(first_name=pk)
             # print(pk.id)
             # quests = Quest.objects.filter(created_by=pk)
             # questslist = list(quests.values())
-            print(vectordb_results)
+            # print(vectordb_results)
 
         #     try:
         #         quest = Quest.objects.get(created_by=pk)
