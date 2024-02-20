@@ -53,7 +53,7 @@ const ViewTeams = () => {
                 name: "Alice Johnson",
                 age: 35,
                 gender: "Female",
-                occupation: "Marketing Specialist",
+                occupation: "Marketing Specialistddddd dfvdvfr dvgfvfdvd",
                 residence: "Los Angeles",
               },
               {
@@ -157,10 +157,10 @@ const ViewTeams = () => {
                             <p className="mb-2">You can view all the teams here
                                </p>
                         </div>
-                        <div >
+                        
                         {<AppError />}
                         <TeamArticle teams={teams} />
-                        </div>
+                        
                     </div>
                 </div>
             </div>
