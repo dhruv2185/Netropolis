@@ -16,8 +16,6 @@ import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
-
-
 const RegisterQuest = () => {
     const [questData, setQuestData] = useState({
         quest_name: "",
@@ -27,6 +25,7 @@ const RegisterQuest = () => {
         rewards: "",
         other_information: "",
         available_till: "",
+        // created_by: CMInfo.user_id
     });
     const [naturalActivities, setNaturalActivities] = useState([
         {
@@ -212,7 +211,7 @@ const RegisterQuest = () => {
             labour_shortage_activities: labourShortageActivities
         }
         try {
-            const res = await fetch("http://localhost:8000/quest", {
+            const res = await fetch("http://localhost:8000/quests/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -222,6 +221,9 @@ const RegisterQuest = () => {
             }
             )
             if (!res.ok) {
+                console.log(res);
+                const d = await res.json();
+                console.log(d);
                 throw Error("Error in creating quest. Please Try Again");
             }
             const data = await res.json();

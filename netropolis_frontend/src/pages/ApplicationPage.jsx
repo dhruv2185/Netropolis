@@ -16,8 +16,10 @@ import Footer from "../components/globals/Footer";
 
 const ApplicationPage = (props) => {
     // route : /quests/questId
+    const navigate = useNavigate();
+    const { userInfo, tokens } = useSelector((state) => state.auth);
     useEffect(() => {
-        if (userInfo) {
+        if (userInfo === null) {
             toast.error("Please login to continue.")
             navigate("/");
         }
@@ -28,11 +30,30 @@ const ApplicationPage = (props) => {
     const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
 
     const { questId } = useParams();
-    const { questData } = props;
-    const navigate = useNavigate();
+    // const { questData } = props;
+
+    let dummyTeams = [
+        {
+            id: 1,
+            team_name: "Team 1"
+        },
+        {
+            id: 2,
+            team_name: "Team 2"
+        },
+        {
+            id: 3,
+            team_name: "Team 3"
+        },
+        {
+            id: 4,
+            team_name: "Team 4"
+        }
+    ]
+
     const [teams, setTeams] = useState(dummyTeams);
 
-    const { userInfo, tokens } = useSelector((state) => state.auth);
+
 
     const [appInfo, setAppInfo] = useState({
         userId: userInfo.id,
@@ -53,9 +74,10 @@ const ApplicationPage = (props) => {
         other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
         available_till: Date.now(),
     }
+    const listt = [1];
     const fetchTeams = async () => {
         try {
-            const response = await fetch(`${BASE_URL}/teams`, {
+            const response = await fetch(`${BASE_URL}/teams/?pk=${userInfo.user_profile.username}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -64,8 +86,12 @@ const ApplicationPage = (props) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
-                setTeams(data);
+                if (Array.isArray(data)) {
+                    setTeams(data);
+                }
+                else {
+                    setTeams([data]);
+                }
             } else {
                 throw new Error(data.message);
             }
@@ -74,26 +100,6 @@ const ApplicationPage = (props) => {
             toast.error(err.message);
         }
     }
-
-
-    let dummyTeams = [
-        {
-            id: 1,
-            team_name: "Team 1"
-        },
-        {
-            id: 2,
-            team_name: "Team 2"
-        },
-        {
-            id: 3,
-            team_name: "Team 3"
-        },
-        {
-            id: 4,
-            team_name: "Team 4"
-        }
-    ]
 
     const handleInputChange = (e) => {
         setAppInfo({ ...appInfo, [e.target.name]: e.target.value });
