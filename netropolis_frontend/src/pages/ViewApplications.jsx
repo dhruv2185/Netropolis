@@ -15,7 +15,7 @@ import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
 
-const RegisterTaskPage = () => {
+const ViewApplications = () => {
     const [tasks, setTasks] = useState([
         {
             description: "",
@@ -182,4 +182,4 @@ const RegisterTaskPage = () => {
     );
 };
 
-export default RegisterTaskPage;
+export default ViewApplications;

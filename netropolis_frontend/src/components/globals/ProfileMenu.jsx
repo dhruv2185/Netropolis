@@ -19,7 +19,7 @@ import {
   } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { clearCredentials } from "../../features/slices/authSlice";
+import { clearCredentials, clearTokens } from "../../features/slices/authSlice";
 const profileMenuItems = [
     {
       label: "My Profile",
@@ -29,12 +29,12 @@ const profileMenuItems = [
     {
       label: "Teams",
       icon: UserGroupIcon,
-      link:"/teams",
+      link:"/viewteams",
     },
     {
       label: "Applications",
       icon: NewspaperIcon,
-      link:"/applications",
+      link:"/viewapplications",
     },
     {
       label: "Sign Out",
@@ -47,6 +47,7 @@ const ProfileMenu=()=> {
 
   const handleLogout = () => {
     dispatch(clearCredentials());
+    dispatch(clearTokens());
     // Perform any additional logout operations you need here
   };
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);

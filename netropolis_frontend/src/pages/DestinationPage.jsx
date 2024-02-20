@@ -4,6 +4,7 @@ import Article from "../components/globals/Article.jsx";
 import Header from "../components/globals/Header.jsx";
 import navigations from "../data/navigations.json";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const DestinationPage = ({ destinations, destinationCategories }) => {
@@ -13,7 +14,7 @@ const DestinationPage = ({ destinations, destinationCategories }) => {
   const tokens = JSON.parse(localStorage.getItem("tokens"));
   // const {userInfo, tokens} = useSelector((state) => state.auth);
 
-  fetchQuests = async () => {
+  const fetchQuests = async () => {
     try {
       const res = await fetch(`${baseUrl}/quests`, {
         method: "GET",

@@ -1,4 +1,5 @@
 
+const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 // Login with username and password
 export const loginRequest = async (userData) => {
     const res = await fetch(`${baseUrl}/login/`, {
