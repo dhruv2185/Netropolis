@@ -17,7 +17,7 @@ class Team(models.Model):
     # place_of_birth = models.TextField()
     # place_of_residence = models.TextField()
     # occupation = models.TextField()
-    team_info = models.TextField()
+    team_info = models.JSONField,()
     composition = models.TextField()
     expectations_for_the_platform = models.TextField()
     concerns = models.TextField()
@@ -27,18 +27,9 @@ class Team(models.Model):
 
 
 class Community_Manager(models.Model):
-    id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50, unique=True)
-    password = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def save(self, *args, **kwargs):
-        self.password = make_password(self.password)
-        super(Community_Manager, self).save(*args, **kwargs)
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    region = models.TextField()
+    
     def __str__(self):
         return self.first_name
 

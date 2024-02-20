@@ -19,7 +19,7 @@ load_dotenv()
 class QuestRegistrationView(APIView):
     # permission_classes = (IsAuthenticated,)
     serializer_class = QuestsSerializer
-    encoder = SentenceTransformer("all-MiniLM-L6-v2")
+    # encoder = SentenceTransformer("all-MiniLM-L6-v2")
     qdrant = QdrantClient(
         url=os.getenv("QDRANT_HOST"),
         api_key=os.getenv("QDRANT_API_KEY"),
