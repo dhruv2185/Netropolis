@@ -38,7 +38,7 @@ class FetchUser(APIView):
         print(user.id)
         serializer = self.serializer_class(user)
         return Response(
-            { "user_profile": serializer.data, 
+            {"user_profile": serializer.data,
              "user_id": str(user.id)}, status=status.HTTP_201_CREATED)
 
     def put(self, request, *args, **kwargs):
@@ -78,6 +78,8 @@ class TeamProfile(APIView):
             except MultipleObjectsReturned:
                 teams = Team.objects.filter(created_by=pk)
                 serializer = self.serializer_class(teams, many=True)
+            except Team.DoesNotExist:
+                return Response([], status=status.HTTP_200_OK)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

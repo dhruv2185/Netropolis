@@ -16,20 +16,31 @@ import Footer from "../components/globals/Footer";
 
 const ApplicationPage = (props) => {
     // route : /quests/questId
-    useEffect(() => {
-        if (userInfo) {
-            toast.error("Please login to continue.")
-            navigate("/");
+    const navigate = useNavigate();
+    
+    let dummyTeams = [
+        {
+            id: 1,
+            team_name: "Team 1"
+        },
+        {
+            id: 2,
+            team_name: "Team 2"
+        },
+        {
+            id: 3,
+            team_name: "Team 3"
+        },
+        {
+            id: 4,
+            team_name: "Team 4"
         }
-        else
-            fetchTeams();
-    }, [navigate, userInfo]);
-
+    ]
     const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
 
     const { questId } = useParams();
     const { questData } = props;
-    const navigate = useNavigate();
+    
     const [teams, setTeams] = useState(dummyTeams);
 
     const { userInfo, tokens } = useSelector((state) => state.auth);
@@ -53,6 +64,14 @@ const ApplicationPage = (props) => {
         other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
         available_till: Date.now(),
     }
+    useEffect(() => {
+        if (userInfo) {
+            toast.error("Please login to continue.")
+            navigate("/");
+        }
+        else
+            fetchTeams();
+    }, [navigate, userInfo]);
     const fetchTeams = async () => {
         try {
             const response = await fetch(`${BASE_URL}/teams`, {
@@ -76,24 +95,7 @@ const ApplicationPage = (props) => {
     }
 
 
-    let dummyTeams = [
-        {
-            id: 1,
-            team_name: "Team 1"
-        },
-        {
-            id: 2,
-            team_name: "Team 2"
-        },
-        {
-            id: 3,
-            team_name: "Team 3"
-        },
-        {
-            id: 4,
-            team_name: "Team 4"
-        }
-    ]
+   
 
     const handleInputChange = (e) => {
         setAppInfo({ ...appInfo, [e.target.name]: e.target.value });
