@@ -5,6 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from six import text_type
 from .models import Team, Community_Manager, Quest, Schedule, Application, TaskProblem
+from django.core.exceptions import ValidationError
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -50,6 +51,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class CommunityManagerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Community_Manager
+        fields = ['region']
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        community_manager = Community_Manager.objects.create(user=user, **validated_data)
+        return community_manager
+        
 
 class TeamsSerializer(serializers.ModelSerializer):
     class Meta:

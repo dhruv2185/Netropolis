@@ -10,7 +10,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Team
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
-
+from rest_framework.decorators import api_view, permission_classes
 
 class RegisterView(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -69,7 +69,7 @@ class TeamProfile(APIView):
             return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, format=None):
-        pk = request.query_params.get('pk', None)
+        pk = request.user
         if pk is not None:
             pk = get_user_model().objects.get(username=pk)
             try:
@@ -99,3 +99,34 @@ class TeamProfile(APIView):
         teams = Team.objects.get(id=pk)
         teams.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_by_id(request):
+        pk = request.query_params.get('pk', None)
+        if pk is not None:
+            try:
+                team = Team.objects.get(id=pk)
+                serializer = TeamsSerializer(team, many=False)
+            except MultipleObjectsReturned:
+                teams = Team.objects.filter(id=pk)
+                serializer = TeamsSerializer(teams, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def get_by_community_manager(request):
+#         pk = request.query_params.get('communtiy_manager')
+#         if pk is not None:
+#             try:
+#                 team = Team.objects.get(id=pk)
+#                 serializer = TeamsSerializer(team, many=False)
+#             except MultipleObjectsReturned:
+#                 teams = Team.objects.filter(id=pk)
+#                 serializer = TeamsSerializer(teams, many=True)
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         else:
+#             return Response(status=status.HTTP_400_BAD_REQUEST)
