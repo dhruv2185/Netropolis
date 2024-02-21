@@ -43,6 +43,87 @@ const convertToEvent = (eventIfo, date) => {
 
 const ScheduleQuestPage = (props) => {
     // route : baseUrl/applications/applicationId
+    const navigate = useNavigate();
+    const { userInfo, tokens } = useSelector((state) => state.auth);
+    const dummy_team_data = {
+
+        team_name: "Team Rocket",
+        compostion: "Jessie, James, Meowth",
+        expectations_for_the_platform: "To blast off at the speed of light!",
+        concerns: "To protect the world from devastation!",
+        members: [
+            {
+                name: "Jessie",
+                age: 25,
+                gender: "Female",
+                place_of_residence: "Kanto",
+                occupation: "Pokemon Trainer",
+            }
+            ,
+            {
+                name: "James",
+                age: 25,
+                gender: "Male",
+                place_of_residence: "Kanto",
+                occupation: "Pokemon Trainer",
+            },
+            {
+                name: "Meowth",
+                age: 25,
+                gender: "Male",
+                place_of_residence: "Kanto",
+                occupation: "Pokemon",
+            }
+        ]
+
+    }
+    const dummy_quest_data = {
+        quest_name: "Pokemon Quest",
+        region: "Kanto",
+        genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
+        rewards: "$8000",
+        other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
+        available_till: Date.now(),
+        duration: {
+            start_date: Date.now(),
+            end_date: Date.now()
+        }
+        ,
+        special_notes: "This is a special note for the quest",
+        desired_tasks: "Catch them all!",
+        daily_time_span: "10:00 AM - 6:00 PM",
+        team: {
+            team_name: "Team Rocket",
+            compostion: "Jessie, James, Meowth",
+            expectations_for_the_platform: "To blast off at the speed of light!",
+            concerns: "To protect the world from devastation!",
+            members: [
+                {
+                    name: "Jessie",
+                    age: 25,
+                    gender: "Female",
+                    place_of_residence: "Kanto",
+                    occupation: "Pokemon Trainer",
+                }
+                ,
+                {
+                    name: "James",
+                    age: 25,
+                    gender: "Male",
+                    place_of_residence: "Kanto",
+                    occupation: "Pokemon Trainer",
+                },
+                {
+                    name: "Meowth",
+                    age: 25,
+                    gender: "Male",
+                    place_of_residence: "Kanto",
+                    occupation: "Pokemon",
+                }
+            ]
+        }
+    }
+    
     useEffect(() => {
         if (userInfo) {
             toast.error("Please login to continue.")
@@ -107,9 +188,9 @@ const ScheduleQuestPage = (props) => {
 
     const { applicationId } = useParams();
     const { questId, teamId } = props.appInfo;
-    const navigate = useNavigate();
+    
 
-    const { userInfo, tokens } = useSelector((state) => state.auth);
+    
 
     const [schedule, setSchedule] = useState({
         createdBy: CMInfo.id,
@@ -197,84 +278,7 @@ const ScheduleQuestPage = (props) => {
         newDays[index].events[ind][e.target.name] = e.target.value;
         setDays(newDays);
     }
-    const dummy_team_data = {
-
-        team_name: "Team Rocket",
-        compostion: "Jessie, James, Meowth",
-        expectations_for_the_platform: "To blast off at the speed of light!",
-        concerns: "To protect the world from devastation!",
-        members: [
-            {
-                name: "Jessie",
-                age: 25,
-                gender: "Female",
-                place_of_residence: "Kanto",
-                occupation: "Pokemon Trainer",
-            }
-            ,
-            {
-                name: "James",
-                age: 25,
-                gender: "Male",
-                place_of_residence: "Kanto",
-                occupation: "Pokemon Trainer",
-            },
-            {
-                name: "Meowth",
-                age: 25,
-                gender: "Male",
-                place_of_residence: "Kanto",
-                occupation: "Pokemon",
-            }
-        ]
-
-    }
-    const dummy_quest_data = {
-        quest_name: "Pokemon Quest",
-        region: "Kanto",
-        genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-        rewards: "$8000",
-        other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-        available_till: Date.now(),
-        duration: {
-            start_date: Date.now(),
-            end_date: Date.now()
-        }
-        ,
-        special_notes: "This is a special note for the quest",
-        desired_tasks: "Catch them all!",
-        daily_time_span: "10:00 AM - 6:00 PM",
-        team: {
-            team_name: "Team Rocket",
-            compostion: "Jessie, James, Meowth",
-            expectations_for_the_platform: "To blast off at the speed of light!",
-            concerns: "To protect the world from devastation!",
-            members: [
-                {
-                    name: "Jessie",
-                    age: 25,
-                    gender: "Female",
-                    place_of_residence: "Kanto",
-                    occupation: "Pokemon Trainer",
-                }
-                ,
-                {
-                    name: "James",
-                    age: 25,
-                    gender: "Male",
-                    place_of_residence: "Kanto",
-                    occupation: "Pokemon Trainer",
-                },
-                {
-                    name: "Meowth",
-                    age: 25,
-                    gender: "Male",
-                    place_of_residence: "Kanto",
-                    occupation: "Pokemon",
-                }
-            ]
-        }
-    }
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const bodyToBeSent = {

@@ -83,64 +83,26 @@ const ViewTeams = () => {
     // console.log("tokens", tokens);
 
     // Handle Input Change
-    const handleDynamicActivityInputChange = (e, index, activities, setActivities) => {
-        const values = [...activities];
-        values[index][e.target.name] = e.target.value;
-        setActivities(values);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // validation
-        try {
-            tasks.forEach((task) => {
-                if (task.description === "") {
-                    throw Error("Please fill in all the fields.");
-                }
-                task.createdBy = userInfo.id;
-            })
-            const toBeSent = {
-                tasks: tasks,
-                // created by : CMInfo.username
-            }
-            console.log(toBeSent);
-            // const res = await fetch("http://localhost:8000/task", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Authorization": "Bearer " + tokens.access
-            //     },
-            //     body: JSON.stringify(toBeSent)
-            // }
-            // )
-            // if (!res.ok) {
-            //     throw Error("Error in creating tasks. Please Try Again");
-            // }
-            // const data = await res.json();
-            // console.log(data);
-        }
-        catch (err) {
-            toast.error(err.message);
-            console.log(err);
-        }
-
-    };
-
-    const addFields = (e, activities, setActivities) => {
-        e.preventDefault();
-        setActivities([...activities, { description: "" }]);
-    }
-    const removeFields = (e, index, activities, setActivities) => {
-        e.preventDefault();
-        console.log("remove karne ki koshish");
-        if (activities.length === 1) {
-            toast.error("You cannot remove the only member of the team.");
-            return;
-        }
-        const values = [...activities];
-        values.splice(index, 1);
-        setActivities(values);
-    }
+    // const handleDynamicActivityInputChange = (e, index, activities, setActivities) => {
+    //     const values = [...activities];
+    //     values[index][e.target.name] = e.target.value;
+    //     setActivities(values);
+    // }
+    // const addFields = (e, activities, setActivities) => {
+    //     e.preventDefault();
+    //     setActivities([...activities, { description: "" }]);
+    // }
+    // const removeFields = (e, index, activities, setActivities) => {
+    //     e.preventDefault();
+    //     console.log("remove karne ki koshish");
+    //     if (activities.length === 1) {
+    //         toast.error("You cannot remove the only member of the team.");
+    //         return;
+    //     }
+    //     const values = [...activities];
+    //     values.splice(index, 1);
+    //     setActivities(values);
+    // }
 
     return (
         <><Header navigations={navigations} />

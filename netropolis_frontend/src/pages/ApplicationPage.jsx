@@ -65,7 +65,7 @@ const ApplicationPage = (props) => {
         available_till: Date.now(),
     }
     useEffect(() => {
-        if (userInfo) {
+        if (!userInfo) {
             toast.error("Please login to continue.")
             navigate("/");
         }

@@ -14,7 +14,7 @@ import {
           <Button text="Create Team" path={"/team-registration"}/> 
           <div className="lg:w-2/3 w-full lg:border-r flex justify-start items-center lg:items-start px-8 flex-col">
             {teams.map((team, idx) => (
-              <TeamCard key={idx} team={team} />
+              <TeamCard key={idx} team={team} index={idx} />
             ))}
           </div>
         </div>
@@ -23,7 +23,7 @@ import {
   };
   
   
-  const TeamCard = ({ team }) => {
+  const TeamCard = ({ team,index }) => {
     const removeFields = (e, index) => {
       e.preventDefault();
       //yaha fetch likhna hai tema remove karne ke liye
@@ -31,8 +31,13 @@ import {
     }
     return (
       <article className="w-full flex flex-col justify-center items-center border-b py-8">
-        <header className="w-full gap-2 flex justify-start items-center">
-          <h1 className="text-lg lg:text-xl font-bold mt-2 text-indigo-400 py-5">{team.team_name}</h1>
+        <header className="w-full gap-2 flex justify-between items-center">
+          <h1 className="text-lg lg:text-xl font-bold mt-2 text-indigo-400 py-5">{team.team_name}</h1><button
+                                                        onClick={(e) => removeFields(e, index)}
+                                                        className={"text-base lg:text-lg font-bold rounded-full"}
+                                                    >
+                                                        <MinusCircleIcon className="h-7 w-7 text-red-500 " />
+                                                    </button>
         </header>
         <main className="flex w-full gap-3 lg:gap-5 justify-stretch items-center">
           <div className="flex-1 h-full gap-1 flex flex-col justify-start items-center">
@@ -52,12 +57,7 @@ import {
             grid-cols-3 max-lg:grid-cols-2">
               {team.members.map((member, idx) => (<div style={{ border: "1px solid #A6A6A6", borderRadius: "8px" }} className="p-4">
                 <div className="w-full flex justify-between">
-                <h2 className="text-md font-bold mt-1 text-indigo-400 py-1">Member {idx+1}</h2><button
-                                                        onClick={(e) => removeFields(e, idx)}
-                                                        className={"text-base lg:text-lg font-bold rounded-full"}
-                                                    >
-                                                        <MinusCircleIcon className="h-7 w-7 text-red-500 " />
-                                                    </button></div>
+                <h2 className="text-md font-bold mt-1 text-indigo-400 py-1">Member {idx+1}</h2></div>
                 <li key={idx}>
                   <strong>Name:</strong> {member.name}<br/> <strong>Age:</strong> {member.age}, <strong>Gender:</strong> {member.gender} <br/><strong>Occupation:</strong> {member.occupation}<br/> <strong>Place of Residence:</strong> {member.residence}
                 </li></div>
