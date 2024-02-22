@@ -28,7 +28,7 @@ import activities from "./data/activities.json";
 import activityCategories from "./data/activitycategories.json";
 import destinationCategories from "./data/destinationcategories.json";
 import ViewTeams from "./pages/ViewTeams.jsx";
-import ViewApplications from "./pages/ViewApplications.jsx";
+import ViewUserApplications from "./pages/ViewUserApplications.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -44,7 +44,7 @@ const router = createBrowserRouter(
       <Route path="/schedulequest" element={<ScheduleQuestPage />} />
       <Route path="/registertask" element={<RegisterTaskPage />} />
       <Route path="/viewteams" element={<ViewTeams />} />
-      <Route path="/viewapplications" element={<ViewApplications />} />
+      <Route path="/viewapplications" element={<ViewUserApplications />} />
 
     </Route>
   )

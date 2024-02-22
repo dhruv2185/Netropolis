@@ -87,17 +87,16 @@ const TeamCard = ({ team }) => {
           </p>
           <ul className="w-full text-neutral-600 text-sm lg:text-base leading-5 grid gap-2
             grid-cols-3 max-lg:grid-cols-2">
-            {team.team_info.map((member, idx) => (<div style={{ border: "1px solid #A6A6A6", borderRadius: "8px" }} className="p-4">
+            {team.members.map((member, idx) => (<div style={{ border: "1px solid #A6A6A6", borderRadius: "8px" }} className="p-4">
               <div className="w-full flex justify-between">
-                <h2 className="text-md font-bold mt-1 text-indigo-400 py-1">Member {idx + 1}</h2>
-                <button
+                <h2 className="text-md font-bold mt-1 text-indigo-400 py-1">Member {idx + 1}</h2><button
                   onClick={(e) => removeFields(e, idx)}
                   className={"text-base lg:text-lg font-bold rounded-full"}
                 >
                   <MinusCircleIcon className="h-7 w-7 text-red-500 " />
                 </button></div>
               <li key={idx}>
-                <strong>Name:</strong> {member.name}<br /> <strong>Age:</strong> {member.age}, <strong>Gender:</strong> {member.gender} <br /><strong>Occupation:</strong> {member.occupation}<br /> <strong>Place of Residence:</strong> {member.place_of_residence}
+                <strong>Name:</strong> {member.name}<br /> <strong>Age:</strong> {member.age}, <strong>Gender:</strong> {member.gender} <br /><strong>Occupation:</strong> {member.occupation}<br /> <strong>Place of Residence:</strong> {member.residence}
               </li></div>
             ))}
           </ul>
