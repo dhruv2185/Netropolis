@@ -25,7 +25,6 @@ const TeamArticle = ({ teams }) => {
       <div className="w-full flex flex-col gap-16 lg:gap-0  items-center max-w-8xl">
         {/* Teams */}
         {/* Articles */}
-        <Button text="Create Team" path={"/team-registration"} />
         {teams && <div className="lg:w-2/3 w-full lg:border-r flex justify-start items-center lg:items-start px-8 flex-col">
           {teams.map((team, idx) => (
             <TeamCard key={idx} team={team} />
@@ -88,6 +87,7 @@ const TeamCard = ({ team }) => {
           <ul className="w-full text-neutral-600 text-sm lg:text-base leading-5 grid gap-2
             grid-cols-3 max-lg:grid-cols-2">
             {team.team_info.map((member, idx) => (<div style={{ border: "1px solid #A6A6A6", borderRadius: "8px" }} className="p-4">
+              {/* Yaha MinusCircleIcon wala hatake ek team ke liye bass ek rakhna hai */}
               <div className="w-full flex justify-between">
                 <h2 className="text-md font-bold mt-1 text-indigo-400 py-1">Member {idx + 1}</h2><button
                   onClick={(e) => removeFields(e, idx)}
