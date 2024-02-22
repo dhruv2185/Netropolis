@@ -14,9 +14,9 @@ import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
-import UserApplicationList from "../components/globals/UserApplicationList";
+import CMApplicationList from "../components/globals/CMApplicationList";
 
-const ViewUserApplications = () => {
+const ViewCMApplications = () => {
     const [applications, setApplications] = useState([
         {
             quest_name: "Pokemon Quest",
@@ -173,7 +173,7 @@ const ViewUserApplications = () => {
 
                         {<AppError />}
 
-                        <UserApplicationList applications={applications}/>
+                        <CMApplicationList applications={applications}/>
                     </div>
                 </div>
             </div>
@@ -182,4 +182,4 @@ const ViewUserApplications = () => {
     );
 };
 
-export default ViewUserApplications;
+export default ViewCMApplications;
