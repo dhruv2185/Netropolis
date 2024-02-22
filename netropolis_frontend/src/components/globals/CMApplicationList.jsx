@@ -2,7 +2,7 @@ import React from "react";
 import { BookmarkIcon, MinusCircleIcon, EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
 
-const ApplicationList = ({ applications }) => {
+const CMApplicationList = ({ applications }) => {
   return (
     <article className="w-full flex justify-center items-center">
       <div className="w-full flex flex-col gap-16 lg:gap-0  items-center max-w-8xl">
@@ -67,10 +67,10 @@ const ApplicationCard = ({ application }) => {
         <div className="flex justify-center items-center gap-2 font-bold">
           <h4 className="text-md text-indigo-400">STATUS : </h4><h4 className="text-neutral-600"> {application.status}</h4>
         </div>
-        <Button text="View Schedule" path="/" customClass={"mx-4"} />
+        <Button text="Schedule" path="/schedulequest" customClass={"mx-4"} />
       </footer>
     </article>
   );
 };
 
-export default ApplicationList;
+export default CMApplicationList;
