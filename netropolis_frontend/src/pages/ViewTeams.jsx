@@ -9,6 +9,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import AppLoader from "../utils/AppLoader";
 import { AppError } from "../utils/AppError";
 
+import Button from "../components/globals/Button";
 import { PlusIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
 import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
@@ -137,8 +138,9 @@ const ViewTeams = () => {
                         </div>
 
                         {<AppError />}
+                        <Button text="Create Team" path={"/team-registration"} customClass={"max-w-md self-center my-10"} />
                         {teams && teams.length > 0 && <TeamArticle teams={teams} />}
-                        {teams && teams.length === 0 && <p className="font-fira text-medium text-4xl text-indigo-400">
+                        {teams && teams.length === 0 && <p className="font-fira text-medium text-xl text-indigo-400 self-center">
                             You currently have no teams. Please create one to view it here.
                         </p>}
 
