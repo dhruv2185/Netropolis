@@ -53,8 +53,6 @@ const ApplicationPage = (props) => {
 
     const [teams, setTeams] = useState(dummyTeams);
 
-
-
     const [appInfo, setAppInfo] = useState({
         userId: userInfo.id,
         questId: questId,

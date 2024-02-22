@@ -17,7 +17,8 @@ import navigations from "../data/navigations.json";
 import TeamArticle from "../components/globals/TeamArticle";
 
 const ViewTeams = () => {
-    const [teams, setTeams] = useState([
+    console.log("viewteams");
+    const dummyTeams = [
         {
             id: 1,
             team_name: "Team A",
@@ -25,51 +26,86 @@ const ViewTeams = () => {
             expectations: "To deliver high-quality projects on time",
             concerns: "Resource allocation, Communication",
             members: [
-              {
-                name: "John Doe",
-                age: 30,
-                gender: "Male",
-                occupation: "Designer",
-                residence: "New York",
-              },
-              {
-                name: "Jane Smith",
-                age: 28,
-                gender: "Female",
-                occupation: "Developer",
-                residence: "San Francisco",
-              },
-              // More members...
+                {
+                    name: "John Doe",
+                    age: 30,
+                    gender: "Male",
+                    occupation: "Designer",
+                    residence: "New York",
+                },
+                {
+                    name: "Jane Smith",
+                    age: 28,
+                    gender: "Female",
+                    occupation: "Developer",
+                    residence: "San Francisco",
+                },
+                // More members...
             ],
-          },
-          {
+        },
+        {
             id: 2,
             team_name: "Team B",
             composition: "Marketing Specialists, Content Writers",
             expectations: "To increase brand visibility and engagement",
             concerns: "Content quality, Audience targeting",
             members: [
-              {
-                name: "Alice Johnson",
-                age: 35,
-                gender: "Female",
-                occupation: "Marketing Specialistddddd dfvdvfr dvgfvfdvd",
-                residence: "Los Angeles",
-              },
-              {
-                name: "Bob Thompson",
-                age: 32,
-                gender: "Male",
-                occupation: "Content Writer",
-                residence: "Chicago",
-              },
-              // More members...
+                {
+                    name: "Alice Johnson",
+                    age: 35,
+                    gender: "Female",
+                    occupation: "Marketing Specialistddddd dfvdvfr dvgfvfdvd",
+                    residence: "Los Angeles",
+                },
+                {
+                    name: "Bob Thompson",
+                    age: 32,
+                    gender: "Male",
+                    occupation: "Content Writer",
+                    residence: "Chicago",
+                },
+                // More members...
             ],
-          },
-    ])
+        },
+    ]
+    const [teams, setTeams] = useState()
+
+    const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
+
+    const fetchTeams = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/teams/?pk=${userInfo.user_profile.username}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${tokens.access}`
+                }
+            });
+            if (response.ok) {
+                console.log(response);
+                const data = await response.json();
+                console.log(data);
+                if (Array.isArray(data)) {
+                    setTeams(data);
+                }
+                else {
+                    const newdata = [data];
+                    console.log(newdata)
+                    setTeams(newdata);
+                }
+            }
+            else {
+                throw new Error(data.message);
+            }
+        }
+        catch (err) {
+            toast.error(err.message);
+        }
+    }
 
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
+    const tokens = useSelector((state) => state.auth.tokens);
 
     useEffect(() => {
         if (userInfo === null) {
@@ -77,70 +113,12 @@ const ViewTeams = () => {
             toast.error("Please login to continue.")
             navigate('/')
         }
-    }, []);
+        else
+            fetchTeams();
+    }, [tokens]);
 
-    const tokens = useSelector((state) => state.auth.tokens);
+
     // console.log("tokens", tokens);
-
-    // Handle Input Change
-    const handleDynamicActivityInputChange = (e, index, activities, setActivities) => {
-        const values = [...activities];
-        values[index][e.target.name] = e.target.value;
-        setActivities(values);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // validation
-        try {
-            tasks.forEach((task) => {
-                if (task.description === "") {
-                    throw Error("Please fill in all the fields.");
-                }
-                task.createdBy = userInfo.id;
-            })
-            const toBeSent = {
-                tasks: tasks,
-                // created by : CMInfo.username
-            }
-            console.log(toBeSent);
-            // const res = await fetch("http://localhost:8000/task", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Authorization": "Bearer " + tokens.access
-            //     },
-            //     body: JSON.stringify(toBeSent)
-            // }
-            // )
-            // if (!res.ok) {
-            //     throw Error("Error in creating tasks. Please Try Again");
-            // }
-            // const data = await res.json();
-            // console.log(data);
-        }
-        catch (err) {
-            toast.error(err.message);
-            console.log(err);
-        }
-
-    };
-
-    const addFields = (e, activities, setActivities) => {
-        e.preventDefault();
-        setActivities([...activities, { description: "" }]);
-    }
-    const removeFields = (e, index, activities, setActivities) => {
-        e.preventDefault();
-        console.log("remove karne ki koshish");
-        if (activities.length === 1) {
-            toast.error("You cannot remove the only member of the team.");
-            return;
-        }
-        const values = [...activities];
-        values.splice(index, 1);
-        setActivities(values);
-    }
 
     return (
         <><Header navigations={navigations} />
@@ -152,15 +130,18 @@ const ViewTeams = () => {
 
                         <div className="justify-center flex gap-2 flex-col text-center items-center mb-10">
                             <p className="font-fira text-medium text-4xl text-indigo-400">
-                                View Teams
+                                Your Teams
                             </p>
                             <p className="mb-2">You can view all the teams here
-                               </p>
+                            </p>
                         </div>
-                        
+
                         {<AppError />}
-                        <TeamArticle teams={teams} />
-                        
+                        {teams && teams.length > 0 && <TeamArticle teams={teams} />}
+                        {teams && teams.length === 0 && <p className="font-fira text-medium text-4xl text-indigo-400">
+                            You currently have no teams. Please create one to view it here.
+                        </p>}
+
                     </div>
                 </div>
             </div>
