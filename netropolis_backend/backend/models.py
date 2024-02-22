@@ -31,7 +31,7 @@ class Community_Manager(models.Model):
     region = models.TextField()
     
     def __str__(self):
-        return self.first_name
+        return self.user.username
 
 
 class Quest(models.Model):

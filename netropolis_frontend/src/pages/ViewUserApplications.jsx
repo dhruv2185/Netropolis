@@ -15,9 +15,12 @@ import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
 import UserApplicationList from "../components/globals/UserApplicationList";
+const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const ViewUserApplications = () => {
-    const [applications, setApplications] = useState([
+    const [applications, setApplications] = useState()
+
+    const dummyApplications = [
         {
             quest_name: "Pokemon Quest",
             region: "Kanto",
@@ -80,11 +83,15 @@ const ViewUserApplications = () => {
             status: "UNDER REVIEW"
         },
         // More applications...
-    ])
+    ]
+
+    const userInfo = useSelector((state) => state.auth.userInfo);
+    const navigate = useNavigate();
+    const tokens = useSelector((state) => state.auth.tokens);
 
     const fetchApplications = async () => {
         try {
-            const res = await fetch(`${baseUrl}/applications/?pk=${userInfo.user_profile.username}`, {
+            const res = await fetch(`${baseUrl}/applications/`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -92,6 +99,7 @@ const ViewUserApplications = () => {
                 }
             })
             const data = await res.json();
+            console.log(data);
             if (res.ok) {
                 if (Array.isArray(data)) {
                     setApplications(data);
@@ -108,9 +116,6 @@ const ViewUserApplications = () => {
         }
     }
 
-    const userInfo = useSelector((state) => state.auth.userInfo);
-    const navigate = useNavigate();
-
     useEffect(() => {
         if (userInfo === null) {
             console.log("redirecting to login");
@@ -119,70 +124,7 @@ const ViewUserApplications = () => {
         }
         else
             fetchApplications();
-    }, [fetchApplications, tokens]);
-
-    const tokens = useSelector((state) => state.auth.tokens);
-    // console.log("tokens", tokens);
-
-    // Handle Input Change
-    const handleDynamicActivityInputChange = (e, index, activities, setActivities) => {
-        const values = [...activities];
-        values[index][e.target.name] = e.target.value;
-        setActivities(values);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // validation
-        try {
-            tasks.forEach((task) => {
-                if (task.description === "") {
-                    throw Error("Please fill in all the fields.");
-                }
-                task.createdBy = userInfo.id;
-            })
-            const toBeSent = {
-                tasks: tasks,
-                // created by : CMInfo.username
-            }
-            console.log(toBeSent);
-            // const res = await fetch("http://localhost:8000/task", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Authorization": "Bearer " + tokens.access
-            //     },
-            //     body: JSON.stringify(toBeSent)
-            // }
-            // )
-            // if (!res.ok) {
-            //     throw Error("Error in creating tasks. Please Try Again");
-            // }
-            // const data = await res.json();
-            // console.log(data);
-        }
-        catch (err) {
-            toast.error(err.message);
-            console.log(err);
-        }
-
-    };
-
-    const addFields = (e, activities, setActivities) => {
-        e.preventDefault();
-        setActivities([...activities, { description: "" }]);
-    }
-    const removeFields = (e, index, activities, setActivities) => {
-        e.preventDefault();
-        console.log("remove karne ki koshish");
-        if (activities.length === 1) {
-            toast.error("You cannot remove the only member of the team.");
-            return;
-        }
-        const values = [...activities];
-        values.splice(index, 1);
-        setActivities(values);
-    }
+    }, [tokens]);
 
     return (
         <><Header navigations={navigations} />
@@ -190,8 +132,6 @@ const ViewUserApplications = () => {
                 {/* left side */}
                 <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
                     <div className="flex flex-col h-auto min-h-[100vh] w-full flex-1 mb-5 mt-32">
-                        {/* <div className="flex justify-end p-1"></div> */}
-
                         <div className="justify-center flex gap-2 flex-col text-center items-center mb-10">
                             <p className="font-fira text-medium text-4xl text-indigo-400">
                                 My Applications
@@ -201,7 +141,8 @@ const ViewUserApplications = () => {
 
                         {<AppError />}
 
-                        <UserApplicationList applications={applications} />
+                        {applications && applications.length > 0 && < UserApplicationList applications={applications} />}
+                        {applications && applications.length === 0 && <p className="text-center text-lg text-neutral-400">No applications found</p>}
                     </div>
                 </div>
             </div>

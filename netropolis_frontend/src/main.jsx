@@ -37,7 +37,6 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} />
-      {/* <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} /> */}
       <Route path="/team-registration" element={<TeamRegistrationPage />} />
       <Route path="/application/:questId" element={<ApplicationPage />} />
       <Route path="/registerquest" element={<RegisterQuest />} />

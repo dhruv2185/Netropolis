@@ -18,7 +18,6 @@ import navigations from "../data/navigations.json";
 import TeamArticle from "../components/globals/TeamArticle";
 
 const ViewTeams = () => {
-    console.log("viewteams");
     const dummyTeams = [
         {
             id: 1,

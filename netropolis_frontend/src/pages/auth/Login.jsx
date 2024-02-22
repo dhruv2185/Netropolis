@@ -72,8 +72,12 @@ const Login = () => {
       if (user.error?.message) {
         throw new Error(user.error.message)
       }
+      let role = "user"
+      if (user.hasOwnProperty("region") && user.region !== null) {
+        role = "cm"
+      }
       dispatch(setTokens(userTokens));
-      dispatch(setCredentials({ ...user }));
+      dispatch(setCredentials({ ...user, role }));
       navigate("/");
     } catch (err) {
       toast.error(err?.data?.message || err.error?.message);
@@ -91,22 +95,29 @@ const Login = () => {
   });
 
   const submitHandler = async (e) => {
+    console.log("submitHandler");
     e.preventDefault();
     if (!username || !password) {
       return toast.error("All fields are required");
     }
     try {
       const tokens = await loginRequest({ username, password });
+      console.log(tokens);
       if (tokens.error?.message) {
         throw new Error(tokens.error.message)
       }
       const user = await fetchUserProfile(tokens);
+      console.log(user);
       if (user.error?.message) {
         throw new Error(user.error.message)
       }
       else {
+        let role = "user"
+        if (user.hasOwnProperty("region") && user.region !== null) {
+          role = "cm"
+        }
         dispatch(setTokens({ ...tokens }));
-        dispatch(setCredentials({ ...user }));
+        dispatch(setCredentials({ ...user, role }));
         navigate("/");
       }
     } catch (err) {

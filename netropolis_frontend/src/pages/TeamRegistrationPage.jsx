@@ -17,25 +17,26 @@ import navigations from "../data/navigations.json";
 const VITE_BASE_BACKEND_URL = "http://127.0.0.1:8000"
 
 const TeamRegistrationPage = () => {
-    const [loading, setLoading] = useState(false);
-    const userInfo = useSelector((state) => state.auth.userInfo);
-    const [teamData, setTeamData] = useState({
-        team_name: "",
-        composition: "",
-        expectations_for_the_platform: "",
-        concerns: "",
-        created_by: userInfo.user_id
-    });
 
     const navigate = useNavigate();
-
+    const userInfo = useSelector((state) => state.auth.userInfo);
     useEffect(() => {
         if (userInfo === null) {
             console.log("redirecting to login");
             toast.error("Please login to create a team.")
             navigate('/login')
         }
-    }, []);
+    }, [navigate, userInfo]);
+
+    const [loading, setLoading] = useState(false);
+
+    const [teamData, setTeamData] = useState({
+        team_name: "",
+        composition: "",
+        expectations_for_the_platform: "",
+        concerns: "",
+        created_by: userInfo?.user_id
+    });
 
     const tokens = useSelector((state) => state.auth.tokens);
     // console.log("tokens", tokens);
@@ -89,7 +90,7 @@ const TeamRegistrationPage = () => {
             toast.success("Team created successfully");
             setLoading(false);
             // yahape view teams wale pe redirect karna hai
-            navigate("/");
+            navigate("/viewteams");
         }
         catch (err) {
             console.log(err);

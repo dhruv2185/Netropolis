@@ -84,7 +84,7 @@ const Register = () => {
             if (user.error?.message) {
                 throw new Error(user.error.message)
             }
-            dispatch(setCredentials({ ...user }));
+            dispatch(setCredentials({ ...user, role: "role" }));
             dispatch(setTokens({ ...currTokens }));
             navigate("/");
             toast.success("Signup is successful");
@@ -139,7 +139,7 @@ const Register = () => {
             if (user.error?.message) {
                 throw new Error(user.error.message)
             }
-            dispatch(setCredentials({ ...user }));
+            dispatch(setCredentials({ ...user, role: "user" }));
             dispatch(setTokens({ ...currTokens }));
             navigate("/");
             toast.success("Signup is successful");
@@ -302,7 +302,10 @@ const Register = () => {
                                     <button
                                         className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
                                         disabled={loading}
-                                        onClick={() => login()}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            login()
+                                        }}
                                     > Sign Up with Google
                                     </button>
                                 </div>
