@@ -51,7 +51,7 @@ const ApplicationPage = (props) => {
         }
     ]
 
-    const [teams, setTeams] = useState(dummyTeams);
+    const [teams, setTeams] = useState();
 
     const [appInfo, setAppInfo] = useState({
         userId: userInfo.id,
@@ -270,7 +270,7 @@ const ApplicationPage = (props) => {
                                             >
                                                 <option value="">Select Team</option>
                                                 {
-                                                    teams.map((team, index) => (
+                                                    teams && teams.map((team, index) => (
                                                         <option key={index} value={team.id}>{team.team_name}</option>
                                                     ))
                                                 }

@@ -1,5 +1,5 @@
 from django.urls import path
-from . import community_manager_views, login_views, application_views, quest_registration_views, quest_scheduling_views, quest_searching_views
+from . import community_manager_views, login_views, application_views, quest_registration_views, quest_scheduling_views, quest_searching_views, tasks_entry
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 urlpatterns = [
@@ -19,4 +19,5 @@ urlpatterns = [
          name='quest_searching'),
     path('get_team_by_id/', login_views.get_by_id),
     path('community_manager_register/', community_manager_views.CommunityManagerView.as_view()),
+    path('tasks/', tasks_entry.TaskView.as_view()),
 ]

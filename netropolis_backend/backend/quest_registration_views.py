@@ -63,7 +63,10 @@ class QuestRegistrationView(APIView):
             except MultipleObjectsReturned:
                 quests = Quest.objects.filter(created_by=pk)
                 serializer = self.serializer_class(quests, many=True)
+            except Quest.DoesNotExist:
+                 return Response([], status=status.HTTP_200_OK)
             return Response(serializer.data, status=status.HTTP_200_OK)
+
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 

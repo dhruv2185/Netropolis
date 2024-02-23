@@ -18,7 +18,7 @@ import UserApplicationList from "../components/globals/UserApplicationList";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const ViewUserApplications = () => {
-    const [applications, setApplications] = useState()
+
 
     const dummyApplications = [
         {
@@ -84,6 +84,7 @@ const ViewUserApplications = () => {
         },
         // More applications...
     ]
+    const [applications, setApplications] = useState(dummyApplications)
 
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
@@ -122,8 +123,8 @@ const ViewUserApplications = () => {
             toast.error("Please login to continue.")
             navigate('/')
         }
-        else
-            fetchApplications();
+        // else
+        // fetchApplications();
     }, [tokens]);
 
     return (

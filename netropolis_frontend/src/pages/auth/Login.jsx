@@ -76,6 +76,8 @@ const Login = () => {
       if (user.hasOwnProperty("region") && user.region !== null) {
         role = "cm"
       }
+      // isme cm id bhi aayega agar cm bhi hai
+
       dispatch(setTokens(userTokens));
       dispatch(setCredentials({ ...user, role }));
       navigate("/");
@@ -116,6 +118,7 @@ const Login = () => {
         if (user.hasOwnProperty("region") && user.region !== null) {
           role = "cm"
         }
+        // isme cm id bhi aayega agar cm bhi hai
         dispatch(setTokens({ ...tokens }));
         dispatch(setCredentials({ ...user, role }));
         navigate("/");

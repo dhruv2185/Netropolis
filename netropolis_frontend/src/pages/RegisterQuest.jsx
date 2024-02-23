@@ -18,7 +18,6 @@ const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const RegisterQuest = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
-    console.log(userInfo?.user_id);
     const navigate = useNavigate();
     const [questData, setQuestData] = useState({
         quest_name: "",

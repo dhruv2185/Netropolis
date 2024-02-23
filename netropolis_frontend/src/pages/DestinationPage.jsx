@@ -9,14 +9,15 @@ const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const DestinationPage = ({ destinations, destinationCategories }) => {
   const [results, setResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   //yaha pe fetch request marni h to get quest data aur fir results ko set karna h
 
   const tokens = JSON.parse(localStorage.getItem("tokens"));
   // const {userInfo, tokens} = useSelector((state) => state.auth);
 
-  const fetchQuests = async () => {
+  const fetchSearchedQuests = async () => {
     try {
-      const res = await fetch(`${baseUrl}/quests`, {
+      const res = await fetch(`${baseUrl}/search/?query=${searchQuery}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -24,13 +25,16 @@ const DestinationPage = ({ destinations, destinationCategories }) => {
           "Authorization": `Bearer ${tokens.access}`
         },
       });
+      const data = await res.json();
+      console.log(data);
       if (!res.ok) {
         throw new Error('Something went wrong. Please try again later.')
       }
       else {
-        const data = await res.json();
-        console.log(data);
-        setResults(data);
+        if (Array.isArray(data))
+          setResults(data);
+        else
+          setResults([data]);
       }
     }
     catch (err) {
@@ -53,12 +57,20 @@ const DestinationPage = ({ destinations, destinationCategories }) => {
             <div className="flex-1">
               <input
                 type="text"
+                name="searchQuery"
                 className="bg-transparent placeholder-indigo-200 flex-1 w-full text-sm text-white focus:outline-none active:outline-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search anything..."
               />
             </div>
             <div className="w-20">
-              <button className="text-indigo-400 font-bold bg-white rounded-full w-full py-2 px-3">
+              <button className="text-indigo-400 font-bold bg-white rounded-full w-full py-2 px-3"
+                onClick={(e) => {
+                  e.preventDefault();
+                  fetchSearchedQuests();
+                }}
+              >
                 Search
               </button>
             </div>
