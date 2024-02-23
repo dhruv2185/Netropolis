@@ -17,70 +17,73 @@ import navigations from "../data/navigations.json";
 import CMApplicationList from "../components/globals/CMApplicationList";
 
 const ViewCMApplications = () => {
-    const [applications, setApplications] = useState([
+
+    const dummyApplications = [
         {
             quest_name: "Pokemon Quest",
-          region: "Kanto",
-          genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-          rewards: 8000,
-          other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-          available_till: "Thu Feb 22 2024",
-          stay_start_date: "dd-mm-yyyy",
-          stay_end_date: "dd-mm-yyyy",
-          special_note: "Any specific information you want to share with us?",
-          desired_tasks: ["Task 1", "Task 2", "Task 3"],
-          daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
-          team_name: "Select Team",
-          description:"ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
-          status: "UNDER REVIEW"
-        },{
+            region: "Kanto",
+            genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
+            rewards: 8000,
+            other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
+            available_till: "Thu Feb 22 2024",
+            stay_start_date: "dd-mm-yyyy",
+            stay_end_date: "dd-mm-yyyy",
+            special_note: "Any specific information you want to share with us?",
+            desired_tasks: ["Task 1", "Task 2", "Task 3"],
+            daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
+            team_name: "Select Team",
+            description: "ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
+            status: "UNDER REVIEW"
+        }, {
             quest_name: "Pokemon Quest",
-          region: "Kanto",
-          genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-          rewards: 8000,
-          other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-          available_till: "Thu Feb 22 2024",
-          stay_start_date: "dd-mm-yyyy",
-          stay_end_date: "dd-mm-yyyy",
-          special_note: "Any specific information you want to share with us?",
-          desired_tasks: ["Task 1", "Task 2", "Task 3"],
-          daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
-          team_name: "Select Team",
-          description:"ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
-          status: "UNDER REVIEW"
-        },{
+            region: "Kanto",
+            genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
+            rewards: 8000,
+            other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
+            available_till: "Thu Feb 22 2024",
+            stay_start_date: "dd-mm-yyyy",
+            stay_end_date: "dd-mm-yyyy",
+            special_note: "Any specific information you want to share with us?",
+            desired_tasks: ["Task 1", "Task 2", "Task 3"],
+            daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
+            team_name: "Select Team",
+            description: "ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
+            status: "UNDER REVIEW"
+        }, {
             quest_name: "Pokemon Quest",
-          region: "Kanto",
-          genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-          rewards: 8000,
-          other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-          available_till: "Thu Feb 22 2024",
-          stay_start_date: "dd-mm-yyyy",
-          stay_end_date: "dd-mm-yyyy",
-          special_note: "Any specific information you want to share with us?",
-          desired_tasks: ["Task 1", "Task 2", "Task 3"],
-          daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
-          team_name: "Select Team",
-          description:"ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
-          status: "UNDER REVIEW"
-        },{
+            region: "Kanto",
+            genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
+            rewards: 8000,
+            other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
+            available_till: "Thu Feb 22 2024",
+            stay_start_date: "dd-mm-yyyy",
+            stay_end_date: "dd-mm-yyyy",
+            special_note: "Any specific information you want to share with us?",
+            desired_tasks: ["Task 1", "Task 2", "Task 3"],
+            daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
+            team_name: "Select Team",
+            description: "ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
+            status: "UNDER REVIEW"
+        }, {
             quest_name: "Pokemon Quest",
-          region: "Kanto",
-          genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-          rewards: 8000,
-          other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-          available_till: "Thu Feb 22 2024",
-          stay_start_date: "dd-mm-yyyy",
-          stay_end_date: "dd-mm-yyyy",
-          special_note: "Any specific information you want to share with us?",
-          desired_tasks: ["Task 1", "Task 2", "Task 3"],
-          daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
-          team_name: "Select Team",
-          description:"ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
-          status: "UNDER REVIEW"
+            region: "Kanto",
+            genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
+            rewards: 8000,
+            other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
+            available_till: "Thu Feb 22 2024",
+            stay_start_date: "dd-mm-yyyy",
+            stay_end_date: "dd-mm-yyyy",
+            special_note: "Any specific information you want to share with us?",
+            desired_tasks: ["Task 1", "Task 2", "Task 3"],
+            daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
+            team_name: "Select Team",
+            description: "ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
+            status: "UNDER REVIEW"
         },
         // More applications...
-      ])
+    ]
+
+    const [applications, setApplications] = useState(dummyApplications)
 
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
@@ -95,66 +98,6 @@ const ViewCMApplications = () => {
 
     const tokens = useSelector((state) => state.auth.tokens);
     // console.log("tokens", tokens);
-
-    // Handle Input Change
-    const handleDynamicActivityInputChange = (e, index, activities, setActivities) => {
-        const values = [...activities];
-        values[index][e.target.name] = e.target.value;
-        setActivities(values);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // validation
-        try {
-            tasks.forEach((task) => {
-                if (task.description === "") {
-                    throw Error("Please fill in all the fields.");
-                }
-                task.createdBy = userInfo.id;
-            })
-            const toBeSent = {
-                tasks: tasks,
-                // created by : CMInfo.username
-            }
-            console.log(toBeSent);
-            // const res = await fetch("http://localhost:8000/task", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Authorization": "Bearer " + tokens.access
-            //     },
-            //     body: JSON.stringify(toBeSent)
-            // }
-            // )
-            // if (!res.ok) {
-            //     throw Error("Error in creating tasks. Please Try Again");
-            // }
-            // const data = await res.json();
-            // console.log(data);
-        }
-        catch (err) {
-            toast.error(err.message);
-            console.log(err);
-        }
-
-    };
-
-    const addFields = (e, activities, setActivities) => {
-        e.preventDefault();
-        setActivities([...activities, { description: "" }]);
-    }
-    const removeFields = (e, index, activities, setActivities) => {
-        e.preventDefault();
-        console.log("remove karne ki koshish");
-        if (activities.length === 1) {
-            toast.error("You cannot remove the only member of the team.");
-            return;
-        }
-        const values = [...activities];
-        values.splice(index, 1);
-        setActivities(values);
-    }
 
     return (
         <><Header navigations={navigations} />
@@ -172,8 +115,8 @@ const ViewCMApplications = () => {
                         </div>
 
                         {<AppError />}
-
-                        <CMApplicationList applications={applications}/>
+                        {applications && applications.length > 0 && < CMApplicationList applications={applications} />}
+                        {applications && applications.length === 0 && <p className="text-center text-lg text-neutral-400">No applications found</p>}
                     </div>
                 </div>
             </div>

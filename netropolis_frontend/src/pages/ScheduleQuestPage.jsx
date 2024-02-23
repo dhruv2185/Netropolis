@@ -123,7 +123,7 @@ const ScheduleQuestPage = (props) => {
             ]
         }
     }
-    
+
     useEffect(() => {
         if (userInfo) {
             toast.error("Please login to continue.")
@@ -160,7 +160,7 @@ const ScheduleQuestPage = (props) => {
 
     const fetchTeamData = async (teamId) => {
         try {
-            const response = await fetch(`${BASE_URL}/team/${teamId}`, {
+            const response = await fetch(`${BASE_URL}/get_team_by_id/${teamId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -188,9 +188,9 @@ const ScheduleQuestPage = (props) => {
 
     const { applicationId } = useParams();
     const { questId, teamId } = props.appInfo;
-    
 
-    
+
+
 
     const [schedule, setSchedule] = useState({
         createdBy: CMInfo.id,
@@ -278,7 +278,7 @@ const ScheduleQuestPage = (props) => {
         newDays[index].events[ind][e.target.name] = e.target.value;
         setDays(newDays);
     }
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const bodyToBeSent = {
