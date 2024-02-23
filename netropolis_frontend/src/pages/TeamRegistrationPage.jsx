@@ -14,36 +14,39 @@ import mesh from "../assets/images/mesh.png";
 import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
+const VITE_BASE_BACKEND_URL = "http://127.0.0.1:8000"
 
 const TeamRegistrationPage = () => {
-    const [loading, setLoading] = useState(false);
-    const [teamData, setTeamData] = useState({
-        team_name: "",
-        composition: "",
-        expectations_for_the_platform: "",
-        concerns: "",
-    });
 
-    const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
-
+    const userInfo = useSelector((state) => state.auth.userInfo);
     useEffect(() => {
         if (userInfo === null) {
             console.log("redirecting to login");
             toast.error("Please login to create a team.")
             navigate('/login')
         }
-    }, []);
+    }, [navigate, userInfo]);
+
+    const [loading, setLoading] = useState(false);
+
+    const [teamData, setTeamData] = useState({
+        team_name: "",
+        composition: "",
+        expectations_for_the_platform: "",
+        concerns: "",
+        created_by: userInfo?.user_id
+    });
 
     const tokens = useSelector((state) => state.auth.tokens);
-    console.log("tokens", tokens);
+    // console.log("tokens", tokens);
 
     //  Handle input
     const handleInputChange = (event, index) => {
-        console.log("change karne ki koshish toh ho rahi");
+        // console.log("change karne ki koshish toh ho rahi");
         const values = [...inputFields];
         values[index][event.target.name] = event.target.value;
-        console.log(values);
+        // console.log(values);
         setInputFields(values);
     };
 
@@ -74,9 +77,12 @@ const TeamRegistrationPage = () => {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${tokens.access}`,
                 },
-                body: JSON.stringify({ ...teamData, teamInfo: inputFields, number_of_people: inputFields.length }),
+                body: JSON.stringify({ ...teamData, team_info: inputFields, number_of_people: inputFields.length }),
             });
             if (!res.ok) {
+                console.log(res);
+                const d = await res.json();
+                console.log(d);
                 throw new Error("Error in creating team");
             }
             const data = await res.json();
@@ -84,9 +90,10 @@ const TeamRegistrationPage = () => {
             toast.success("Team created successfully");
             setLoading(false);
             // yahape view teams wale pe redirect karna hai
-            navigate("/");
+            navigate("/viewteams");
         }
         catch (err) {
+            console.log(err);
             toast.error(err.message);
             return;
         }

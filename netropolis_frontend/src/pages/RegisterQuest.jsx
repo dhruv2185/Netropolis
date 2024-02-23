@@ -16,9 +16,10 @@ import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
-
-
 const RegisterQuest = () => {
+    const userInfo = useSelector((state) => state.auth.userInfo);
+    console.log(userInfo?.user_id);
+    const navigate = useNavigate();
     const [questData, setQuestData] = useState({
         quest_name: "",
         region: "",
@@ -72,8 +73,7 @@ const RegisterQuest = () => {
         }
     }
 
-    const userInfo = useSelector((state) => state.auth);
-    const navigate = useNavigate();
+
     let dummyTasks = [
         {
             task: "Choose your first Pokemon"
@@ -173,7 +173,6 @@ const RegisterQuest = () => {
         setQuestData({ ...questData, genre_tags: values });
     }
 
-
     const handlePrimaryInputChange = (e) => {
         setQuestData(
             { ...questData, [e.target.name]: e.target.value }
@@ -205,14 +204,16 @@ const RegisterQuest = () => {
                 return;
             }
         })
+        console.log(questData);
         const toBeSent = {
             ...questData,
             natural_activities: naturalActivities,
             local_activities: localActivities,
-            labour_shortage_activities: labourShortageActivities
+            labour_shortage_activities: labourShortageActivities,
+            created_by: userInfo.user_id
         }
         try {
-            const res = await fetch("http://localhost:8000/quest", {
+            const res = await fetch("http://localhost:8000/quests/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -222,10 +223,14 @@ const RegisterQuest = () => {
             }
             )
             if (!res.ok) {
+                // console.log(res);
+                const d = await res.json();
+                // console.log(d);
                 throw Error("Error in creating quest. Please Try Again");
             }
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
+            navigate("/")
         } catch (err) {
             toast.error("An error occurred. Please try again.");
         }

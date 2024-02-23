@@ -28,8 +28,8 @@ import activities from "./data/activities.json";
 import activityCategories from "./data/activitycategories.json";
 import destinationCategories from "./data/destinationcategories.json";
 import ViewTeams from "./pages/ViewTeams.jsx";
-import ViewApplications from "./pages/ViewApplications.jsx";
-
+import ViewUserApplications from "./pages/ViewUserApplications.jsx";
+import ViewCMApplications from "./pages/ViewCMApplications.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -37,14 +37,14 @@ const router = createBrowserRouter(
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} />
-      {/* <Route path="/activities" element={<ActivityPage activities={activities} activityCategories={activityCategories} />} /> */}
       <Route path="/team-registration" element={<TeamRegistrationPage />} />
       <Route path="/application/:questId" element={<ApplicationPage />} />
       <Route path="/registerquest" element={<RegisterQuest />} />
       <Route path="/schedulequest" element={<ScheduleQuestPage />} />
       <Route path="/registertask" element={<RegisterTaskPage />} />
       <Route path="/viewteams" element={<ViewTeams />} />
-      <Route path="/viewapplications" element={<ViewApplications />} />
+      <Route path="/viewapplications" element={<ViewUserApplications />} />
+      <Route path="/viewCMapplications" element={<ViewCMApplications />} />
 
     </Route>
   )

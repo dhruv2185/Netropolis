@@ -22,18 +22,17 @@ class ApplicationsView(APIView):
             return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, format=None):
-        pk = request.query_params.get('pk', None)
-        if pk is not None:
-            pk = get_user_model().objects.get(username=pk)
-            try:
-                application = Application.objects.get(created_by=pk)
-                serializer = self.serializer_class(application, many=False)
-            except MultipleObjectsReturned:
-                applications = Application.objects.filter(created_by=pk)
-                serializer = self.serializer_class(applications, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+        user = request.user
+        print(type(user))
+        try:
+            application = Application.objects.get(user_id= user.id)
+            serializer = self.serializer_class(application, many=False)
+        except MultipleObjectsReturned:
+            applications = Application.objects.filter(user_id=user.id)
+            serializer = self.serializer_class(applications, many=True)
+        except Application.DoesNotExist:
+            return Response([], status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request):
         pk = request.query_params.get('pk', None)

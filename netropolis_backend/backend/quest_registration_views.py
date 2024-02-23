@@ -12,6 +12,7 @@ from qdrant_client import QdrantClient
 from qdrant_client.http import models
 from sentence_transformers import SentenceTransformer
 import os
+from .models import Community_Manager
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -26,8 +27,13 @@ class QuestRegistrationView(APIView):
     )
 
     def post(self, request, *args, **kwargs):
-        serialzer = self.serializer_class(data=request.data)
-
+        print(request.data)
+        username = request.data['created_by']
+        user = get_user_model().objects.get(id=username)
+        cm = Community_Manager.objects.get(user=user)
+        form = request.data
+        form['created_by'] = cm.id
+        serialzer = self.serializer_class(data=form)
         if serialzer.is_valid():
             serialzer.save()
             newQuest = dict(serialzer.data)
