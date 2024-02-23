@@ -41,7 +41,6 @@ const TeamCard = ({ team }) => {
   const tokens = useSelector((state) => state.auth.tokens);
   const removeFields = async (e, index) => {
     e.preventDefault();
-    //yaha fetch likhna hai tema remove karne ke liye
     try {
       console.log("try hua");
       const res = await fetch(`${baseUrl}/teams/?pk=${team.id}`, {

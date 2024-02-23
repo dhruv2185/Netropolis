@@ -127,7 +127,6 @@ const ViewTeams = () => {
                 <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
                     <div className="flex flex-col h-auto min-h-[100vh] w-full flex-1 mb-5 mt-32">
                         {/* <div className="flex justify-end p-1"></div> */}
-
                         <div className="justify-center flex gap-2 flex-col text-center items-center mb-10">
                             <p className="font-fira text-medium text-4xl text-indigo-400">
                                 Your Teams
@@ -135,13 +134,12 @@ const ViewTeams = () => {
                             <p className="mb-2">You can view all the teams here
                             </p>
                         </div>
-
                         {<AppError />}
-                        <Button text="Create Team" path={"/team-registration"} customClass={"max-w-md self-center my-10"} />
                         {teams && teams.length > 0 && <TeamArticle teams={teams} />}
                         {teams && teams.length === 0 && <p className="font-fira text-medium text-xl text-indigo-400 self-center">
                             You currently have no teams. Please create one to view it here.
                         </p>}
+                        <Button text="Create Team" path={"/team-registration"} customClass={"max-w-md self-center my-10"} />
 
                     </div>
                 </div>
