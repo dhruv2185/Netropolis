@@ -14,9 +14,9 @@ const DestinationPage = ({ destinations, destinationCategories }) => {
   const tokens = JSON.parse(localStorage.getItem("tokens"));
   // const {userInfo, tokens} = useSelector((state) => state.auth);
 
-  const fetchQuests = async () => {
+  const fetchSearchedQuests = async () => {
     try {
-      const res = await fetch(`${baseUrl}/quests`, {
+      const res = await fetch(`${baseUrl}/search/?query=`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
