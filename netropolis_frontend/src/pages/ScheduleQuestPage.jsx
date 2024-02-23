@@ -189,9 +189,6 @@ const ScheduleQuestPage = (props) => {
     const { applicationId } = useParams();
     const { questId, teamId } = props.appInfo;
 
-
-
-
     const [schedule, setSchedule] = useState({
         createdBy: CMInfo.id,
         start_date: "",
@@ -320,11 +317,13 @@ const ScheduleQuestPage = (props) => {
                 body: JSON.stringify(bodyToBeSent)
             }
             )
+            const data = await response.json();
             if (!response.ok) {
+                console.log(data);
                 throw new Error('Something went wrong');
             }
-            const data = await response.json();
             console.log(data);
+            toast.success("Schedule Created Successfully");
         }
         catch (err) {
             toast.error(err.message);

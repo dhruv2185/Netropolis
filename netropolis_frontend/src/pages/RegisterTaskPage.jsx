@@ -46,33 +46,31 @@ const RegisterTaskPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // validation
         try {
             tasks.forEach((task) => {
                 if (task.description === "") {
                     throw Error("Please fill in all the fields.");
                 }
-                task.createdBy = userInfo.id;
+                task.createdBy = userInfo?.cm_id;
             })
-            const toBeSent = {
-                tasks: tasks,
-                // created by : CMInfo.username
-            }
+            const toBeSent = tasks;
             console.log(toBeSent);
-            // const res = await fetch("http://localhost:8000/task", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         "Authorization": "Bearer " + tokens.access
-            //     },
-            //     body: JSON.stringify(toBeSent)
-            // }
-            // )
-            // if (!res.ok) {
-            //     throw Error("Error in creating tasks. Please Try Again");
-            // }
-            // const data = await res.json();
-            // console.log(data);
+            const res = await fetch("http://localhost:8000/tasks", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + tokens.access
+                },
+                body: JSON.stringify(toBeSent)
+            }
+            )
+            const data = await res.json();
+            if (!res.ok) {
+                console.log(data);
+                throw Error("Error in creating tasks. Please Try Again");
+            }
+            toast.success("Tasks Created Successfully");
+            navigate("/");
         }
         catch (err) {
             toast.error(err.message);
@@ -87,7 +85,6 @@ const RegisterTaskPage = () => {
     }
     const removeFields = (e, index, activities, setActivities) => {
         e.preventDefault();
-        console.log("remove karne ki koshish");
         if (activities.length === 1) {
             toast.error("You cannot remove the only member of the team.");
             return;
@@ -159,7 +156,7 @@ const RegisterTaskPage = () => {
                                                         Submit
                                                     </button>
                                                     <button
-                                                        onClick={(e)=>{addFields(e,tasks,setTasks)}}
+                                                        onClick={(e) => { addFields(e, tasks, setTasks) }}
                                                         className={"w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full"}
                                                     >
                                                         Add Task
