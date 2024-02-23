@@ -61,10 +61,9 @@ qdrant.recreate_collection(
 #         distance=models.Distance.COSINE,
 #     ),
 # )
-
-qdrant.upload_records(
+qdrant.upload_points(
     collection_name="quests",
-    records=[
+    points=[
         models.Record(
             id=idx, vector=encoder.encode(doc["description"]).tolist(), payload=doc
         )

@@ -59,5 +59,5 @@ class QuestSearchingView(APIView):
         #         print(list(quests.values()))
         #         serializer = self.serializer_class(quests, many=True)
             return Response(results, status=status.HTTP_200_OK)
-        # else:
-        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
