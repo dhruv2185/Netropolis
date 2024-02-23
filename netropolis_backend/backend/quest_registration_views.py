@@ -38,9 +38,9 @@ class QuestRegistrationView(APIView):
             serialzer.save()
             newQuest = dict(serialzer.data)
             try:
-                self.qdrant.upload_records(
+                self.qdrant.upload_points(
                     collection_name="quests",
-                    records=[
+                    points=[
                         models.Record(
                             id=newQuest['id'], vector=self.encoder.encode(newQuest["description"][0]).tolist(), payload=newQuest
                         )

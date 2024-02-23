@@ -5,9 +5,9 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth.models import User
-from .serializers import RegisterSerializer, TeamsSerializer, UserSerializer
+from .serializers import RegisterSerializer, TeamsSerializer, UserSerializer, CommunityManagerSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Team
+from .models import Team, Community_Manager
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
 from rest_framework.decorators import api_view, permission_classes
@@ -32,15 +32,29 @@ class RegisterView(generics.ListCreateAPIView):
 class FetchUser(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
+    serializer_class2 = CommunityManagerSerializer
 
     def get(self, request, *args, **kwargs):
-        user = get_user_model().objects.get(username=request.user)
-        print(user.id)
+        user = request.user
+        print(type(user))
         serializer = self.serializer_class(user)
-        return Response(
-            {"user_profile": serializer.data,
-             "user_id": str(user.id)}, status=status.HTTP_201_CREATED)
-
+        try:
+            # print(user.id)
+            cm_profile = Community_Manager.objects.get(user=user.id)
+            print(cm_profile.id)         
+            serializer2 = self.serializer_class2(cm_profile)
+            print(type(cm_profile.region))
+            return Response(
+                {"user_profile": serializer.data,
+                 "user_id": str(user.id),
+                 "cm_id": str(cm_profile.id),
+                 "region": cm_profile.region}, status=status.HTTP_201_CREATED)
+        except Community_Manager.DoesNotExist:
+            return Response({"user_profile": serializer.data,
+                            "user_id": str(user.id)}, status=status.HTTP_201_CREATED)            
+        except:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
     def put(self, request, *args, **kwargs):
         user = get_user_model().objects.get(username=request.user)
         serializer = self.serializer_class(user, data=request.data)

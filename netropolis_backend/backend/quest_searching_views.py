@@ -39,7 +39,7 @@ class QuestSearchingView(APIView):
             search = self.qdrant.search(
                 collection_name="quests",
                 query_vector=self.encoder.encode(query).tolist(),
-                limit=6,)
+                limit=1000,)
             vectordb_results = [hit.payload for hit in search]
             # final_results = [x for x in vectordb_results if x in sqldb_results]
             # pk = Community_Manager.objects.get(first_name=pk)
@@ -59,5 +59,5 @@ class QuestSearchingView(APIView):
         #         print(list(quests.values()))
         #         serializer = self.serializer_class(quests, many=True)
             return Response(results, status=status.HTTP_200_OK)
-        # else:
-        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
