@@ -294,11 +294,12 @@ const Register = () => {
                                         </span>
                                     </div>
                                 </div>
-
-                                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
+                                <div className="flex flex-col justify-center items-center gap-2">
+                                <div className="justify-center w-full flex gap-2 flex-col text-center items-center">
                                     <Button text={isLoading && loading ? <AppLoader /> : "Sign Up"} customClass={"w-full"} loading={isLoading} ></Button>
                                 </div>
-                                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
+                                <h2 className=" text-indigo-300 font-extrabold rounded-full bg-slate-100 px-2">OR</h2>
+                                <div className="justify-center w-full flex gap-2 flex-col text-center items-center">
                                     <button
                                         className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
                                         disabled={loading}
@@ -308,7 +309,7 @@ const Register = () => {
                                         }}
                                     > Sign Up with Google
                                     </button>
-                                </div>
+                                </div></div>
                             </div>
                         </form>
                         <p className=" text-center  mx-auto w-[350px] text-[white]">

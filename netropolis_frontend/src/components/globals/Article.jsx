@@ -9,10 +9,20 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
+import React, { useState, useEffect } from 'react';
+
 import Button from "./Button";
-const tags=["beach","mountain","hill","forest","desert"];
+
 const Article = ({ data, categories }) => {
-  const getData = data;
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const handlePageChange = (pageNumber) => {
+    if(pageNumber < 1 || pageNumber > Math.ceil(data.length / itemsPerPage)) return;
+    setCurrentPage(pageNumber);
+  };
+
+  const getData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   return (
     <article className="w-full flex justify-center items-center">
       <div className="w-full flex flex-col py-10 gap-16 lg:gap-0 lg:py-20 lg:flex-row-reverse lg:items-start max-w-7xl">
@@ -23,22 +33,31 @@ const Article = ({ data, categories }) => {
         </div>
         {/*  article*/}
 
-        <ForYou data={getData} />
+        <SearchResults data={getData} totalItems={data.length} 
+      itemsPerPage={itemsPerPage} 
+      currentPage={currentPage} 
+      onPageChange={handlePageChange} />
+        
       </div>
+      
     </article>
   );
 };
 
-const ForYou = ({ data }) => {
+const SearchResults = ({ data,totalItems,itemsPerPage,currentPage,onPageChange }) => {
   return (
     <div className="lg:w-2/3 w-full lg:border-r flex justify-start items-center lg:items-start px-8 flex-col">
-      <h1 className="text-indigo-400 font-bold text-lg xl:text-xl">For You</h1>
+      <h1 className="text-indigo-400 font-bold text-lg xl:text-xl">Search Results ({data.length})</h1>
       <div className="w-full">
         {data.map((item, idx) => {
           return <ArticleCard key={idx} data={item} />;
         })}
       </div>
-      <Pagination />
+      <Pagination 
+      totalItems={totalItems} 
+      itemsPerPage={itemsPerPage} 
+      currentPage={currentPage} 
+      onPageChange={onPageChange} />
     </div>
   );
 };
@@ -68,43 +87,43 @@ const ArticleCard = ({ data }) => {
   return (
     <article className="w-full flex flex-col justify-center items-center border-b py-8">
       <header className="w-full gap-2 flex justify-start items-center">
-        <div className="w-8 aspect-square bg-neutral-200 rounded-full"></div>
-        <p className="text-neutral-600 text-sm lg:text-base">
-          by{" "}
+        
+        <p className="text-neutral-600 text-sm lg:text-base flex gap-1">
+        <MapPinIcon className="w-4 lg:w-5"/>
           <span className="font-bold text-indigo-400">
-            {import.meta.env.VITE_APP}
+          {data.region}
           </span>
         </p>
         <CalendarDaysIcon className="w-4 lg:w-5" />
-        <p className="text-sm lg:text-base text-neutral-600">5 January</p>
+        <p className="text-sm lg:text-base text-neutral-600">{(new Date(data.created_at)).toDateString()}</p>
       </header>
       <main className="flex w-full gap-3 lg:gap-5 justify-stretch items-center">
         <div className="flex-1 h-full gap-1 flex flex-col justify-start items-center">
           <h1 className="text-lg lg:text-xl font-bold mt-2 text-neutral-600 cutoff-text cutoff-text-2 w-full">
-            {data.title}
+            {data.quest_name}
           </h1>
           <p className="w-full text-neutral-600 text-sm lg:text-base leading-5 cutoff-text cutoff-text-2">
             {data.description}
           </p>
-          {Object.prototype.hasOwnProperty.call(data, "location") ? (
+          {/* {Object.prototype.hasOwnProperty.call(data, "location") ? (
             <div className="w-full flex justify-start my-3 items-center">
               <MapPinIcon className="w-4 text-neutral-600" />
               <span className="text-xs text-neutral-600">{data.location}</span>
             </div>
           ) : (
             ""
-          )}
+          )} */}
         </div>
         <div
           className="w-24 aspect-square rounded-xl bg-cover"
           style={{
-            backgroundImage: `url(https://source.unsplash.com/random/1920x1080/?${data.slug})`,
+            backgroundImage: `url(https://source.unsplash.com/random/1920x1080/?${data.description})`,
           }}
         ></div>
       </main>
       <footer className="w-full mt-2 flex justify-between items-center">
         <div className="flex justify-center items-center gap-2">
-          {tags.map((item, idx) => (
+          {data?.genre_tags?.map((item, idx) => (
             <a
               href={`/`}
               key={idx}
@@ -130,7 +149,7 @@ const ArticleCard = ({ data }) => {
             </span>
           </div>
           <BookmarkIcon className="w-5 text-neutral-600 cursor-pointer" />
-          <Button text="Apply Now" path="/" customClass={"mx-4"}/>
+          <Button text="Apply Now" path={`/application/${data.id}`} customClass={"mx-4"}/>
         </div>
       </footer>
     </article>
@@ -139,27 +158,31 @@ const ArticleCard = ({ data }) => {
 
 
 
-const Pagination = () => {
+const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => {
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
   return (
     <div className="w-full p-4 flex justify-end gap-5 items-center">
-      <div className="flex cursor-pointer gap-2 justify-center items-center">
-        <ChevronLeftIcon className="w-4" />
+      <div className="flex cursor-pointer gap-2 justify-center items-center" onClick={() => onPageChange(currentPage - 1)}>
+        <ChevronLeftIcon className="w-4"  />
         <span className="text-neutral-600 font-bold text-sm">Prev</span>
       </div>
       <div className="flex justify-center items-center gap-2">
-        <div className="bg-indigo-400 text-white text-sm w-6 aspect-square rounded-full flex justify-center items-center">
-          1
-        </div>
-        <div className="bg-neutral-200 text-neutral-600 text-sm w-6 aspect-square rounded-full flex justify-center items-center">
-          2
-        </div>
-        <div className="bg-neutral-200 text-neutral-600 text-sm w-6 aspect-square rounded-full flex justify-center items-center">
-          3
-        </div>
+        {pageNumbers.map(number => (
+          <div 
+            key={number} 
+            className={`text-sm w-6 cursor-pointer aspect-square rounded-full flex justify-center items-center ${number === currentPage ? 'bg-indigo-400 text-white' : 'bg-neutral-200 text-neutral-600'}`}
+            onClick={() => onPageChange(number)}
+          >
+            {number}
+          </div>
+        ))}
       </div>
-      <div className="flex cursor-pointer gap-2 justify-center items-center">
-        <span className="text-neutral-600 font-bold text-sm">Prev</span>
-        <ChevronRightIcon className="w-4" />
+      <div className="flex cursor-pointer gap-2 justify-center items-center" onClick={() => onPageChange(currentPage + 1)}>
+        <span className="text-neutral-600 font-bold text-sm">Next</span>
+        <ChevronRightIcon className="w-4"  />
       </div>
     </div>
   );

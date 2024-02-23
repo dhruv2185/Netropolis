@@ -6,6 +6,8 @@ import {
 import mesh from "../../assets/images/mesh.png";
 import temple from "../../assets/images/temple.png";
 import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const metadata = {
   header: `Dive into fun-filled quests and events across the country with`,
@@ -16,6 +18,12 @@ const metadata = {
 const netropolis = "Netropolis";
 
 const Hero = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+  const onSearch = (e) => {
+    e.preventDefault();
+    navigate(`/search?query=${searchQuery}`);
+  }
   return (
     <main className="h-[700px] overflow-hidden w-full flex justify-center items-center">
       <div
@@ -48,7 +56,7 @@ const Hero = () => {
           </motion.article>
           <footer className="w-full">
             <form
-              action=""
+              onSubmit={onSearch}
               className="bg-indigo-400 my-20 lg:my-10 max-w-md w-full gap-4 rounded-full p-2 flex justify-center items-center"
             >
               <div className="w-8 flex justify-center items-center aspect-square">
@@ -57,12 +65,15 @@ const Hero = () => {
               <div className="flex-1">
                 <input
                   type="text"
+                  name="searchQuery"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="bg-transparent placeholder-indigo-200 flex-1 w-full text-sm text-white focus:outline-none active:outline-none"
                   placeholder="Search anything..."
                 />
               </div>
               <div className="w-20">
-                <button className="text-indigo-400 font-bold bg-white rounded-full w-full py-2 px-3">
+                <button type="submit" className="text-indigo-400 font-bold bg-white rounded-full w-full py-2 px-3">
                   Search
                 </button>
               </div>

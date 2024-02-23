@@ -197,8 +197,9 @@ const Login = () => {
 
                 <p className="text-sm text-right mt-3 text-indigo-100 pb-2 mb-3">
                   <Link to="/forgotpassword">Forgot Password</Link>
-                </p>
+                </p><div className="flex flex-col gap-2 justify-center items-center">
                 <Button text={isLoading ? <AppLoader /> : "Sign In"} customClass={"w-full"} loading={isLoading} ></Button>
+                <h2 className=" text-indigo-300 font-extrabold rounded-full bg-slate-100 px-2">OR</h2>
                 <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
                   <button
                     className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
@@ -209,7 +210,7 @@ const Login = () => {
                     }}
                   > Sign In with Google
                   </button>
-                </div>
+                </div></div>
               </form>
 
               <p className="font-medium text-sm text-center mt-5 text-[white]">
