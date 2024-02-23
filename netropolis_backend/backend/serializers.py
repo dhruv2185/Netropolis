@@ -101,3 +101,10 @@ class TasksSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskProblem
         fields = '__all__'
+        
+class TaskSerializerBulk(serializers.ListSerializer):
+    child = TasksSerializer()
+
+    def create(self, validated_data):
+        instances = [TaskProblem(**item) for item in validated_data]
+        return TaskProblem.objects.bulk_create(instances)
