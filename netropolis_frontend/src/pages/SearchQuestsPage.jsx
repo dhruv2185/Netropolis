@@ -4,18 +4,30 @@ import Article from "../components/globals/Article.jsx";
 import Header from "../components/globals/Header.jsx";
 import navigations from "../data/navigations.json";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { useState } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState ,useEffect} from "react";
+import AppLoader from "../utils/AppLoader.jsx";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
-
-const DestinationPage = ({ destinations, destinationCategories }) => {
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+const SearchQuestsPage = ({ destinations, destinationCategories }) => {
+  const navigate = useNavigate();
+  const query = useQuery();
   const [results, setResults] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(query.get("query") || "");
+  const [loading, setLoading] = useState(false);
   //yaha pe fetch request marni h to get quest data aur fir results ko set karna h
 
   const tokens = JSON.parse(localStorage.getItem("tokens"));
   // const {userInfo, tokens} = useSelector((state) => state.auth);
 
   const fetchSearchedQuests = async () => {
+    if(searchQuery === "") {
+      toast.error("Please enter a search query.");
+      return;
+    };
+    setLoading(true);
     try {
       const res = await fetch(`${baseUrl}/search/?query=${searchQuery}`, {
         method: "GET",
@@ -40,7 +52,20 @@ const DestinationPage = ({ destinations, destinationCategories }) => {
     catch (err) {
       toast.error("Failed to fetch quest details.Please check your connection and try again later.");
     }
+    setLoading(false);
   }
+  useEffect(() => {
+    if (query.get("query")) {
+      setSearchQuery(query.get("query"));
+      fetchSearchedQuests();
+    }
+  }, [query.get("query")]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`?query=${searchQuery}`);
+    fetchSearchedQuests();
+  };
 
   return (
     <>
@@ -66,19 +91,17 @@ const DestinationPage = ({ destinations, destinationCategories }) => {
             </div>
             <div className="w-20">
               <button className="text-indigo-400 font-bold bg-white rounded-full w-full py-2 px-3"
-                onClick={(e) => {
-                  e.preventDefault();
-                  fetchSearchedQuests();
-                }}
+                onClick={handleSearch}
               >
                 Search
               </button>
             </div>
           </form>
         </footer>
-        <Article data={results} categories={destinationCategories} />
+        {loading && <div className="w-full min-h-[60vh] flex justify-center items-center"><AppLoader /></div>}
+        {!loading && <Article data={results} categories={destinationCategories} />}
       </main></>
   );
 };
 
-export default DestinationPage;
+export default SearchQuestsPage;

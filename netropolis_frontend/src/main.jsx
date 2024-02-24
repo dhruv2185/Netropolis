@@ -15,7 +15,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
-import DestinationPage from "./pages/DestinationPage.jsx";
+import SearchQuestsPage from "./pages/SearchQuestsPage.jsx";
 import ActivityPage from "./pages/ActivityPage.jsx";
 import TeamRegistrationPage from "./pages/TeamRegistrationPage.jsx";
 import ApplicationPage from "./pages/ApplicationPage.jsx";
@@ -36,7 +36,7 @@ const router = createBrowserRouter(
       <Route index={true} path="/" element={<LandingPage destinations={destinations} activities={activities} />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/destinations" element={<DestinationPage destinations={destinations} destinationCategories={destinationCategories} />} />
+      <Route path="/search" element={<SearchQuestsPage destinations={destinations} destinationCategories={destinationCategories} />} />
       <Route path="/team-registration" element={<TeamRegistrationPage />} />
       <Route path="/application/:questId" element={<ApplicationPage />} />
       <Route path="/registerquest" element={<RegisterQuest />} />

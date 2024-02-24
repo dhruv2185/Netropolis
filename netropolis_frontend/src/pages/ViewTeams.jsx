@@ -23,7 +23,7 @@ const ViewTeams = () => {
             id: 1,
             team_name: "Team A",
             composition: "Designers, Developers, Project Managers",
-            expectations: "To deliver high-quality projects on time",
+            expectations_for_the_platform: "To deliver high-quality projects on time",
             concerns: "Resource allocation, Communication",
             members: [
                 {
@@ -47,7 +47,7 @@ const ViewTeams = () => {
             id: 2,
             team_name: "Team B",
             composition: "Marketing Specialists, Content Writers",
-            expectations: "To increase brand visibility and engagement",
+            expectations_for_the_platform: "To increase brand visibility and engagement",
             concerns: "Content quality, Audience targeting",
             members: [
                 {
