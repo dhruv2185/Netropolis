@@ -25,3 +25,9 @@ class TaskView(APIView):
         tasks = TaskProblem.objects.all()
         serializer = self.serializer_class(tasks, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self, request):
+        pk = request.query_params.get('pk', None)
+        task = TaskProblem.objects.get(id=pk)
+        task.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

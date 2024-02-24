@@ -24,7 +24,6 @@ class QuestSchedulingView(APIView):
     def get(self, request, format=None):
         pk = request.query_params.get('pk', None)
         if pk is not None:
-            pk = get_user_model().objects.get(username=pk)
             try:
                 schedule = Schedule.objects.get(created_by=pk)
                 serializer = self.serializer_class(schedule, many=False)

@@ -130,17 +130,3 @@ def get_by_id(request):
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def get_by_community_manager(request):
-#         pk = request.query_params.get('communtiy_manager')
-#         if pk is not None:
-#             try:
-#                 team = Team.objects.get(id=pk)
-#                 serializer = TeamsSerializer(team, many=False)
-#             except MultipleObjectsReturned:
-#                 teams = Team.objects.filter(id=pk)
-#                 serializer = TeamsSerializer(teams, many=True)
-#             return Response(serializer.data, status=status.HTTP_200_OK)
-#         else:
-#             return Response(status=status.HTTP_400_BAD_REQUEST)
