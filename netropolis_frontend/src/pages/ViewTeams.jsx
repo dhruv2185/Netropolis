@@ -135,7 +135,7 @@ const ViewTeams = () => {
                             </p>
                         </div>
                         {<AppError />}
-                        {teams && teams.length > 0 && <TeamArticle teams={teams} />}
+                        {teams && teams.length > 0 && <TeamArticle teams={teams} fetchTeams={fetchTeams} />}
                         {teams && teams.length === 0 && <p className="font-fira text-medium text-xl text-indigo-400 self-center">
                             You currently have no teams. Please create one to view it here.
                         </p>}

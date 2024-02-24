@@ -47,9 +47,9 @@ const RegisterQuest = () => {
 
     const [tasks, setTasks] = useState([]);
 
-    const fetchTasks = () => {
+    const fetchTasks = async () => {
         try {
-            const res = fetch(`${baseUrl}/tasks`, {
+            const res = await fetch(`${baseUrl}/tasks/`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -57,17 +57,22 @@ const RegisterQuest = () => {
                     "Authorization": "Bearer " + tokens.access
                 },
             });
+            console.log("chala toh hai");
+            const data = await res.json();
+            console.log(data);
             if (!res.ok) {
                 setTasks(dummyTasks);
                 throw new Error('Something went wrong. Please try again later.')
             }
             else {
-                const data = res.json();
-                console.log(data);
-                setTasks(data);
+                if (Array.isArray(data))
+                    setTasks(data);
+                else
+                    setTasks([data]);
             }
         }
         catch (err) {
+            console.log(err);
             toast.error("Failed to fetch tasks. Please check your connection and try again later.");
         }
     }
@@ -277,7 +282,7 @@ const RegisterQuest = () => {
                                         >
 
                                             <span className="ml-2 text-sm tracking-wide text-wrap">
-                                                {task.task}
+                                                {task.description}
                                             </span>
                                         </p>
                                     </li>

@@ -14,7 +14,9 @@ class ApplicationsView(APIView):
     serializer_class = ApplicationsSerializer
 
     def post(self, request, *args, **kwargs):
+        print(request.data)
         serialzer = self.serializer_class(data=request.data)
+        
         if serialzer.is_valid():
             serialzer.save()
             return Response(serialzer.data, status=status.HTTP_201_CREATED)

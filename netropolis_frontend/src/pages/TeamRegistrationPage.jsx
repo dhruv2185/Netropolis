@@ -60,11 +60,11 @@ const TeamRegistrationPage = () => {
         e.preventDefault();
         try {
             if (teamData.team_name === "" || teamData.composition === "" || teamData.expectations_for_the_platform === "" || teamData.concerns === "") {
-                return toast.error("All fields are required");
+                throw Error("All fields are required!")
             }
             inputFields.forEach((field) => {
                 if (field.name === "" || field.age === "" || field.gender === "" || field.place_of_residence === "" || field.occupation === "") {
-                    return toast.error("All fields are required");
+                    throw Error("All fields are required!");
                 }
             }
             );
