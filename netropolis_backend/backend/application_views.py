@@ -4,8 +4,8 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth.models import User
-from .serializers import  ApplicationsSerializer
-from .models import Application
+from .serializers import  ApplicationsSerializer, QuestsSerializer
+from .models import Application, Quest
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
 
@@ -49,3 +49,21 @@ class ApplicationsView(APIView):
         applications = Application.objects.get(id=pk)
         applications.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_by_community_manager(request):
+        pk = request.query_params.get('id')
+        if pk is not None:
+            try:
+                quest = Quest.objects.get(created_by=pk)
+                serializer = QuestsSerializer(quest, many=False)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except MultipleObjectsReturned:
+                quests = Quest.objects.filter(created_by=pk)
+                serializer = QuestsSerializer(quests, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Quest.DoesNotExist:
+                return Response([], status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
