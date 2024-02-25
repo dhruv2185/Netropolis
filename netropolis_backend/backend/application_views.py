@@ -4,7 +4,7 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth.models import User
-from .serializers import  ApplicationsSerializer, QuestsSerializer
+from .serializers import  ApplicationsSerializer
 from .models import Application, Quest, Community_Manager
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
@@ -56,17 +56,17 @@ def get_by_community_manager(request):
     user = request.user
     cm = Community_Manager.objects.get(user=user.id)
     pk = cm.id
-    print(pk)
+    applications = Application.objects.filter(quest_id__created_by=pk)
     if pk is not None:
         try:
-            quest = Quest.objects.get(created_by=pk)
-            serializer = QuestsSerializer(quest, many=False)
+            application = Application.objects.get(quest_id__created_by=pk)
+            serializer = ApplicationsSerializer(application, many=False)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except MultipleObjectsReturned:
-            quests = Quest.objects.filter(created_by=pk)
-            serializer = QuestsSerializer(quests, many=True)
+            applications = Application.objects.filter(quest_id__created_by=pk)
+            serializer = ApplicationsSerializer(applications, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        except Quest.DoesNotExist:
+        except Application.DoesNotExist:
             return Response([], status=status.HTTP_200_OK)
     else:
         return Response(status=status.HTTP_400_BAD_REQUEST)
