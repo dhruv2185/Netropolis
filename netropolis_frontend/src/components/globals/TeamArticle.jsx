@@ -9,7 +9,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
-const TeamArticle = ({ teams }) => {
+const TeamArticle = ({ teams, fetchTeams }) => {
   console.log(teams)
   // const [teams, setTeams] = useState([]);
   // if (Array.isArray(teamsData)) {
@@ -27,7 +27,7 @@ const TeamArticle = ({ teams }) => {
         {/* Articles */}
         {teams && <div className="lg:w-2/3 w-full lg:border-r flex justify-start items-center lg:items-start px-8 flex-col">
           {teams.map((team, idx) => (
-            <TeamCard key={idx} team={team} index={idx}/>
+            <TeamCard key={idx} team={team} index={idx} fetchTeams={fetchTeams} />
           ))}
         </div>}
       </div>
@@ -36,9 +36,10 @@ const TeamArticle = ({ teams }) => {
 };
 
 
-const TeamCard = ({ team,index }) => {
+const TeamCard = ({ team, index, fetchTeams }) => {
   const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
   const tokens = useSelector((state) => state.auth.tokens);
+  console.log(team);
   const removeFields = async (e, index) => {
     e.preventDefault();
     try {
@@ -52,6 +53,7 @@ const TeamCard = ({ team,index }) => {
       })
       if (res.ok) {
         toast.success("Team deleted successfully");
+        fetchTeams();
       }
       else {
         const e = await res.json();
@@ -68,11 +70,11 @@ const TeamCard = ({ team,index }) => {
     <article className="w-full flex flex-col justify-center items-center border-b py-8">
       <header className="w-full gap-2 flex justify-between items-center">
         <h1 className="text-lg lg:text-xl font-bold mt-2 text-indigo-400 py-5">{team.team_name}</h1><button
-                  onClick={(e) => removeFields(e, index)}
-                  className={"text-base lg:text-lg font-bold rounded-full"}
-                >
-                  <MinusCircleIcon className="h-7 w-7 text-red-500 " />
-                </button>
+          onClick={(e) => removeFields(e, index)}
+          className={"text-base lg:text-lg font-bold rounded-full"}
+        >
+          <MinusCircleIcon className="h-7 w-7 text-red-500 " />
+        </button>
       </header>
       <main className="flex w-full gap-3 lg:gap-5 justify-stretch items-center">
         <div className="flex-1 h-full gap-1 flex flex-col justify-start items-center">

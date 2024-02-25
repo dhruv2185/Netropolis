@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { setCredentials, setTokens } from "../features/slices/authSlice";
 import AppLoader from "../utils/AppLoader";
 
@@ -31,6 +31,9 @@ const ApplicationPage = (props) => {
 
     const { questId } = useParams();
     // const { questData } = props;
+    const location = useLocation();
+    const quest_data = location.state;
+    console.log(quest_data);
 
     let dummyTeams = [
         {
@@ -54,24 +57,26 @@ const ApplicationPage = (props) => {
     const [teams, setTeams] = useState();
 
     const [appInfo, setAppInfo] = useState({
-        userId: userInfo.id,
-        questId: questId,
+        user_id: userInfo.user_id,
+        quest_id: questId,
         stay_start_date: "",
         stay_end_date: "",
         special_note: "",
         desired_tasks: "",
-        teamId: "",
-        daily_time_span: ""
+        teamId: 0,
+        daily_time_span: "",
+        approval_status: false,
+        status: "unviewed"
     });
     //  quest data props se ayega
-    const quest_data = {
-        quest_name: "Pokemon Quest",
-        region: "Kanto",
-        genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-        rewards: "$8000",
-        other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-        available_till: Date.now(),
-    }
+    // const quest_data = {
+    //     quest_name: "Pokemon Quest",
+    //     region: "Kanto",
+    //     genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
+    //     rewards: "$8000",
+    //     other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
+    //     available_till: Date.now(),
+    // }
     const listt = [1];
     const fetchTeams = async () => {
         try {
@@ -84,6 +89,7 @@ const ApplicationPage = (props) => {
             });
             if (response.ok) {
                 const data = await response.json();
+                console.log(data);
                 if (Array.isArray(data)) {
                     setTeams(data);
                 }
@@ -120,10 +126,13 @@ const ApplicationPage = (props) => {
         if (appInfo.stay_start_date === "" || appInfo.stay_end_date === "" || appInfo.special_note === "" || appInfo.desired_tasks === "" || appInfo.teamId === "" || appInfo.daily_time_span === "") {
             return toast.error("All fields are required");
         }
-        console.log(appInfo);
-        appInfo.userId = userInfo.id;
+        // console.log(appInfo);
+
+        // appInfo.user_id = userInfo.id;
         try {
-            const response = await fetch(`${BASE_URL}/applications`, {
+            const u = `${BASE_URL}/applications/`;
+            console.log(u);
+            const response = await fetch(`${BASE_URL}/applications/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -271,7 +280,7 @@ const ApplicationPage = (props) => {
                                                 <option value="">Select Team</option>
                                                 {
                                                     teams && teams.map((team, index) => (
-                                                        <option key={index} value={team.id}>{team.team_name}</option>
+                                                        <option key={index} value={team.id}>{team.id}</option>
                                                     ))
                                                 }
                                             </select>

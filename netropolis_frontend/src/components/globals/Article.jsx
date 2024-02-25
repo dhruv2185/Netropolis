@@ -14,11 +14,11 @@ import React, { useState, useEffect } from 'react';
 import Button from "./Button";
 
 const Article = ({ data, categories }) => {
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const handlePageChange = (pageNumber) => {
-    if(pageNumber < 1 || pageNumber > Math.ceil(data.length / itemsPerPage)) return;
+    if (pageNumber < 1 || pageNumber > Math.ceil(data.length / itemsPerPage)) return;
     setCurrentPage(pageNumber);
   };
 
@@ -33,18 +33,18 @@ const Article = ({ data, categories }) => {
         </div>
         {/*  article*/}
 
-        <SearchResults data={getData} totalItems={data.length} 
-      itemsPerPage={itemsPerPage} 
-      currentPage={currentPage} 
-      onPageChange={handlePageChange} />
-        
+        <SearchResults data={getData} totalItems={data.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange} />
+
       </div>
-      
+
     </article>
   );
 };
 
-const SearchResults = ({ data,totalItems,itemsPerPage,currentPage,onPageChange }) => {
+const SearchResults = ({ data, totalItems, itemsPerPage, currentPage, onPageChange }) => {
   return (
     <div className="lg:w-2/3 w-full lg:border-r flex justify-start items-center lg:items-start px-8 flex-col">
       <h1 className="text-indigo-400 font-bold text-lg xl:text-xl">Search Results ({data.length})</h1>
@@ -53,11 +53,11 @@ const SearchResults = ({ data,totalItems,itemsPerPage,currentPage,onPageChange }
           return <ArticleCard key={idx} data={item} />;
         })}
       </div>
-      <Pagination 
-      totalItems={totalItems} 
-      itemsPerPage={itemsPerPage} 
-      currentPage={currentPage} 
-      onPageChange={onPageChange} />
+      <Pagination
+        totalItems={totalItems}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={onPageChange} />
     </div>
   );
 };
@@ -84,14 +84,20 @@ const RecommendedTopic = ({ categories }) => {
 };
 
 const ArticleCard = ({ data }) => {
+  // console.log(data);
+  const randomIndex = Math.floor(Math.random() * data.quest_name.split(" ").length);
+  const unsplash = data.quest_name.split(" ")[randomIndex];
+  // console.log(unsplash);
+  const u = `https://source.unsplash.com/random/1920x1080/?${unsplash}`
+  console.log(u);
   return (
     <article className="w-full flex flex-col justify-center items-center border-b py-8">
       <header className="w-full gap-2 flex justify-start items-center">
-        
+
         <p className="text-neutral-600 text-sm lg:text-base flex gap-1">
-        <MapPinIcon className="w-4 lg:w-5"/>
+          <MapPinIcon className="w-4 lg:w-5" />
           <span className="font-bold text-indigo-400">
-          {data.region}
+            {data.region}
           </span>
         </p>
         <CalendarDaysIcon className="w-4 lg:w-5" />
@@ -117,7 +123,7 @@ const ArticleCard = ({ data }) => {
         <div
           className="w-24 aspect-square rounded-xl bg-cover"
           style={{
-            backgroundImage: `url(https://source.unsplash.com/random/1920x1080/?${data.description})`,
+            backgroundImage: `url(${u})`,
           }}
         ></div>
       </main>
@@ -132,8 +138,8 @@ const ArticleCard = ({ data }) => {
               {item}
             </a>
           ))}
-          
-          
+
+
         </div>
         <div className="flex justify-center items-center gap-2">
           <div className="flex justify-center items-center gap-1 mx-2">
@@ -149,7 +155,7 @@ const ArticleCard = ({ data }) => {
             </span>
           </div>
           <BookmarkIcon className="w-5 text-neutral-600 cursor-pointer" />
-          <Button text="Apply Now" path={`/application/${data.id}`} customClass={"mx-4"}/>
+          <Button text="Apply Now" path={`/application/${data.id}`} data={data} customClass={"mx-4"} />
         </div>
       </footer>
     </article>
@@ -166,13 +172,13 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
   return (
     <div className="w-full p-4 flex justify-end gap-5 items-center">
       <div className="flex cursor-pointer gap-2 justify-center items-center" onClick={() => onPageChange(currentPage - 1)}>
-        <ChevronLeftIcon className="w-4"  />
+        <ChevronLeftIcon className="w-4" />
         <span className="text-neutral-600 font-bold text-sm">Prev</span>
       </div>
       <div className="flex justify-center items-center gap-2">
         {pageNumbers.map(number => (
-          <div 
-            key={number} 
+          <div
+            key={number}
             className={`text-sm w-6 cursor-pointer aspect-square rounded-full flex justify-center items-center ${number === currentPage ? 'bg-indigo-400 text-white' : 'bg-neutral-200 text-neutral-600'}`}
             onClick={() => onPageChange(number)}
           >
@@ -182,19 +188,19 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
       </div>
       <div className="flex cursor-pointer gap-2 justify-center items-center" onClick={() => onPageChange(currentPage + 1)}>
         <span className="text-neutral-600 font-bold text-sm">Next</span>
-        <ChevronRightIcon className="w-4"  />
+        <ChevronRightIcon className="w-4" />
       </div>
     </div>
   );
 };
 
-const StaffPick = ({data, header}) => {
+const StaffPick = ({ data, header }) => {
   return (
     <div className="w-full p-8 hidden gap-4 lg:flex flex-col justify-center items-center">
       <h1 className="w-full text-indigo-400 font-bold text-xl">{header}</h1>
       <div className="w-full flex flex-col justify-center items-ccenter">
         {
-          data.sort((a, b) => a.viewCount - b.viewCount).slice(0,5).map((item, idx) => {
+          data.sort((a, b) => a.viewCount - b.viewCount).slice(0, 5).map((item, idx) => {
             return (
               <a href={`/destinations/${item.slug}`} className="w-full hover:bg-indigo-400 hover:color-white rounded-lg flex border-b p-4 justify-between items-center">
                 <h1 className="text-neutral-600">{item.title}</h1>
