@@ -1,6 +1,5 @@
 
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import Footer from "../components/globals/Footer.jsx";
 import Header from "../components/globals/Header.jsx";
 import QuestList from "../components/globals/QuestList.jsx";
@@ -17,7 +16,7 @@ const ViewCMQuests = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
   useEffect(() => {
     if (userInfo === null || userInfo.role !== "cm") {
-      toast.error("Please login to continue.");
+      toast.error("Please login as Community Manager to continue.");
       navigate('/');
     }
     else

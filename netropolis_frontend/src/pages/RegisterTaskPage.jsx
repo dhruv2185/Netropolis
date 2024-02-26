@@ -30,7 +30,7 @@ const RegisterTaskPage = () => {
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
             console.log("redirecting to login");
-            toast.error("Please login to continue.")
+            toast.error("Please login as Community Manager to continue.")
             navigate('/')
         }
     }, []);

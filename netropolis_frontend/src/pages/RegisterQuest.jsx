@@ -143,7 +143,7 @@ const RegisterQuest = () => {
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
             console.log("redirecting to login");
-            toast.error("Please login to continue.")
+            toast.error("Please login as Community Manager to continue.")
             navigate('/')
         }
         else
@@ -328,13 +328,15 @@ const RegisterQuest = () => {
                                         </div>
                                         <div className="w-8/12 " >
                                             <p className="text-indigo-400 font-inter mb-[4px]">Description</p>
-                                            <input
+                                            <textarea
                                                 type="text"
                                                 name="description"
                                                 value={questData.description}
                                                 onChange={handlePrimaryInputChange}
-                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                className="w-full text-black rounded-2xl pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[105px] overflow-auto hide-scrollbar"
+
                                                 placeholder="Description"
+
                                             />
                                         </div>
                                         <div className="w-8/12 " >
@@ -361,12 +363,12 @@ const RegisterQuest = () => {
                                         </div>
                                         <div className="w-8/12" >
                                             <p className="text-indigo-400 font-inter mb-[4px]">Other Information</p>
-                                            <input
+                                            <textarea
                                                 type="text"
                                                 name="other_information"
                                                 value={questData.other_information}
                                                 onChange={handlePrimaryInputChange}
-                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                className="w-full text-black rounded-2xl pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[105px] overflow-auto hide-scrollbar"
                                                 placeholder="Other Information"
                                             />
                                         </div>

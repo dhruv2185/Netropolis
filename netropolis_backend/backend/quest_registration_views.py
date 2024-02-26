@@ -35,7 +35,7 @@ class QuestRegistrationView(APIView):
         form['created_by'] = cm.id
         serialzer = self.serializer_class(data=form)
         if serialzer.is_valid():
-
+            serialzer.save()
             newQuest = dict(serialzer.data)
             try:
                 self.qdrant.upload_points(
@@ -47,9 +47,12 @@ class QuestRegistrationView(APIView):
 
                     ],
                 )
-            except:
-                print("Error uploading to qdrant")
-            serialzer.save()
+            except Exception as e:
+                print(e)
+                # delete the quest if it fails to upload to qdrant
+                Quest.objects.get(id=newQuest['id']).delete()
+                return Response("Error Uploading to Qdrant", status=status.HTTP_400_BAD_REQUEST)
+
             return Response(serialzer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)

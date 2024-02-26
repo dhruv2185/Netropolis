@@ -7,6 +7,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import AppLoader from "../utils/AppLoader.jsx";
+import Footer from "../components/globals/Footer.jsx";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -55,11 +56,7 @@ const SearchQuestsPage = ({ destinations, destinationCategories }) => {
     setLoading(false);
   }
   useEffect(() => {
-    if (userInfo === null || userInfo.role !== "user") {
-      toast.error("Please login to continue.");
-      navigate('/');
-    }
-    else if (query.get("query")) {
+    if (query.get("query")) {
       setSearchQuery(query.get("query"));
       fetchSearchedQuests();
     }
@@ -104,7 +101,7 @@ const SearchQuestsPage = ({ destinations, destinationCategories }) => {
         </footer>
         {loading && <div className="w-full min-h-[60vh] flex justify-center items-center"><AppLoader /></div>}
         {!loading && <Article data={results} categories={destinationCategories} />}
-      </main></>
+      </main><Footer navigations={navigations} /></>
   );
 };
 

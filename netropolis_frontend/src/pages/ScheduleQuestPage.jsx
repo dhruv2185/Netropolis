@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { setCredentials, setTokens } from "../features/slices/authSlice";
-import AppLoader from "../utils/AppLoader";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+// import { setCredentials, setTokens } from "../features/slices/authSlice";
+// import AppLoader from "../utils/AppLoader";
 
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+// import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { PlusIcon, MinusCircleIcon, PlusSmallIcon } from "@heroicons/react/24/solid";
-import { useLoginMutation } from "../features/slices/usersApiSlice";
-import Button from "../components/globals/Button";
+// import { useLoginMutation } from "../features/slices/usersApiSlice";
+// import Button from "../components/globals/Button";
 import Title from "../components/globals/Title";
 import navigations from "../data/navigations.json";
 import Header from "../components/globals/Header";
@@ -126,7 +126,7 @@ const ScheduleQuestPage = (props) => {
 
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
-            toast.error("Please login to continue.")
+            toast.error("Please login as Community Manager to continue.")
             navigate("/");
         }
         else {

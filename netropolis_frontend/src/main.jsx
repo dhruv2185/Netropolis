@@ -16,7 +16,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
 import SearchQuestsPage from "./pages/SearchQuestsPage.jsx";
-import ActivityPage from "./pages/ActivityPage.jsx";
+// import ActivityPage from "./pages/ActivityPage.jsx";
 import TeamRegistrationPage from "./pages/TeamRegistrationPage.jsx";
 import ApplicationPage from "./pages/ApplicationPage.jsx";
 import RegisterQuest from "./pages/RegisterQuest.jsx";
@@ -61,11 +61,10 @@ const clientId = "1064200584812-8fttm5kfnbojukbvh44qf103sa4skqd8.apps.googleuser
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId={clientId}>
     <Provider store={store}>
-      <React.StrictMode>
 
-        <RouterProvider router={router} />
+      <RouterProvider router={router} />
 
-      </React.StrictMode>
+
     </Provider>
   </GoogleOAuthProvider>
 );

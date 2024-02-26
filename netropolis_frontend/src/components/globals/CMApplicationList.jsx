@@ -31,7 +31,7 @@ const ApplicationCard = ({ application }) => {
               <strong>Region:</strong> {application.region}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
-              {/* <strong>Genre Tags:</strong> {application.genre_tags?.join(", ")} */}
+              <strong>Genre Tags:</strong> {application.genre_tags.join(", ")}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
               <strong>Description:</strong> {application.description}
@@ -53,7 +53,7 @@ const ApplicationCard = ({ application }) => {
               <strong>Special Note:</strong> {application.special_note}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
-              {/* <strong>Desired Tasks:</strong> {application.desired_tasks.join(", ")} */}
+              <strong>Desired Tasks:</strong> {application.desired_tasks}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
               <strong>Preferred daily time span for quests during the stay:</strong> {application.daily_time_span}

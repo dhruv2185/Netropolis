@@ -19,53 +19,59 @@ import {
   Avatar,
   Badge
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
-import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 import { clearCredentials, clearTokens } from "../../features/slices/authSlice";
-const profileMenuItems = [
-  {
-    label: "My Profile",
-    icon: UserCircleIcon,
-    link: "/profile",
-  },
-  {
-    label: "Teams",
-    icon: UserGroupIcon,
-    link: "/viewteams",
-  },
-  {
-    label: "Applications",
-    icon: NewspaperIcon,
-    link: "/viewapplications",
-  },
-  {
-    label: "Create Quest",
-    icon: PlusCircleIcon,
-    link: "/registerquest",
-  },
-  {
-    label: "My Quests",
-    icon: QueueListIcon,
-    link: "/viewquests",
-  },
-  {
-    label: "Create tasks",
-    icon: PlusCircleIcon,
-    link: "/registertask",
-  }
-  ,
-  {
-    label: "Sign Out",
-    icon: PowerIcon,
-    link: "/signout",
-  },
-];
+
 const ProfileMenu = () => {
   const dispatch = useDispatch();
-
+  const role = useSelector((state) => state.auth.userInfo.role);
+  const profileMenuItems = [
+    {
+      label: "My Profile",
+      icon: UserCircleIcon,
+      link: "/profile",
+    },
+    ...(role === "user" ? [{
+      label: "Teams",
+      icon: UserGroupIcon,
+      link: "/viewteams",
+    }] : []),
+    {
+      label: "Applications",
+      icon: NewspaperIcon,
+      link: role === "user" ? "/viewapplications" : (role === "cm" ? "/viewCMapplications" : undefined),
+    },
+    ...(role === "cm" ? [
+      {
+        label: "Create Quest",
+        icon: PlusCircleIcon,
+        link: "/registerquest",
+      },
+      {
+        label: "My Quests",
+        icon: QueueListIcon,
+        link: "/viewquests",
+      },
+      {
+        label: "Create tasks",
+        icon: PlusCircleIcon,
+        link: "/registertask",
+      }
+    ] : []),
+    {
+      label: "Sign Out",
+      icon: PowerIcon,
+      link: "/signout",
+    },
+  ];
+  const navigate = useNavigate();
+  console.log(profileMenuItems)
   const handleLogout = () => {
+
     dispatch(clearCredentials());
     dispatch(clearTokens());
+    navigate('/');
     // Perform any additional logout operations you need here
   };
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -105,8 +111,8 @@ const ProfileMenu = () => {
             <MenuItem
               key={label}
               className={`flex items-center gap-2 rounded ${isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
+                ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                : ""
                 }`}
             >
               {React.createElement(icon, {

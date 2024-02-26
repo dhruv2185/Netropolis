@@ -4,10 +4,11 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from django.contrib.auth.models import User
-from .serializers import  ApplicationsSerializer
+from .serializers import ApplicationsSerializer
 from .models import Application, Quest, Community_Manager
 from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
+
 
 class ApplicationsView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -16,7 +17,7 @@ class ApplicationsView(APIView):
     def post(self, request, *args, **kwargs):
         print(request.data)
         serialzer = self.serializer_class(data=request.data)
-        
+
         if serialzer.is_valid():
             serialzer.save()
             return Response(serialzer.data, status=status.HTTP_201_CREATED)
@@ -25,12 +26,10 @@ class ApplicationsView(APIView):
 
     def get(self, request, format=None):
         user = request.user
-        print(type(user))
         try:
-            application = Application.objects.get(user_id= user.id)
-            serializer = self.serializer_class(application, many=False)
-        except MultipleObjectsReturned:
-            applications = Application.objects.filter(user_id=user.id)
+            applications = Application.objects.select_related('quest_id').filter(
+                user_id=user.id)
+            print(applications[0].quest_id.created_by)
             serializer = self.serializer_class(applications, many=True)
         except Application.DoesNotExist:
             return Response([], status=status.HTTP_200_OK)
@@ -51,7 +50,8 @@ class ApplicationsView(APIView):
         applications = Application.objects.get(id=pk)
         applications.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-    
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_by_community_manager(request):

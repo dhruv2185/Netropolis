@@ -172,7 +172,7 @@ const ApplicationPage = (props) => {
                                 <div className="flex flex-wrap gap-2 mb-4 max-md:justify-center max-md:items-center">
                                     {
                                         quest_data.genre_tags.map((tag, index) => (
-                                            <p key={index} className="text-white font-inter bg-indigo-400 px-2 py-1 rounded-full ">{tag}</p>
+                                            <p key={index} className="text-white font-inter bg-indigo-400 px-2 py-1 rounded-full m-1">{tag}</p>
                                         ))
                                     }
                                 </div>
@@ -280,7 +280,7 @@ const ApplicationPage = (props) => {
                                                 <option value="">Select Team</option>
                                                 {
                                                     teams && teams.map((team, index) => (
-                                                        <option key={index} value={team.id}>{team.id}</option>
+                                                        <option key={index} value={team.id}>{team.team_name}</option>
                                                     ))
                                                 }
                                             </select>

@@ -84,7 +84,7 @@ const Register = () => {
             if (user.error?.message) {
                 throw new Error(user.error.message)
             }
-            dispatch(setCredentials({ ...user, role: "role" }));
+            dispatch(setCredentials({ ...user, role: "user" }));
             dispatch(setTokens({ ...currTokens }));
             navigate("/");
             toast.success("Signup is successful");
@@ -295,21 +295,21 @@ const Register = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col justify-center items-center gap-2">
-                                <div className="justify-center w-full flex gap-2 flex-col text-center items-center">
-                                    <Button text={isLoading && loading ? <AppLoader /> : "Sign Up"} customClass={"w-full"} loading={isLoading} ></Button>
-                                </div>
-                                <h2 className=" text-indigo-300 font-extrabold rounded-full bg-slate-100 px-2">OR</h2>
-                                <div className="justify-center w-full flex gap-2 flex-col text-center items-center">
-                                    <button
-                                        className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
-                                        disabled={loading}
-                                        onClick={(e) => {
-                                            e.preventDefault()
-                                            login()
-                                        }}
-                                    > Sign Up with Google
-                                    </button>
-                                </div></div>
+                                    <div className="justify-center w-full flex gap-2 flex-col text-center items-center">
+                                        <Button text={isLoading && loading ? <AppLoader /> : "Sign Up"} customClass={"w-full"} loading={isLoading} ></Button>
+                                    </div>
+                                    <h2 className=" text-indigo-300 font-extrabold rounded-full bg-slate-100 px-2">OR</h2>
+                                    <div className="justify-center w-full flex gap-2 flex-col text-center items-center">
+                                        <button
+                                            className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
+                                            disabled={loading}
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                login()
+                                            }}
+                                        > Sign Up with Google
+                                        </button>
+                                    </div></div>
                             </div>
                         </form>
                         <p className=" text-center  mx-auto w-[350px] text-[white]">

@@ -123,8 +123,8 @@ const ViewUserApplications = () => {
             toast.error("Please login to continue.")
             navigate('/')
         }
-        // else
-        // fetchApplications();
+        else
+            fetchApplications();
     }, [tokens]);
 
     return (

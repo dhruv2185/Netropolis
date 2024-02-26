@@ -52,11 +52,12 @@ const SearchResults = ({ data, totalItems, itemsPerPage, currentPage, onPageChan
           return <ArticleCard key={idx} data={item} selectedTags={selectedTags} setSelectedTags={setSelectedTags} setFilteredData={setFilteredData} allData={allData} />;
         })}
       </div>
-      <Pagination
+
+      {totalItems >= itemsPerPage && <Pagination
         totalItems={totalItems}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
-        onPageChange={onPageChange} />
+        onPageChange={onPageChange} />}
     </div>
   );
 };
