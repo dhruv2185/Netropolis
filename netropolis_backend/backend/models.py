@@ -29,7 +29,7 @@ class Team(models.Model):
 class Community_Manager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     region = models.TextField()
-    
+
     def __str__(self):
         return self.user.username
 
@@ -48,6 +48,7 @@ class Quest(models.Model):
     description = models.TextField()
     created_by = models.ForeignKey(
         Community_Manager, on_delete=models.CASCADE, default=7)
+    available_till = models.DateTimeField()
 
 
 class Application(models.Model):

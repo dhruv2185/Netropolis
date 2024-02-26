@@ -5,6 +5,7 @@ import "../../css/slider.css";
 import instagramIcon from "../../assets/images/instagram.png";
 import whatsappIcon from "../../assets/images/whatsapp.png";
 import twitterIcon from "../../assets/images/twitter.png";
+import { Link } from "react-router-dom";
 const Slider = ({ data }) => {
   const mostViewData = data
     .sort((a, b) => b.viewCount - a.viewCount)
@@ -59,12 +60,12 @@ const HeroWrapper = ({ activeSlide }) => {
       <motion.p initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { duration: .8, ease: "circOut", delay: 1.2 } }} className="cutoff-text cutoff-text-2 lg:text-left mx-4 text-center text-white removeTransition">
         {activeSlide.description}
       </motion.p>
-      <a
-        href=""
+      <Link
+        to="/explore"
         className="m-8 removeTransition overflow-hidden whitespace-nowrap lg:mx-4 text-base font-bold bg-indigo-400 text-white py-4 px-8 rounded-full"
       >
         <motion.span initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1, transition: { duration: .8, ease: "circOut", delay: 1.5 } }} className="inline-block removeTransition">Explore Now</motion.span>
-      </a>
+      </Link>
     </div>
   );
 };

@@ -5,10 +5,10 @@ import "../../css/leaflet.css";
 import "leaflet/dist/leaflet.css";
 
 const metadata = {
-  title: "Bali Map's Guide",
-  subtitle: "Are you lost? We have a map of the island of Bali",
+  title: "Japan Map's Guide",
+  subtitle: "Are you lost? We have a map of the country of Japan",
   map: {
-    
+
     centerMap: [34.40535859962245, 132.45033708766664],
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -27,7 +27,7 @@ const Map = ({ destinations }) => {
             subtitleClass={"text-end"}
             customClass={"flex flex-col items-end"}
           />
-          <Button text={"Open Google Maps"} path={"/activities"} />
+          <Button text={"Explore Quests"} path={"/explore"} />
         </div>
         <div className="w-full md:w-2/3">
           <div className="w-full aspect-square md:aspect-video rounded-xl overflow-hidden">

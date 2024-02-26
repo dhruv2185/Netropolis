@@ -1,5 +1,5 @@
 [
   {"name": "Home", "path": "/"},
-  {"name": "Destinations", "path": "/destinations"},
-  {"name": "Activities", "path": "/activities"}
+  {"name": "Search", "path": "/search"},
+  {"name": "Explore", "path": "/explore"}
 ]

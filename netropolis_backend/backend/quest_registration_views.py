@@ -96,43 +96,51 @@ class QuestRegistrationView(APIView):
         quests.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_all_quests(request):
     try:
-        quest = Quest.objects.all()
+        quest = Quest.objects.get()
         serializer = QuestsSerializer(quest, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except MultipleObjectsReturned:
         quests = Quest.objects.all()
         serializer = QuestsSerializer(quests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except Quest.DoesNotExist:
         return Response([], status=status.HTTP_200_OK)
-    
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_quest_by_id(request):
     pk = request.query_params.get('id')
     try:
-        quest = Quest.objects.get(id = pk)
+        quest = Quest.objects.get(id=pk)
         serializer = QuestsSerializer(quest, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except MultipleObjectsReturned:
-        quests = Quest.objects.filter(id = pk)
+        quests = Quest.objects.filter(id=pk)
         serializer = QuestsSerializer(quests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except Quest.DoesNotExist:
         return Response([], status=status.HTTP_200_OK)
-    
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_quest_by_cm(request):
     user = request.user
-    cm_profile = Community_Manager.objects.get(id = user.id)
-    print(cm_profile.id)
+    cm_profile = Community_Manager.objects.get(id=user.id)
     pk = cm_profile.id
     try:
-        quest = Quest.objects.get(created_by = pk)
+        quest = Quest.objects.get(created_by=pk)
         serializer = QuestsSerializer(quest, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except MultipleObjectsReturned:
-        quests = Quest.objects.filter(created_by = pk)
+        quests = Quest.objects.filter(created_by=pk)
         serializer = QuestsSerializer(quests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except Quest.DoesNotExist:
         return Response([], status=status.HTTP_200_OK)
