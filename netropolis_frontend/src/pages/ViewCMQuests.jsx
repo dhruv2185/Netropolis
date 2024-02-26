@@ -1,15 +1,24 @@
 
+import { toast } from "react-toastify";
 import Footer from "../components/globals/Footer.jsx";
 import Header from "../components/globals/Header.jsx";
 import QuestList from "../components/globals/QuestList.jsx";
 import navigations from "../data/navigations.json";
+import { useSelector } from "react-redux";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 const ViewCMQuests = () => {
+
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
   const tokens = JSON.parse(localStorage.getItem("tokens"));
+  const userInfo = useSelector((state) => state.auth.userInfo);
   useEffect(() => {
-    fetchQuestsForCM();
+    if (userInfo === null || userInfo.role !== "cm") {
+      toast.error("Please login to continue.");
+      navigate('/');
+    }
+    else
+      fetchQuestsForCM();
   }, []);
   const fetchQuestsForCM = async () => {
     setLoading(true);

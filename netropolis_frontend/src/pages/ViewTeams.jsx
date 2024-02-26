@@ -108,7 +108,7 @@ const ViewTeams = () => {
     const tokens = useSelector((state) => state.auth.tokens);
 
     useEffect(() => {
-        if (userInfo === null) {
+        if (userInfo === null || userInfo.role !== "user") {
             console.log("redirecting to login");
             toast.error("Please login to continue.")
             navigate('/')
