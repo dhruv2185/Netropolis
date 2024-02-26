@@ -1,4 +1,7 @@
 # Netropolis
+## Live URL
+
+(Will be updated soon!)
 
 ## Description
 
@@ -77,3 +80,8 @@ The goal of the project is to propose functions to build a matching platform tha
 - Python
 - VectorDB
 - Sentence transformers(LLM)
+
+## Miscellaneous
+(Will be updated soon)
+- Google Drive link (Demo Video and Documentation for submission) : https://drive.google.com/drive/folders/1vI5s1vZxrFzV2tq2T8qda_DDiJcBPARG?usp=sharing
+- Figma Link : https://www.figma.com/file/Ljaj2dko4PNk4VZqJIa4uD/Untitled?type=design&node-id=0%3A1&mode=design&t=O1FUnCXwqboAd29T-1

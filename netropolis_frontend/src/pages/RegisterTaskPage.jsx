@@ -19,11 +19,12 @@ const RegisterTaskPage = () => {
     const [tasks, setTasks] = useState([
         {
             description: "",
-            createdBy: "",
+            created_by: "",
         }
     ])
 
     const userInfo = useSelector((state) => state.auth.userInfo);
+    // console.log(userInfo);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,11 +52,11 @@ const RegisterTaskPage = () => {
                 if (task.description === "") {
                     throw Error("Please fill in all the fields.");
                 }
-                task.createdBy = userInfo?.cm_id;
+                task.created_by = userInfo?.cm_id;
             })
             const toBeSent = tasks;
             console.log(toBeSent);
-            const res = await fetch("http://localhost:8000/tasks", {
+            const res = await fetch("http://localhost:8000/tasks/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
