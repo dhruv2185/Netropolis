@@ -141,7 +141,7 @@ const RegisterQuest = () => {
         }
     ]
     useEffect(() => {
-        if (userInfo === null) {
+        if (userInfo === null || userInfo.role !== "cm") {
             console.log("redirecting to login");
             toast.error("Please login to continue.")
             navigate('/')

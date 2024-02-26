@@ -125,7 +125,7 @@ const ScheduleQuestPage = (props) => {
     }
 
     useEffect(() => {
-        if (userInfo) {
+        if (userInfo === null || userInfo.role !== "cm") {
             toast.error("Please login to continue.")
             navigate("/");
         }

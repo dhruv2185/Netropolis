@@ -5,7 +5,7 @@ import Header from "../components/globals/Header.jsx";
 import navigations from "../data/navigations.json";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import AppLoader from "../utils/AppLoader.jsx";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 function useQuery() {
@@ -23,7 +23,7 @@ const SearchQuestsPage = ({ destinations, destinationCategories }) => {
   // const {userInfo, tokens} = useSelector((state) => state.auth);
 
   const fetchSearchedQuests = async () => {
-    if(searchQuery === "") {
+    if (searchQuery === "") {
       toast.error("Please enter a search query.");
       return;
     };
@@ -55,7 +55,11 @@ const SearchQuestsPage = ({ destinations, destinationCategories }) => {
     setLoading(false);
   }
   useEffect(() => {
-    if (query.get("query")) {
+    if (userInfo === null || userInfo.role !== "user") {
+      toast.error("Please login to continue.");
+      navigate('/');
+    }
+    else if (query.get("query")) {
       setSearchQuery(query.get("query"));
       fetchSearchedQuests();
     }
