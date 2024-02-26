@@ -7,6 +7,7 @@ import Header from "../components/globals/Header.jsx";
 import navigations from "../data/navigations.json";
 import Footer from "../components/globals/Footer.jsx";
 import AppLoader from "../utils/AppLoader.jsx";
+import { toast } from "react-toastify";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 const ExploreQuestsPage = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,7 @@ const ExploreQuestsPage = () => {
       const data = await res.json();
       console.log(data);
       if (!res.ok) {
+        console.log("heh")
         throw new Error('Something went wrong. Please try again later.')
       }
       else {

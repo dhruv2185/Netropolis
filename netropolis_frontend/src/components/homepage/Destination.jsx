@@ -7,6 +7,7 @@ import {
   BanknotesIcon,
 } from "@heroicons/react/24/solid";
 import Button from "../globals/Button.jsx";
+import { Link } from "react-router-dom";
 
 const metadata = {
   title: "Popular Destinations",
@@ -26,7 +27,7 @@ const Destination = ({ destinations }) => {
           subtitleClass={"text-center"}
         />
         <CardWrapper destinations={destinations} />
-        <Button text={"Explore more Destinations"} path={"/destinations"} />
+        <Button text={"Explore more Destinations"} path={"/explore"} />
       </div>
     </div>
   );
@@ -96,12 +97,12 @@ const MainCard = ({ destinations }) => {
               {destinations[0].likeCount}
             </span>
           </div>
-          <a
-            href=""
+          <Link
+            to="/explore"
             className="text-white text-sm lg:text-lg bg-indigo-400 font-bold py-2 px-4 ml-2 rounded-[12px]"
           >
             Explore
-          </a>
+          </Link>
         </div>
       </div>
       <div className="blackGradient bottom-0 z-10 absolute w-full h-full"></div>
@@ -130,12 +131,12 @@ const MiniCard = ({ destination }) => {
             <BanknotesIcon className="w-3" />
             {destination.price > 0 ? `Rp. ${destination.price},00` : "Free"}
           </span>
-          <a
-            href=""
+          <Link
+            to="/explore"
             className="text-sm lg:text-base font-bold text-white bg-indigo-400 py-1 px-2 rounded-[8px]"
           >
             Explore
-          </a>
+          </Link>
         </div>
       </div>
     </div>

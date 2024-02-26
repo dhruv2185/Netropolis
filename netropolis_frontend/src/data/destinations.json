@@ -1,35 +1,36 @@
-[{
-  "_id": {
-    "$oid": "65007122b9bfee81838cb452"
+[
+  {
+    "_id": {
+      "$oid": "65007122b9bfee81838cb452"
+    },
+    "title": "Mount Fuji",
+    "slug": "mount-fuji",
+    "description": "An iconic volcanic mountain and Japan's highest peak, offering breathtaking views and hiking opportunities.",
+    "category": "Natural Landmark",
+    "location": "Yamanashi Prefecture",
+    "likeCount": 249,
+    "viewCount": 3000,
+    "map": [
+      35.3606,
+      138.7274
+    ],
+    "price": 0,
+    "__v": 0
   },
-  "title": "Tanah Lot Temple",
-  "slug": "tanah-lot-temple",
-  "description": "A temple located on a rocky outcrop by the sea, offering spectacular sunset views.",
-  "category": "Sacred Place",
-  "location": "Tabanan",
-  "likeCount": 249,
-  "viewCount": 3000,
-  "map": [
-    -8.621152100522897,
-    115.08680250004782
-  ],
-  "price": 30000,
-  "__v": 0
-},
   {
     "_id": {
       "$oid": "65007136b9bfee81838cb454"
     },
-    "title": "Kuta Beach",
-    "slug": "kuta-beach",
-    "description": "A beach famous for its suitable waves for surfing.",
-    "category": "Beach",
-    "location": "Kuta, Badung",
+    "title": "Hiroshima Peace Memorial Park",
+    "slug": "hiroshima-peace-memorial-park",
+    "description": "A memorial park dedicated to the legacy of Hiroshima's atomic bombing, featuring museums, monuments, and the A-Bomb Dome.",
+    "category": "Historical Site",
+    "location": "Hiroshima",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.712617317303236,
-      115.1668455121354
+      34.3955,
+      132.4512
     ],
     "price": 0,
     "__v": 0
@@ -38,251 +39,252 @@
     "_id": {
       "$oid": "65007146b9bfee81838cb456"
     },
-    "title": "Ubud Monkey Forest",
-    "slug": "ubud-monkey-forest",
-    "description": "A forest in Ubud inhabited by hundreds of long-tailed monkeys.",
-    "category": "Nature Tourism",
-    "location": "Ubud, Gianyar",
+    "title": "Kyoto Imperial Palace",
+    "slug": "kyoto-imperial-palace",
+    "description": "Former residence of Japan's Imperial family, surrounded by beautiful gardens and traditional architecture.",
+    "category": "Historical Site",
+    "location": "Kyoto",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.519171084205922,
-      115.26062989853408
+      35.0254,
+      135.7624
     ],
-    "price": 50000,
+    "price": 0,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "65007153b9bfee81838cb458"
     },
-    "title": "Tegallalang Rice Terraces",
-    "slug": "tegallalang-rice-terraces",
-    "description": "Beautiful terraced rice fields in the Tegallalang area.",
-    "category": "Nature Tourism",
-    "location": "Tegallalang, Gianyar",
+    "title": "Himeji Castle",
+    "slug": "himeji-castle",
+    "description": "A stunning UNESCO World Heritage Site, known for its white exterior and elegant design, often referred to as the White Heron Castle.",
+    "category": "Historical Site",
+    "location": "Himeji",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.431605054154746,
-      115.27933518579829
+      34.8394,
+      134.6939
     ],
-    "price": 20000,
+    "price": 1000,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "65007160b9bfee81838cb45a"
     },
-    "title": "Agung Rai Art Museum",
-    "slug": "agung-rai-art-museum",
-    "description": "An art museum showcasing the works of Balinese and international artists.",
-    "category": "Museum",
-    "location": "Ubud, Gianyar",
+    "title": "Arashiyama Bamboo Grove",
+    "slug": "arashiyama-bamboo-grove",
+    "description": "A mesmerizing bamboo forest in Kyoto, offering serene walking paths and stunning natural beauty.",
+    "category": "Natural Landmark",
+    "location": "Kyoto",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.522611313395622,
-      115.26328852691739
+      35.0154,
+      135.6739
     ],
-    "price": 50000,
+    "price": 0,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "6500716cb9bfee81838cb45c"
     },
-    "title": "Sanur Beach",
-    "slug": "sanur-beach",
-    "description": "A tranquil beach with stunning sunrise views.",
-    "category": "Beach",
-    "location": "Sanur, Denpasar",
+    "title": "Itsukushima Shrine",
+    "slug": "itsukushima-shrine",
+    "description": "A UNESCO World Heritage Site located on the island of Miyajima, known for its iconic 'floating' torii gate and scenic beauty.",
+    "category": "Sacred Place",
+    "location": "Miyajima",
     "likeCount": 249,
-    "viewCount": 2000,
+    "viewCount": 100,
     "map": [
-      -8.707168096949449,
-      115.2626218517922
+      34.2953,
+      132.3194
     ],
-    "price": 0,
+    "price": 300,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "65007177b9bfee81838cb45e"
     },
-    "title": "Goa Gajah",
-    "slug": "goa-gajah",
-    "description": "An ancient cave with intriguing stone carvings.",
-    "category": "Historical Site",
-    "location": "Bedulu, Gianyar",
+    "title": "Nikko Toshogu Shrine",
+    "slug": "nikko-toshogu-shrine",
+    "description": "An opulent and intricately decorated shrine complex in Nikko, dedicated to Tokugawa Ieyasu, the founder of the Tokugawa shogunate.",
+    "category": "Sacred Place",
+    "location": "Nikko",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.523285467100607,
-      115.28714272876691
+      36.7638,
+      139.5986
     ],
-    "price": 15000,
+    "price": 1300,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "65007183b9bfee81838cb460"
     },
-    "title": "Seminyak Beach",
-    "slug": "seminyak-beach",
-    "description": "A popular beach with trendy restaurants and bars.",
-    "category": "Beach",
-    "location": "Seminyak, Badung",
+    "title": "Kiyomizu-dera Temple",
+    "slug": "kiyomizu-dera-temple",
+    "description": "A historic Buddhist temple in Kyoto, famous for its wooden stage that offers panoramic views of the city.",
+    "category": "Sacred Place",
+    "location": "Kyoto",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.68207577637126,
-      115.15198229844673
+      34.9948,
+      135.7852
     ],
-    "price": 0,
+    "price": 400,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "65007192b9bfee81838cb462"
     },
-    "title": "Taman Ayun Temple",
-    "slug": "taman-ayun-temple",
-    "description": "A temple famous for its beautiful gardens and water features.",
+    "title": "Senso-ji Temple",
+    "slug": "senso-ji-temple",
+    "description": "Tokyo's oldest temple, located in the Asakusa district, known for its vibrant atmosphere, shopping street, and iconic Kaminarimon Gate.",
     "category": "Sacred Place",
-    "location": "Mengwi, Badung",
+    "location": "Tokyo",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.541441305590194,
-      115.17261202736543
+      35.7144,
+      139.7967
     ],
-    "price": 20000,
+    "price": 0,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "6500719eb9bfee81838cb464"
     },
-    "title": "Balangan Beach",
-    "slug": "balangan-beach",
-    "description": "A hidden and beautiful beach with great surfing waves.",
-    "category": "Beach",
-    "location": "Balangan, Badung",
+    "title": "Kenrokuen Garden",
+    "slug": "kenrokuen-garden",
+    "description": "One of Japan's most beautiful landscape gardens, featuring scenic ponds, bridges, teahouses, and seasonal floral displays.",
+    "category": "Natural Landmark",
+    "location": "Kanazawa",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.791015676856833,
-      115.12431837393704
+      36.5613,
+      136.6562
     ],
-    "price": 0,
+    "price": 320,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "650071abb9bfee81838cb466"
     },
-    "title": "Puri Saren Agung (Puri Ubud)",
-    "slug": "puri-saren-agung",
-    "description": "A royal palace located in the center of Ubud.",
-    "category": "Historical Site",
-    "location": "Ubud, Gianyar",
+    "title": "Golden Pavilion (Kinkaku-ji)",
+    "slug": "golden-pavilion",
+    "description": "A stunning Zen Buddhist temple in Kyoto, featuring a golden pavilion set amidst beautiful gardens.",
+    "category": "Sacred Place",
+    "location": "Kyoto",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.5066238863125,
-      115.26262563911132
+      35.0394,
+      135.7294
     ],
-    "price": 30000,
+    "price": 400,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "650071ccb9bfee81838cb468"
     },
-    "title": "Dreamland Beach",
-    "slug": "dreamland-beach",
-    "description": "A beach with stunning cliff views.",
-    "category": "Beach",
-    "location": "Pecatu, Badung",
+    "title": "Meiji Shrine",
+    "slug": "meiji-shrine",
+    "description": "A tranquil Shinto shrine located in the heart of Tokyo's bustling Shibuya district, dedicated to Emperor Meiji and Empress Shoken.",
+    "category": "Sacred Place",
+    "location": "Tokyo",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.79922375937999,
-      115.11775517019205
+      35.6764,
+      139.6993
     ],
-    "price": 20000,
+    "price": 0,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "650071dab9bfee81838cb46a"
     },
-    "title": "Le Mayeur Museum",
-    "slug": "le-mayeur-museum",
-    "description": "A museum showcasing the works of Dutch artist Adrien-Jean Le Mayeur and his wife, Ni Pollok.",
-    "category": "Museum",
-    "location": "Sanur, Denpasar",
+    "title": "Toji Temple",
+    "slug": "toji-temple",
+    "description": "A UNESCO World Heritage Site in Kyoto, known for its towering pagoda, which is the tallest wooden tower in Japan.",
+    "category": "Sacred Place",
+    "location": "Kyoto",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.674781827537867,
-      115.26369915686966
+      34.9819,
+      135.7477
     ],
-    "price": 20000,
+    "price": 500,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "650071e4b9bfee81838cb46c"
     },
-    "title": "Uluwatu Temple",
-    "slug": "uluwatu-temple",
-    "description": "A temple perched on a cliff with spectacular ocean views.",
-    "category": "Sacred Place",
-    "location": "Uluwatu, Badung",
+    "title": "Okinawa Churaumi Aquarium",
+    "slug": "okinawa-churaumi-aquarium",
+    "description": "One of the largest aquariums in the world, showcasing a diverse range of marine life, including whale sharks and manta rays.",
+    "category": "Museum",
+    "location": "Okinawa",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.828854609209174,
-      115.0850032899929
+      26.6938,
+      127.8770
     ],
-    "price": 30000,
+    "price": 1850,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "650071f1b9bfee81838cb46e"
     },
-    "title": "Pandawa Beach",
-    "slug": "pandawa-beach",
-    "description": "A beach with beautiful view white sand and towering cliffs.",
-    "category": "Beach",
-    "location": "Kutuh, Badung",
+    "title": "Nara Park",
+    "slug": "nara-park",
+    "description": "A sprawling park in Nara, home to hundreds of freely roaming deer and several significant historical sites, including Todai-ji Temple and Kasuga Taisha Shrine.",
+    "category": "Nature Tourism",
+    "location": "Nara",
     "likeCount": 249,
     "viewCount": 100,
     "map": [
-      -8.845323167825564,
-      115.18654722554231
+      34.6851,
+      135.8048
     ],
-    "price": 20000,
+    "price": 0,
     "__v": 0
   },
   {
     "_id": {
       "$oid": "6502b4a44090e057a59bd8df"
     },
-    "title": "Lovina Beach",
-    "slug": "lovina-beach",
-    "description": "Lovina Beach is a coastal area on the northwestern side of the island of Bali",
-    "category": "Beach",
-    "location": "Anturan, Buleleng",
+    "title": "Hokkaido Shikotsu-Toya National Park",
+    "slug": "shikotsu-toya-national-park",
+    "description": "A national park in Hokkaido known for its volcanic landscapes, hot springs, and scenic beauty, including Lake Shikotsu and Mount Usu.",
+    "category": "Natural Landmark",
+    "location": "Hokkaido",
     "likeCount": 300,
     "viewCount": 400,
     "map": [
-      -8.160141299890336,
-      115.0298721709534
+      42.6584,
+      141.3842
     ],
     "price": 0,
     "__v": 0
-  }]
+  }
+]

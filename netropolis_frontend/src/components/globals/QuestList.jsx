@@ -40,7 +40,7 @@ const QuestList = ({ data }) => {
 const SearchResults = ({ data, totalItems, itemsPerPage, currentPage, onPageChange }) => {
     return (
         <div className="lg:w-2/3 w-full lg:border-r flex justify-start items-center lg:items-start px-8 flex-col">
-            <h1 className="text-indigo-400 font-bold text-lg xl:text-xl">Results ({totalItems})</h1>
+            <h1 className="text-indigo-400 font-bold text-lg xl:text-xl">Your Quests</h1>
             <div className="w-full">
                 {data.map((item, idx) => {
                     return <ArticleCard key={idx} data={item} />;

@@ -32,6 +32,7 @@ import ViewUserApplications from "./pages/ViewUserApplications.jsx";
 import ViewCMApplications from "./pages/ViewCMApplications.jsx";
 import ExploreQuestsPage from "./pages/ExploreQuestsPage.jsx";
 import ViewCMQuests from "./pages/ViewCMQuests.jsx";
+import Error404Page from "./pages/Error404Page.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -49,6 +50,7 @@ const router = createBrowserRouter(
       <Route path="/viewapplications" element={<ViewUserApplications />} />
       <Route path="/viewCMapplications" element={<ViewCMApplications />} />
       <Route path="/viewquests" element={<ViewCMQuests />} />
+      <Route path="*" element={<Error404Page />} />
 
     </Route>
   )

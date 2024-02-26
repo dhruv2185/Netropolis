@@ -3,9 +3,9 @@
     "_id": {
       "$oid": "650726d4d303c80689c7b21f"
     },
-    "title": "Yoga",
-    "slug": "yoga",
-    "description": "Bali is a great place to do yoga. There are many yoga studios and retreats in Bali that offer classes for all levels. Visitors can practice yoga in a traditional Balinese setting or in a more modern studio.",
+    "title": "Shirakawa-go Village",
+    "slug": "shirakawa-go-village",
+    "description": "Shirakawa-go is a historic village located in Gifu Prefecture, Japan. It is famous for its traditional gassho-zukuri farmhouses, some of which are more than 250 years old. The village is a UNESCO World Heritage Site and offers visitors a glimpse into rural life in Japan.",
     "createdAt": {
       "$date": "2023-09-18T00:12:46.000Z"
     },
@@ -20,9 +20,9 @@
     "_id": {
       "$oid": "650726dfd303c80689c7b221"
     },
-    "title": "Cooking class",
-    "slug": "cooking-class",
-    "description": "Bali is home to a rich and diverse culinary tradition. Visitors can learn how to cook traditional Balinese dishes at one of the many cooking classes in Bali. Classes are available for all levels, from beginners to experienced cooks.",
+    "title": "Ouchi-juku Village",
+    "slug": "ouchi-juku-village",
+    "description": "Ouchi-juku is a picturesque village located in Fukushima Prefecture, Japan. It was once a post town along the Aizu-Nishi Kaido trade route and is known for its well-preserved thatched-roof buildings. Visitors can experience the atmosphere of the Edo period while strolling through the village.",
     "viewCount": 218391,
     "likeCount": 21381,
     "createdAt": {
@@ -37,9 +37,9 @@
     "_id": {
       "$oid": "650726f5d303c80689c7b223"
     },
-    "title": "Go on a spa day",
-    "slug": "go-on-a-spa-day",
-    "description": "Bali is known for its luxurious spas. Visitors can relax and pamper themselves at one of the many spas in Bali. Spas offer a variety of treatments, including massages, facials, and body treatments.",
+    "title": "Shimoguri-no-sato Village",
+    "slug": "shimoguri-no-sato-village",
+    "description": "Shimoguri-no-sato is a charming village nestled in the mountains of Nagano Prefecture, Japan. It is known for its beautiful scenery, traditional thatched-roof houses, and hot springs. Visitors can relax in the onsens while enjoying the tranquil atmosphere of the village.",
     "viewCount": 9328,
     "likeCount": 298,
     "createdAt": {
@@ -54,9 +54,9 @@
     "_id": {
       "$oid": "65072708d303c80689c7b225"
     },
-    "title": "Go on a nature hike",
-    "slug": "go-on-a-nature-hike",
-    "description": "Bali has a variety of stunning natural landscapes, including forests, waterfalls, and mountains. Visitors can go on a nature hike to explore these landscapes and learn about the local flora and fauna.",
+    "title": "Tsumago-juku Village",
+    "slug": "tsumago-juku-village",
+    "description": "Tsumago-juku is a historic post town located in Nagano Prefecture, Japan. It is part of the Nakasendo, a historic route that connected Kyoto and Edo during the Edo period. The village has preserved its traditional architecture and offers visitors a glimpse into Japan's past.",
     "viewCount": 1238,
     "likeCount": 2139,
     "createdAt": {
@@ -71,9 +71,9 @@
     "_id": {
       "$oid": "65072750d303c80689c7b227"
     },
-    "title": "Attend a cultural performance",
-    "slug": "attend-a-cultural-performance",
-    "description": "Bali is home to a vibrant cultural scene. Visitors can attend a cultural performance to experience traditional Balinese dance, music, and theater.",
+    "title": "Narai-juku Village",
+    "slug": "narai-juku-village",
+    "description": "Narai-juku is a historic post town located in Nagano Prefecture, Japan. It was once an important stop along the Nakasendo highway and is known for its well-preserved Edo-period buildings. Visitors can explore the town's quaint streets and learn about its rich history.",
     "viewCount": 213721,
     "likeCount": 2392,
     "createdAt": {

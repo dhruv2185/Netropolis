@@ -31,7 +31,7 @@ const Map = ({ destinations }) => {
         </div>
         <div className="w-full md:w-2/3">
           <div className="w-full aspect-square md:aspect-video rounded-xl overflow-hidden">
-            <MapContainer center={metadata.map.centerMap} zoom={9}>
+            <MapContainer center={metadata.map.centerMap} zoom={1}>
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
