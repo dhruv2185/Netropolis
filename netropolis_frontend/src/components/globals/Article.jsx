@@ -13,7 +13,7 @@ import React, { useState, useEffect } from 'react';
 
 import Button from "./Button";
 
-const Article = ({ data, categories }) => {
+const Article = ({ data }) => {
   
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -62,26 +62,26 @@ const SearchResults = ({ data,totalItems,itemsPerPage,currentPage,onPageChange }
   );
 };
 
-const RecommendedTopic = ({ categories }) => {
-  return (
-    <div className="flex flex-col justify-center lg:items-start w-full px-8 items-center gap-6">
-      <h1 className="text-indigo-400 font-bold text-lg lg:text-xl">
-        Recommended Topics
-      </h1>
-      <div className="flex flex-wrap max-w-lg justify-center lg:justify-start gap-3 items-center">
-        {categories.map((item, idx) => (
-          <a
-            href={`/`}
-            key={idx}
-            className="bg-neutral-200 hover:bg-indigo-400 hover:text-white text-neutral-600 py-2 px-4 rounded-full"
-          >
-            {item.title}
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-};
+// const RecommendedTopic = ({ categories }) => {
+//   return (
+//     <div className="flex flex-col justify-center lg:items-start w-full px-8 items-center gap-6">
+//       <h1 className="text-indigo-400 font-bold text-lg lg:text-xl">
+//         Recommended Topics
+//       </h1>
+//       <div className="flex flex-wrap max-w-lg justify-center lg:justify-start gap-3 items-center">
+//         {categories.map((item, idx) => (
+//           <a
+//             href={`/`}
+//             key={idx}
+//             className="bg-neutral-200 hover:bg-indigo-400 hover:text-white text-neutral-600 py-2 px-4 rounded-full"
+//           >
+//             {item.title}
+//           </a>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
 
 const ArticleCard = ({ data }) => {
   return (
@@ -117,7 +117,7 @@ const ArticleCard = ({ data }) => {
         <div
           className="w-24 aspect-square rounded-xl bg-cover"
           style={{
-            backgroundImage: `url(https://source.unsplash.com/random/1920x1080/?${data.description})`,
+            backgroundImage: `url(https://source.unsplash.com/random/1920x1080/?${data.quest_name.split(" ").join(",")})`,
           }}
         ></div>
       </main>

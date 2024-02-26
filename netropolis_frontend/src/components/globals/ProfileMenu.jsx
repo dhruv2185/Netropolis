@@ -5,7 +5,8 @@ import {
     UserGroupIcon,
     NewspaperIcon,
     PowerIcon,
-    
+    PlusCircleIcon,
+    QueueListIcon
   } from "@heroicons/react/24/solid";
   import {
     
@@ -16,6 +17,7 @@ import {
     MenuList,
     MenuItem,
     Avatar,
+    Badge
   } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
@@ -36,6 +38,22 @@ const profileMenuItems = [
       icon: NewspaperIcon,
       link:"/viewapplications",
     },
+    {
+      label:"Create Quest",
+      icon: PlusCircleIcon,
+      link:"/registerquest",
+    },
+    {
+      label:"My Quests",
+      icon: QueueListIcon,
+      link:"/viewquests",
+    },
+    {
+      label:"Create tasks",
+      icon: PlusCircleIcon,
+      link:"/registertask",
+    }
+    ,
     {
       label: "Sign Out",
       icon: PowerIcon,
@@ -62,13 +80,17 @@ const ProfileMenu=()=> {
             color="blue-gray"
             className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
           >
+            
+            
             <Avatar
               variant="circular"
               size="sm"
               alt="tania andrew"
               className="border border-gray-900 p-0.5 size-12 rounded-full"
               src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-            />
+            /><span class="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+            2
+            </span>
             <ChevronDownIcon
               strokeWidth={2.5}
               className={`h-3 w-3 transition-transform ${
@@ -100,7 +122,9 @@ const ProfileMenu=()=> {
                   color={isLastItem ? "red" : "inherit"}
                 >{!isLastItem && <Link to={link}>{label}</Link>}
                   {isLastItem && <p onClick={handleLogout}>{label}</p>}
-                </Typography>
+                </Typography>{label==="Applications" && <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+            2
+            </span>}
               </MenuItem>
             );
           })}

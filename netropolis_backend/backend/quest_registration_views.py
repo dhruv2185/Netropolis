@@ -35,7 +35,7 @@ class QuestRegistrationView(APIView):
         form['created_by'] = cm.id
         serialzer = self.serializer_class(data=form)
         if serialzer.is_valid():
-            serialzer.save()
+
             newQuest = dict(serialzer.data)
             try:
                 self.qdrant.upload_points(
@@ -48,7 +48,8 @@ class QuestRegistrationView(APIView):
                     ],
                 )
             except:
-                print("Error in uploading to qdrant")
+                print("Error uploading to qdrant")
+            serialzer.save()
             return Response(serialzer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serialzer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -64,7 +65,7 @@ class QuestRegistrationView(APIView):
                 quests = Quest.objects.filter(created_by=pk)
                 serializer = self.serializer_class(quests, many=True)
             except Quest.DoesNotExist:
-                 return Response([], status=status.HTTP_200_OK)
+                return Response([], status=status.HTTP_200_OK)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
@@ -82,6 +83,15 @@ class QuestRegistrationView(APIView):
 
     def delete(self, request):
         pk = request.query_params.get('pk', None)
+        try:
+            self.qdrant.delete(
+                collection_name="quests",
+                points_selector=models.PointIdsList(
+                    points=[pk]
+                )
+            )
+        except:
+            print("Error deleting from qdrant")
         quests = Quest.objects.get(id=pk)
         quests.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
