@@ -141,7 +141,7 @@ const RegisterQuest = () => {
         }
     ]
     useEffect(() => {
-        if (userInfo === null) {
+        if (userInfo === null || userInfo.role !== "cm") {
             console.log("redirecting to login");
             toast.error("Please login to continue.")
             navigate('/')
@@ -217,7 +217,7 @@ const RegisterQuest = () => {
             created_by: userInfo.user_id
         }
         try {
-            const res = await fetch("http://localhost:8000/quests/", {
+            const res = await fetch(`${baseUrl}/quests/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

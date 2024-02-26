@@ -15,6 +15,7 @@ import Footer from "../components/globals/Footer";
 import Header from "../components/globals/Header";
 import navigations from "../data/navigations.json";
 import CMApplicationList from "../components/globals/CMApplicationList";
+const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const ViewCMApplications = () => {
 
@@ -83,9 +84,41 @@ const ViewCMApplications = () => {
         // More applications...
     ]
 
-    const [applications, setApplications] = useState(dummyApplications)
+    const tokens = useSelector((state) => state.auth.tokens);
+
+    const fetchApplications = async () => {
+        try {
+            const res = await fetch(`${baseUrl}/get_applications_by_cm/`, {
+                method: "GET",
+                headers: {
+                    "Content-type": "application/json",
+                    "Authorization": "Bearer " + tokens.access
+                },
+            })
+            const data = await res.json();
+            if (!res.ok) {
+                console.log(data);
+                throw Error("Failed to fetch applications. Please try again!");
+            }
+            else {
+                if (Array.isArray(data)) {
+                    setApplications(data);
+                }
+                else {
+                    setApplications([data]);
+                }
+            }
+        }
+        catch (err) {
+            console.log(err);
+            toast.error(err.message);
+        }
+    }
+
+    const [applications, setApplications] = useState()
 
     const userInfo = useSelector((state) => state.auth.userInfo);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -94,9 +127,11 @@ const ViewCMApplications = () => {
             toast.error("Please login to continue.")
             navigate('/')
         }
+        else
+            fetchApplications();
     }, []);
 
-    const tokens = useSelector((state) => state.auth.tokens);
+
     // console.log("tokens", tokens);
 
     return (

@@ -2,11 +2,12 @@ import Title from "../globals/Title.jsx";
 import Button from "../globals/Button.jsx";
 import { useState } from "react";
 import "../../css/heroActivity.css";
+import { Link } from "react-router-dom";
 
 const metadata = {
-  title: "Thing to do in Bali",
+  title: "Quests to Explore in Japan",
   subTitle:
-    "Find your perfect Balinese experience: Whether you're looking for adventure, relaxation, or culture, Bali has something to offer everyone.",
+    "Find your perfect Japanese experience: Whether you're looking for adventure, relaxation, or culture, Japan has something to offer everyone.",
 };
 
 const Activity = ({ activities }) => {
@@ -19,7 +20,7 @@ const Activity = ({ activities }) => {
             subtitle={metadata.subTitle}
             subtitleClass={"max-w-sm"}
           />
-          <Button text={"Explore more Activities"} path={"/activities"} />
+          <Button text={"Explore"} path={"/explore"} />
         </div>
         <div className="lg:w-2/3">
           <ActivityCardMobile activities={activities} />
@@ -44,12 +45,12 @@ const ActivityCardMobile = ({ activities }) => {
           >
             <div className="w-full p-4 h-full bg-black bg-opacity-40 flex gap-2 justify-end items-center flex-col">
               <h1 className="text-white font-bold text-base">{item.title}</h1>
-              <a
-                href=""
+              <Link
+                to="/explore"
                 className="text-sm text-white font-bold bg-indigo-400 py-1 px-2 rounded-full"
               >
                 Explore
-              </a>
+              </Link>
             </div>
           </div>
         );
@@ -75,20 +76,18 @@ const ActivityCardDesktop = ({ activities }) => {
         return (
           <div
             key={idx}
-            className={`h-full bg-blue-300 rounded-xl w-1/4 bg-center overflow-hidden bg-cover ${
-              activeCard === item && !cursorInside
-                ? "w-[500px]"
-                : "hover:w-[500px]"
-            }`}
+            className={`h-full bg-blue-300 rounded-xl w-1/4 bg-center overflow-hidden bg-cover ${activeCard === item && !cursorInside
+              ? "w-[500px]"
+              : "hover:w-[500px]"
+              }`}
             onMouseEnter={() => setActiveCard(activities[idx])}
             style={{
               backgroundImage: `url(https://source.unsplash.com/random/1920x1080/?${item.slug})`,
             }}
           >
             <div
-              className={`w-full h-full bg-neutral-800 bg-opacity-70 overflow-hidden flex p-8 justify-end items-center flex-col  ${
-                activeCard !== item ? "opacity-0" : "opacity-100"
-              }`}
+              className={`w-full h-full bg-neutral-800 bg-opacity-70 overflow-hidden flex p-8 justify-end items-center flex-col  ${activeCard !== item ? "opacity-0" : "opacity-100"
+                }`}
             >
               <h1 className="text-2xl font-bold text-white">{item.title}</h1>
               <p className="cutoff-text cutoff-text-2 text-white text-base text-center">

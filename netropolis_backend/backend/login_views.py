@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import MultipleObjectsReturned
 from rest_framework.decorators import api_view, permission_classes
 
+
 class RegisterView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
@@ -41,7 +42,7 @@ class FetchUser(APIView):
         try:
             # print(user.id)
             cm_profile = Community_Manager.objects.get(user=user.id)
-            print(cm_profile.id)         
+            print(cm_profile.id)
             serializer2 = self.serializer_class2(cm_profile)
             print(type(cm_profile.region))
             return Response(
@@ -51,10 +52,10 @@ class FetchUser(APIView):
                  "region": cm_profile.region}, status=status.HTTP_201_CREATED)
         except Community_Manager.DoesNotExist:
             return Response({"user_profile": serializer.data,
-                            "user_id": str(user.id)}, status=status.HTTP_201_CREATED)            
+                            "user_id": str(user.id)}, status=status.HTTP_201_CREATED)
         except:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     def put(self, request, *args, **kwargs):
         user = get_user_model().objects.get(username=request.user)
         serializer = self.serializer_class(user, data=request.data)
@@ -118,15 +119,14 @@ class TeamProfile(APIView):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_by_id(request):
-        pk = request.query_params.get('pk', None)
-        if pk is not None:
-            try:
-                team = Team.objects.get(id=pk)
-                serializer = TeamsSerializer(team, many=False)
-            except MultipleObjectsReturned:
-                teams = Team.objects.filter(id=pk)
-                serializer = TeamsSerializer(teams, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+    pk = request.query_params.get('pk', None)
+    if pk is not None:
+        try:
+            team = Team.objects.get(id=pk)
+            serializer = TeamsSerializer(team, many=False)
+        except MultipleObjectsReturned:
+            teams = Team.objects.filter(id=pk)
+            serializer = TeamsSerializer(teams, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    else:
+        return Response(status=status.HTTP_400_BAD_REQUEST)

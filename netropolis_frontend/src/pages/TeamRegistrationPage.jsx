@@ -21,7 +21,7 @@ const TeamRegistrationPage = () => {
     const navigate = useNavigate();
     const userInfo = useSelector((state) => state.auth.userInfo);
     useEffect(() => {
-        if (userInfo === null) {
+        if (userInfo === null || userInfo.role !== "user") {
             console.log("redirecting to login");
             toast.error("Please login to create a team.")
             navigate('/login')

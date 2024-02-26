@@ -11,7 +11,7 @@ const LandingPage = ({ destinations, activities }) => {
         <>
             <Header navigations={navigations}></Header>
             <Hero />
-            <PopularSearch destinations={destinations} />
+            {/* <PopularSearch destinations={destinations} /> */}
             <Destination destinations={destinations} />
             <Activity activities={activities} />
             <Map destinations={destinations} />

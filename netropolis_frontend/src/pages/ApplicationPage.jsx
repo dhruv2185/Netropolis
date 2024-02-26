@@ -19,7 +19,7 @@ const ApplicationPage = (props) => {
     const navigate = useNavigate();
     const { userInfo, tokens } = useSelector((state) => state.auth);
     useEffect(() => {
-        if (userInfo === null) {
+        if (userInfo === null || userInfo.role !== "user") {
             toast.error("Please login to continue.")
             navigate("/");
         }

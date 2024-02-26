@@ -1,42 +1,41 @@
 import {
   CalendarDaysIcon,
-  BookmarkIcon,
-  MinusCircleIcon,
-  EllipsisHorizontalIcon,
   EyeIcon,
   HandThumbUpIcon,
   MapPinIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  XMarkIcon
 } from "@heroicons/react/24/outline";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import Button from "./Button";
 
-const Article = ({ data, categories }) => {
-
+const Article = ({ data }) => {
+  const [filteredData, setFilteredData] = useState(data);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const handlePageChange = (pageNumber) => {
-    if (pageNumber < 1 || pageNumber > Math.ceil(data.length / itemsPerPage)) return;
+    if (pageNumber < 1 || pageNumber > Math.ceil(filteredData.length / itemsPerPage)) return;
     setCurrentPage(pageNumber);
   };
 
-  const getData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const getData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   return (
     <article className="w-full flex justify-center items-center">
-      <div className="w-full flex flex-col py-10 gap-16 lg:gap-0 lg:py-20 lg:flex-row-reverse lg:items-start max-w-7xl">
+      <div className="w-full flex py-10 gap-16 lg:gap-0 lg:py-20 lg:flex-row-reverse lg:items-start max-w-7xl flex-col">
         {/*categories*/}
-        <div className="w-full lg:w-1/3">
-          <RecommendedTopic categories={categories} />
-          <StaffPick data={data} header={window.location.pathname === "/destinations" ? "Destinations Staff Pick" : "Things to Do Staff Pick"} />
-        </div>
-        {/*  article*/}
 
-        <SearchResults data={getData} totalItems={data.length}
+        {/*  article*/}
+        <div className="w-full lg:w-1/3">
+          {/* <RecommendedTopic categories={categories} /> */}
+          <Filters selectedTags={selectedTags} setSelectedTags={setSelectedTags} allData={data} setFilteredData={setFilteredData} />
+        </div>
+        <SearchResults data={getData} totalItems={filteredData.length}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
-          onPageChange={handlePageChange} />
+          onPageChange={handlePageChange} selectedTags={selectedTags} setSelectedTags={setSelectedTags} setFilteredData={setFilteredData} allData={filteredData} />
 
       </div>
 
@@ -44,13 +43,13 @@ const Article = ({ data, categories }) => {
   );
 };
 
-const SearchResults = ({ data, totalItems, itemsPerPage, currentPage, onPageChange }) => {
+const SearchResults = ({ data, totalItems, itemsPerPage, currentPage, onPageChange, selectedTags, setSelectedTags, setFilteredData, allData }) => {
   return (
     <div className="lg:w-2/3 w-full lg:border-r flex justify-start items-center lg:items-start px-8 flex-col">
-      <h1 className="text-indigo-400 font-bold text-lg xl:text-xl">Search Results ({data.length})</h1>
+      <h1 className="text-indigo-400 font-bold text-lg xl:text-xl">Results ({totalItems})</h1>
       <div className="w-full">
         {data.map((item, idx) => {
-          return <ArticleCard key={idx} data={item} />;
+          return <ArticleCard key={idx} data={item} selectedTags={selectedTags} setSelectedTags={setSelectedTags} setFilteredData={setFilteredData} allData={allData} />;
         })}
       </div>
       <Pagination
@@ -62,34 +61,44 @@ const SearchResults = ({ data, totalItems, itemsPerPage, currentPage, onPageChan
   );
 };
 
-const RecommendedTopic = ({ categories }) => {
-  return (
-    <div className="flex flex-col justify-center lg:items-start w-full px-8 items-center gap-6">
-      <h1 className="text-indigo-400 font-bold text-lg lg:text-xl">
-        Recommended Topics
-      </h1>
-      <div className="flex flex-wrap max-w-lg justify-center lg:justify-start gap-3 items-center">
-        {categories.map((item, idx) => (
-          <a
-            href={`/`}
-            key={idx}
-            className="bg-neutral-200 hover:bg-indigo-400 hover:text-white text-neutral-600 py-2 px-4 rounded-full"
-          >
-            {item.title}
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-};
+// const RecommendedTopic = ({ categories }) => {
+//   return (
+//     <div className="flex flex-col justify-center lg:items-start w-full px-8 items-center gap-6">
+//       <h1 className="text-indigo-400 font-bold text-lg lg:text-xl">
+//         Recommended Topics
+//       </h1>
+//       <div className="flex flex-wrap max-w-lg justify-center lg:justify-start gap-3 items-center">
+//         {categories.map((item, idx) => (
+//           <a
+//             href={`/`}
+//             key={idx}
+//             className="bg-neutral-200 hover:bg-indigo-400 hover:text-white text-neutral-600 py-2 px-4 rounded-full"
+//           >
+//             {item.title}
+//           </a>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// };
 
-const ArticleCard = ({ data }) => {
+const ArticleCard = ({ data, selectedTags, setSelectedTags, setFilteredData, allData }) => {
   // console.log(data);
+  const handleTagClick = (tag) => {
+    let newSelectedTags = [...selectedTags];
+    if (newSelectedTags.includes(tag)) {
+      return;
+    } else {
+      newSelectedTags.push(tag);
+    }
+    setSelectedTags(newSelectedTags);
+    console.log(newSelectedTags, allData)
+    setFilteredData(allData.filter(item => newSelectedTags.every(t => item.genre_tags.includes(t))));
+  };
   const randomIndex = Math.floor(Math.random() * data.quest_name.split(" ").length);
   const unsplash = data.quest_name.split(" ")[randomIndex];
   // console.log(unsplash);
   const u = `https://source.unsplash.com/random/1920x1080/?${unsplash}`
-  console.log(u);
   return (
     <article className="w-full flex flex-col justify-center items-center border-b py-8">
       <header className="w-full gap-2 flex justify-start items-center">
@@ -128,34 +137,33 @@ const ArticleCard = ({ data }) => {
         ></div>
       </main>
       <footer className="w-full mt-2 flex justify-between items-center">
-        <div className="flex justify-center items-center gap-2">
+        <div className="flex justify-center items-center gap-2 max-w-[60%]">
           {data?.genre_tags?.map((item, idx) => (
-            <a
-              href={`/`}
+            <button
+              onClick={() => handleTagClick(item)}
               key={idx}
               className="bg-neutral-200 hover:bg-indigo-400 text-sm hover:text-white text-neutral-600 py-1 px-3 rounded-full"
             >
               {item}
-            </a>
+            </button>
           ))}
 
 
         </div>
-        <div className="flex justify-center items-center gap-2">
-          <div className="flex justify-center items-center gap-1 mx-2">
+        <div className="flex justify-center items-center gap-2 lg:flex-row flex-col">
+          <div className="flex justify-center items-center"><div className="flex justify-center items-center gap-1 mx-2">
             <EyeIcon className="w-5 text-neutral-600 cursor-pointer" />
             <span className="text-neutral-600 lg:text-sm text-xs">
               {Math.floor(Math.random() * 100) + 1}k
             </span>
           </div>
-          <div className="flex justify-center items-center gap-1 mx-2">
-            <HandThumbUpIcon className="w-5 text-neutral-600 cursor-pointer" />
-            <span className="text-neutral-600 lg:text-sm text-xs">
-              {Math.floor(Math.random() * 10) + 1}k
-            </span>
-          </div>
-          <BookmarkIcon className="w-5 text-neutral-600 cursor-pointer" />
-          <Button text="Apply Now" path={`/application/${data.id}`} data={data} customClass={"mx-4"} />
+            <div className="flex justify-center items-center gap-1 mx-2">
+              <HandThumbUpIcon className="w-5 text-neutral-600 cursor-pointer" />
+              <span className="text-neutral-600 lg:text-sm text-xs">
+                {Math.floor(Math.random() * 10) + 1}k
+              </span>
+            </div></div>
+          <Button text="Apply" path={`/application/${data.id}`} data={data} customClass={"mx-4"} />
         </div>
       </footer>
     </article>
@@ -194,28 +202,94 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
   );
 };
 
-const StaffPick = ({ data, header }) => {
+const Filters = ({ selectedTags, setSelectedTags, allData, setFilteredData }) => {
+  const [sort, setSort] = useState({
+    field: '',
+    order: '',
+  });
+
+  const handleSortChange = (event) => {
+    const { name, value } = event.target;
+    setSort(prevSort => ({ ...prevSort, [name]: value }));
+  };
+
+  const applySorting = () => {
+    let newData = [...allData];
+
+    // Apply sorting by date
+    if (sort.field === 'date') {
+      newData.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    }
+
+    // Apply sorting by title
+    if (sort.field === 'title') {
+      newData.sort((a, b) => a.quest_name.localeCompare(b.quest_name));
+    }
+
+    // Reverse order if needed
+    if (sort.order === 'desc') {
+      newData.reverse();
+    }
+
+    // Update filtered data
+    setFilteredData(newData);
+  };
+  const removeTag = (e, tag) => {
+    e.preventDefault();
+    const updatedTags = selectedTags.filter(t => t !== tag);
+    setSelectedTags(updatedTags);
+    setFilteredData(allData.filter(item => updatedTags.every(t => item.genre_tags.includes(t))));
+  };
+
   return (
-    <div className="w-full p-8 hidden gap-4 lg:flex flex-col justify-center items-center">
-      <h1 className="w-full text-indigo-400 font-bold text-xl">{header}</h1>
-      <div className="w-full flex flex-col justify-center items-ccenter">
-        {
-          data.sort((a, b) => a.viewCount - b.viewCount).slice(0, 5).map((item, idx) => {
+    <div className="w-full p-8 gap-4 lg:flex flex-col justify-center items-center">
+      <h1 className="w-full text-indigo-400 font-bold text-xl">Filters</h1>
+      <div className="w-full flex flex-col justify-center items-center gap-2">
+        <div className="flex">
+          {selectedTags.length > 0 && selectedTags.map((tag, index) => {
             return (
-              <a href={`/destinations/${item.slug}`} className="w-full hover:bg-indigo-400 hover:color-white rounded-lg flex border-b p-4 justify-between items-center">
-                <h1 className="text-neutral-600">{item.title}</h1>
-                <div className="flex justify-center items-center gap-2">
-                  <BookmarkIcon className="w-5 text-neutral-600 cursor-pointer" />
-                  <MinusCircleIcon className="w-5 text-neutral-600 cursor-pointer" />
-                  <EllipsisHorizontalIcon className="w-5 text-neutral-600 cursor-pointer" />
-                </div>
-              </a>
-            )
-          })
-        }
+              <span key={index} className="inline-flex justify-center items-center ml-4 rounded-full bg-indigo-400 p-1 px-2 tracking-wide m-1">
+                <p className="text-white font-inter">{tag}</p>
+                <button
+                  onClick={(e) => removeTag(e, tag)}
+                  className={"text-base lg:text-lg font-bold rounded-full"}
+                >
+                  <XMarkIcon className="h-5 w-5 text-white " />
+                </button>
+              </span>
+            );
+          })}
+        </div>
+
+        <div className="w-full flex flex-col justify-center items-center gap-2">
+          <select
+            name="field"
+            value={sort.field}
+            onChange={handleSortChange}
+            className="w-full p-2 border rounded-lg"
+          >
+            <option value="">Sort by...</option>
+            <option value="date">Date</option>
+            <option value="title">Title</option>
+          </select>
+          <select
+            name="order"
+            value={sort.order}
+            onChange={handleSortChange}
+            className="w-full p-2 border rounded-lg"
+          >
+            <option value="">Order...</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+          <button className="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-full" onClick={applySorting}>
+            Apply
+          </button>
+        </div>
+
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Article;
