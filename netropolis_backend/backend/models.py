@@ -56,6 +56,7 @@ class Application(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=7)
     quest_id = models.ForeignKey(Quest, on_delete=models.CASCADE)
     status = models.CharField(max_length=30)
+    preferred_time_span = models.TextField()
     application_date = models.DateTimeField(auto_now=True)
     approval_status = models.BooleanField()
     stay_start_date = models.DateField(null=True)

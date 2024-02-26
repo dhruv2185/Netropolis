@@ -64,7 +64,7 @@ const ApplicationPage = (props) => {
         special_note: "",
         desired_tasks: "",
         teamId: 0,
-        daily_time_span: "",
+        preferred_time_span: "",
         approval_status: false,
         status: "unviewed"
     });
@@ -123,7 +123,7 @@ const ApplicationPage = (props) => {
         if (appInfo.stay_start_date > appInfo.stay_end_date || new Date(appInfo.stay_start_date) < today || new Date(appInfo.stay_end_date) < today) {
             return toast.error("Oops! I guess you mixed up your dates. Please check again.");
         }
-        if (appInfo.stay_start_date === "" || appInfo.stay_end_date === "" || appInfo.special_note === "" || appInfo.desired_tasks === "" || appInfo.teamId === "" || appInfo.daily_time_span === "") {
+        if (appInfo.stay_start_date === "" || appInfo.stay_end_date === "" || appInfo.special_note === "" || appInfo.desired_tasks === "" || appInfo.teamId === "" || appInfo.preferred_time_span === "") {
             return toast.error("All fields are required");
         }
         // console.log(appInfo);
@@ -253,8 +253,8 @@ const ApplicationPage = (props) => {
                                             <p className="font-medium text-indigo-400 font-inter mb-[4px]">Preferred daily time span for quests during the stay </p>
                                             <input
                                                 type="text"
-                                                name="daily_time_span"
-                                                value={appInfo.daily_time_span}
+                                                name="preferred_time_span"
+                                                value={appInfo.preferred_time_span}
                                                 onChange={handleInputChange}
                                                 className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                 placeholder="Preferred time span"

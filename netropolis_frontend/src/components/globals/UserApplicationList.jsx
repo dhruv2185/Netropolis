@@ -53,7 +53,7 @@ const ApplicationCard = ({ application }) => {
               <strong>Desired Tasks:</strong> {application.desired_tasks}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
-              <strong>Preferred daily time span for quests during the stay:</strong> {application.daily_time_span}
+              <strong>Preferred daily time span for quests during the stay:</strong> {application.preferred_time_span}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
               <strong>Team:</strong> {application.teamId.team_name}
@@ -65,7 +65,7 @@ const ApplicationCard = ({ application }) => {
         <div className="flex justify-center items-center gap-2 font-bold">
           <h4 className="text-md text-indigo-400">STATUS : </h4><h4 className="text-neutral-600"> {application.status === "unviewed" ? "UNDER REVIEW" : "SCHEDULED"}</h4>
         </div>
-        <Button text="View Schedule" path="/" customClass={"mx-4"} />
+        {application.status !== "unviewed" && <Button text="View Schedule" path="/" customClass={"mx-4"} />}
       </footer>
     </article>
   );
