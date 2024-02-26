@@ -84,7 +84,7 @@ const ViewUserApplications = () => {
         },
         // More applications...
     ]
-    const [applications, setApplications] = useState(dummyApplications)
+    const [applications, setApplications] = useState([])
 
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();

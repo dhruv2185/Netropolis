@@ -51,6 +51,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
 class CommunityManagerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Community_Manager
@@ -58,9 +59,10 @@ class CommunityManagerSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context['request'].user
-        community_manager = Community_Manager.objects.create(user=user, **validated_data)
+        community_manager = Community_Manager.objects.create(
+            user=user, **validated_data)
         return community_manager
-        
+
 
 class TeamsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -96,15 +98,26 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name')
-        
+
+
 class TasksSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskProblem
         fields = '__all__'
-        
+
+
 class TaskSerializerBulk(serializers.ListSerializer):
     child = TasksSerializer()
 
     def create(self, validated_data):
         instances = [TaskProblem(**item) for item in validated_data]
         return TaskProblem.objects.bulk_create(instances)
+
+
+class ApplicationQuestSerializer(serializers.ModelSerializer):
+    quest_id = QuestsSerializer()
+    teamId = TeamsSerializer()
+
+    class Meta:
+        model = Application
+        fields = '__all__'
