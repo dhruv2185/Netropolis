@@ -15,6 +15,8 @@ urlpatterns = [
          name='quest_management'),
     path('quest_scheduling/', quest_scheduling_views.QuestSchedulingView.as_view(),
          name='quest_scheduling'),
+    path('get_schedule_by_application_id/', quest_scheduling_views.get_by_application_id,
+         name='get_schedule_by_application_id'),
     path('search/', quest_searching_views.QuestSearchingView.as_view(),
          name='quest_searching'),
     path('get_team_by_id/', login_views.get_by_id),
@@ -30,5 +32,6 @@ urlpatterns = [
     path('get_applications_by_cm/', application_views.get_by_community_manager,
          name='get_applications_by_cm'),
     path('get_application_by_id/', application_views.get_by_id,
-         name='get_application_by_id')
+         name='get_application_by_id'),
+    path('get_unviewed/', application_views.get_unviewed, name='get_unviewed'),
 ]

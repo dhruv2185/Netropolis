@@ -3,18 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSignUpMutation } from "../features/slices/usersApiSlice";
-import { setCredentials, setTokens } from "../features/slices/authSlice";
+
+import { setCredentials, setTokens } from "../../features/slices/authSlice";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import AppLoader from "../utils/AppLoader";
-import { AppError } from "../utils/AppError";
+import AppLoader from "../../utils/AppLoader";
+import { AppError } from "../../utils/AppError";
 
 import { PlusIcon, MinusCircleIcon } from "@heroicons/react/24/solid";
-import mesh from "../assets/images/mesh.png";
-import Footer from "../components/globals/Footer";
-import Header from "../components/globals/Header";
-import navigations from "../data/navigations.json";
-import CMApplicationList from "../components/globals/CMApplicationList";
+import mesh from "../../assets/images/mesh.png";
+import Footer from "../../components/globals/Footer";
+import Header from "../../components/globals/Header";
+import navigations from "../../data/navigations.json";
+import CMApplicationList from "../../components/globals/CMApplicationList";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const ViewCMApplications = () => {

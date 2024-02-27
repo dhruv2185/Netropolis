@@ -17,22 +17,24 @@ import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
 import SearchQuestsPage from "./pages/SearchQuestsPage.jsx";
 // import ActivityPage from "./pages/ActivityPage.jsx";
-import TeamRegistrationPage from "./pages/TeamRegistrationPage.jsx";
-import ApplicationPage from "./pages/ApplicationPage.jsx";
-import RegisterQuest from "./pages/RegisterQuest.jsx";
-import ScheduleQuestPage from "./pages/ScheduleQuestPage.jsx";
-import RegisterTaskPage from "./pages/RegisterTaskPage.jsx";
+import TeamRegistrationPage from "./pages/user/TeamRegistrationPage.jsx";
+import ApplicationPage from "./pages/user/ApplicationPage.jsx";
+import RegisterQuest from "./pages/communityManager/RegisterQuest.jsx";
+import ScheduleQuestPage from "./pages/communityManager/ScheduleQuestPage.jsx";
+import RegisterTaskPage from "./pages/communityManager/RegisterTaskPage.jsx";
 
 import destinations from "./data/destinations.json";
 import activities from "./data/activities.json";
 import activityCategories from "./data/activitycategories.json";
 import destinationCategories from "./data/destinationcategories.json";
-import ViewTeams from "./pages/ViewTeams.jsx";
-import ViewUserApplications from "./pages/ViewUserApplications.jsx";
-import ViewCMApplications from "./pages/ViewCMApplications.jsx";
+import ViewTeams from "./pages/user/ViewTeams.jsx";
+import ViewUserApplications from "./pages/user/ViewUserApplications.jsx";
+import ViewCMApplications from "./pages/communityManager/ViewCMApplications.jsx";
 import ExploreQuestsPage from "./pages/ExploreQuestsPage.jsx";
-import ViewCMQuests from "./pages/ViewCMQuests.jsx";
+import ViewCMQuests from "./pages/communityManager/ViewCMQuests.jsx";
 import Error404Page from "./pages/Error404Page.jsx";
+import EditSchedulePage from "./pages/communityManager/EditSchedulePage.jsx";
+import ViewSchedulePage from "./pages/user/ViewSchedulePage.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -45,10 +47,12 @@ const router = createBrowserRouter(
       <Route path="/application/:questId" element={<ApplicationPage />} />
       <Route path="/registerquest" element={<RegisterQuest />} />
       <Route path="/schedulequest/:applicationId" element={<ScheduleQuestPage />} />
+      <Route path="/editschedule/:applicationId" element={<EditSchedulePage />} />
       <Route path="/registertask" element={<RegisterTaskPage />} />
       <Route path="/viewteams" element={<ViewTeams />} />
       <Route path="/viewapplications" element={<ViewUserApplications />} />
       <Route path="/viewCMapplications" element={<ViewCMApplications />} />
+      <Route path="/viewschedule/:applicationId" element={<ViewSchedulePage />} />
       <Route path="/viewquests" element={<ViewCMQuests />} />
       <Route path="*" element={<Error404Page />} />
 

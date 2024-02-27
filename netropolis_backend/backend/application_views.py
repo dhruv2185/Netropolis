@@ -60,6 +60,9 @@ def get_by_community_manager(request):
         cm = Community_Manager.objects.get(user=user)
         applications = Application.objects.filter(
             quest_id__created_by=cm).select_related('quest_id').select_related('teamId')
+        for application in applications:
+            application.status = "viewed"
+            application.save()
         if applications.exists():
             serializer = ApplicationQuestSerializer(applications, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -83,3 +86,21 @@ def get_by_id(request):
             return Response("Application not found", status=status.HTTP_404_NOT_FOUND)
     else:
         return Response("Invalid request: 'pk' parameter is missing", status=status.HTTP_400_BAD_REQUEST)
+
+
+@permission_classes([IsAuthenticated, ])
+@api_view(['GET'])
+def get_unviewed(request):
+    user = request.user
+    cm = Community_Manager.objects.get(user=user.id)
+    pk = cm.id
+    try:
+        applications = Application.objects.filter(
+            quest_id__created_by=pk, status="unviewed")
+        if applications.exists():
+            serializer = ApplicationsSerializer(applications, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response([], status=status.HTTP_200_OK)
+    except Application.DoesNotExist:
+        return Response([], status=status.HTTP_200_OK)

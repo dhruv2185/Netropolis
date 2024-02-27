@@ -70,7 +70,8 @@ class Schedule(models.Model):
     id = models.AutoField(primary_key=True)
     start_date = models.DateField()
     end_date = models.DateField()
-    application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
+    application_id = models.OneToOneField(
+        Application, on_delete=models.CASCADE)
     quest_id = models.ForeignKey(Quest, on_delete=models.CASCADE)
     day_to_day_schedule = models.JSONField()
     createdBy = models.ForeignKey(Community_Manager, on_delete=models.CASCADE)

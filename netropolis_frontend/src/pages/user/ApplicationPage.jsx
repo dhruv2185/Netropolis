@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { setCredentials, setTokens } from "../features/slices/authSlice";
-import AppLoader from "../utils/AppLoader";
 
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useLoginMutation } from "../features/slices/usersApiSlice";
-import Button from "../components/globals/Button";
-import Title from "../components/globals/Title";
-import navigations from "../data/navigations.json";
-import Header from "../components/globals/Header";
-import mesh from "../assets/images/mesh.png";
-import Footer from "../components/globals/Footer";
+import AppLoader from "../../utils/AppLoader";
+
+
+import Button from "../../components/globals/Button";
+import Title from "../../components/globals/Title";
+import navigations from "../../data/navigations.json";
+import Header from "../../components/globals/Header";
+import mesh from "../../assets/images/mesh.png";
+import Footer from "../../components/globals/Footer";
 
 const ApplicationPage = (props) => {
     // route : /quests/questId

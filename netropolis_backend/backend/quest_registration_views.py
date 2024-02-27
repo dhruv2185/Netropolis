@@ -136,7 +136,7 @@ def get_quest_by_id(request):
 @permission_classes([IsAuthenticated])
 def get_quest_by_cm(request):
     user = request.user
-    cm_profile = Community_Manager.objects.get(id=user.id)
+    cm_profile = Community_Manager.objects.get(user=user)
     pk = cm_profile.id
     try:
         quest = Quest.objects.get(created_by=pk)

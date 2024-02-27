@@ -1,12 +1,13 @@
 
 import { useEffect, useState } from "react";
-import Footer from "../components/globals/Footer.jsx";
-import Header from "../components/globals/Header.jsx";
-import QuestList from "../components/globals/QuestList.jsx";
-import navigations from "../data/navigations.json";
-import AppLoader from "../utils/AppLoader.jsx";
+
+import QuestList from "../../components/globals/QuestList.jsx";
+import navigations from "../../data/navigations.json";
+import AppLoader from "../../utils/AppLoader.jsx";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import Header from "../../components/globals/Header.jsx";
+import Footer from "../../components/globals/Footer.jsx";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 const ViewCMQuests = () => {
 
@@ -25,7 +26,7 @@ const ViewCMQuests = () => {
   const fetchQuestsForCM = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${baseUrl}/get_quest_by_cm/`, {
+      const res = await fetch(`${baseUrl}/get_quest_by_cm/?pk=${userInfo.user_id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -46,6 +47,7 @@ const ViewCMQuests = () => {
       }
     }
     catch (err) {
+      console.log(err)
       toast.error("Failed to fetch quest details.Please check your connection and try again later.");
     }
     setLoading(false);

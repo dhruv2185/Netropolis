@@ -9,40 +9,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PlusIcon, MinusCircleIcon, PlusSmallIcon } from "@heroicons/react/24/solid";
 // import { useLoginMutation } from "../features/slices/usersApiSlice";
 // import Button from "../components/globals/Button";
-import Title from "../components/globals/Title";
-import navigations from "../data/navigations.json";
-import Header from "../components/globals/Header";
-import mesh from "../assets/images/mesh.png";
-import { AppError } from "../utils/AppError";
-import Footer from "../components/globals/Footer";
-import AppLoader from "../utils/AppLoader";
-const timeZone = "Asia/Tokyo"
-
-const convertToEvent = (eventIfo, date) => {
-    const toBeReturned = {
-        summary: eventIfo.name,
-        location: eventIfo.location,
-        description: eventIfo.description,
-        start: {
-            dateTime: `${date}T${eventIfo.from}:00`,
-            timeZone: timeZone,
-        },
-        end: {
-            dateTime: `${date}T${eventIfo.to}:00`,
-            timeZone: timeZone,
-        },
-        reminders: {
-            useDefault: false,
-            overrides: [
-                { method: 'popup', minutes: 10 },
-            ],
-        }
-    }
-    return toBeReturned;
-}
+import Title from "../../components/globals/Title";
+import navigations from "../../data/navigations.json";
+import Header from "../../components/globals/Header";
+import mesh from "../../assets/images/mesh.png";
+import { AppError } from "../../utils/AppError";
+import Footer from "../../components/globals/Footer";
+import AppLoader from "../../utils/AppLoader";
 
 
-const ScheduleQuestPage = () => {
+const EditSchedulePage = () => {
     // route : baseUrl/applications/applicationId
     const navigate = useNavigate();
     const { userInfo, tokens } = useSelector((state) => state.auth);
@@ -55,6 +31,7 @@ const ScheduleQuestPage = () => {
         }
         else {
             fetchApplicationData(applicationId);
+            fetchScheduleData();
         }
     }, [navigate, userInfo]);
 
@@ -82,7 +59,29 @@ const ScheduleQuestPage = () => {
             toast.error(err.message);
         }
     }
-
+    const fetchScheduleData = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/get_schedule_by_application_id/?pk=${applicationId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${tokens.access}`
+                }
+            }
+            )
+            if (!response.ok) {
+                throw new Error('Failed to fetch Schedule data. Please try again later.');
+            }
+            const data = await response.json();
+            console.log(data);
+            setSchedule(data);
+            setDays(data.day_to_day_schedule);
+        }
+        catch (err) {
+            toast.error(err.message);
+        }
+    }
     const [applicationData, setApplicationData] = useState()
     const [team_data, setTeamData] = useState()
     const [quest_data, setQuestData] = useState()
@@ -209,8 +208,8 @@ const ScheduleQuestPage = () => {
             //         console.log(data);
             //     }
             // }
-            const response = await fetch(`${BASE_URL}/quest_scheduling/`, {
-                method: 'POST',
+            const response = await fetch(`${BASE_URL}/quest_scheduling/?pk=${applicationId}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: 'application/json',
@@ -225,7 +224,7 @@ const ScheduleQuestPage = () => {
                 throw new Error('Something went wrong');
             }
             console.log(data);
-            toast.success("Schedule Created Successfully");
+            toast.success("Schedule Edited Successfully");
         }
         catch (err) {
             toast.error(err.message);
@@ -332,7 +331,7 @@ const ScheduleQuestPage = () => {
                             {/* <div className="flex justify-end p-1"></div> */}
 
                             <div className="text-center mb-10">
-                                <Title title="Create Schedule" subtitle={"Please create a SCHEDULE for the quest"} titleClass={"text-indigo-400"} />
+                                <Title title="Edit Schedule" subtitle={"Please Edit the SCHEDULE for the quest"} titleClass={"text-indigo-400"} />
                             </div>
 
                             {<AppError />}
@@ -504,6 +503,6 @@ const ScheduleQuestPage = () => {
     );
 };
 
-export default ScheduleQuestPage;
+export default EditSchedulePage;
 
 
