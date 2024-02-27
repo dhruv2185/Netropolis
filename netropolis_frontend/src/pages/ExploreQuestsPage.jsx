@@ -24,7 +24,6 @@ const ExploreQuestsPage = () => {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": `Bearer ${tokens.access}`
         },
       });
       const data = await res.json();
@@ -41,7 +40,7 @@ const ExploreQuestsPage = () => {
       }
     }
     catch (err) {
-      toast.error("Failed to fetch quest details.Please check your connection and try again later.");
+      toast.error(err);
     }
     setLoading(false);
   }

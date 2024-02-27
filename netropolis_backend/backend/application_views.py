@@ -67,3 +67,19 @@ def get_by_community_manager(request):
             return Response([], status=status.HTTP_200_OK)
     except Community_Manager.DoesNotExist:
         return Response("Community Manager not found", status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_by_id(request):
+    pk = request.query_params.get('pk', None)
+    if pk is not None:
+        try:
+            application = Application.objects.select_related(
+                'quest_id', 'teamId').get(id=pk)
+            serializer = ApplicationQuestSerializer(application, many=False)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Application.DoesNotExist:
+            return Response("Application not found", status=status.HTTP_404_NOT_FOUND)
+    else:
+        return Response("Invalid request: 'pk' parameter is missing", status=status.HTTP_400_BAD_REQUEST)

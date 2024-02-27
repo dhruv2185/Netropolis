@@ -9,14 +9,15 @@ export const loginRequest = async (userData) => {
         },
         body: JSON.stringify(userData),
     })
+    const data = await res.json();
     if (!res.ok) {
         return {
             error: {
-                message: res.message
+                message: "Please enter valid credentials"
             }
         }
     }
-    const data = await res.json();
+
     return data;
 }
 
@@ -29,14 +30,15 @@ export const fetchUserProfile = async (tokens) => {
             Authorization: `Bearer ${tokens.access}`,
         },
     });
+    const data = await res.json();
     if (!res.ok) {
         return {
             error: {
-                message: res.message
+                message: "Failed to login. Please try again later."
             }
         }
     }
-    const data = await res.json();
+
     return data;
 }
 
@@ -49,14 +51,15 @@ export const signUpRequest = async (userInfo) => {
         },
         body: JSON.stringify(userInfo),
     });
+    const data = await res.json();
     if (!res.ok) {
         return {
             error: {
-                message: res.message
+                message: data.message
             }
         }
     }
-    const data = await res.json();
+
     return data;
 }
 

@@ -44,7 +44,7 @@ const router = createBrowserRouter(
       <Route path="/team-registration" element={<TeamRegistrationPage />} />
       <Route path="/application/:questId" element={<ApplicationPage />} />
       <Route path="/registerquest" element={<RegisterQuest />} />
-      <Route path="/schedulequest" element={<ScheduleQuestPage />} />
+      <Route path="/schedulequest/:applicationId" element={<ScheduleQuestPage />} />
       <Route path="/registertask" element={<RegisterTaskPage />} />
       <Route path="/viewteams" element={<ViewTeams />} />
       <Route path="/viewapplications" element={<ViewUserApplications />} />

@@ -97,21 +97,24 @@ const Login = () => {
   });
 
   const submitHandler = async (e) => {
-    console.log("submitHandler");
     e.preventDefault();
+    console.log("submitHandler");
+
     if (!username || !password) {
       return toast.error("All fields are required");
     }
     try {
       const tokens = await loginRequest({ username, password });
       console.log(tokens);
-      if (tokens.error?.message) {
+      if (tokens.error) {
+        const msg = tokens.error.message ? tokens.error.message : "Failed to login. Please try again later.";
         throw new Error(tokens.error.message)
       }
       const user = await fetchUserProfile(tokens);
       console.log(user);
-      if (user.error?.message) {
-        throw new Error(user.error.message)
+      if (user.error) {
+        const msg = user.error.message ? user.error.message : "Failed to login. Please try again later.";
+        throw new Error(msg)
       }
       else {
         let role = "user"
@@ -124,7 +127,8 @@ const Login = () => {
         navigate("/");
       }
     } catch (err) {
-      toast.error(err?.data?.message || err.error?.message);
+      console.log(err);
+      toast.error(err?.data?.message || err.error?.message || err?.message || err);
     }
   };
 
@@ -198,19 +202,19 @@ const Login = () => {
                 <p className="text-sm text-right mt-3 text-indigo-100 pb-2 mb-3">
                   <Link to="/forgotpassword">Forgot Password</Link>
                 </p><div className="flex flex-col gap-2 justify-center items-center">
-                <Button text={isLoading ? <AppLoader /> : "Sign In"} customClass={"w-full"} loading={isLoading} ></Button>
-                <h2 className=" text-indigo-300 font-extrabold rounded-full bg-slate-100 px-2">OR</h2>
-                <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
-                  <button
-                    className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
-                    disabled={isLoading}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      login();
-                    }}
-                  > Sign In with Google
-                  </button>
-                </div></div>
+                  <Button type="submit" text={isLoading ? <AppLoader /> : "Sign In"} customClass={"w-full"} loading={isLoading} ></Button>
+                  <h2 className=" text-indigo-300 font-extrabold rounded-full bg-slate-100 px-2">OR</h2>
+                  <div className="justify-center w-full pt-2 pb-3 flex gap-4 flex-col text-center items-center">
+                    <button
+                      className={`w-full text-base lg:text-lg text-white bg-indigo-400 font-bold py-2 px-4 rounded-full`}
+                      disabled={isLoading}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        login();
+                      }}
+                    > Sign In with Google
+                    </button>
+                  </div></div>
               </form>
 
               <p className="font-medium text-sm text-center mt-5 text-[white]">

@@ -46,7 +46,8 @@ class QuestSearchingView(APIView):
             # print(pk.id)
             # quests = Quest.objects.filter(created_by=pk)
             # questslist = list(quests.values())
-            print(vectordb_results)
+            for hit in search:
+                print(hit.payload, "score:", hit.score)
             results = vectordb_results
 
         #     try:

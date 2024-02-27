@@ -37,12 +37,13 @@ class QuestRegistrationView(APIView):
         if serialzer.is_valid():
             serialzer.save()
             newQuest = dict(serialzer.data)
+            print(newQuest['quest_name'])
             try:
                 self.qdrant.upload_points(
                     collection_name="quests",
                     points=[
                         models.Record(
-                            id=newQuest['id'], vector=self.encoder.encode(newQuest["description"][0]).tolist(), payload=newQuest
+                            id=newQuest['id'], vector=self.encoder.encode(newQuest['quest_name']+'\n'+newQuest["description"][0]).tolist(), payload=newQuest
                         )
 
                     ],
@@ -101,7 +102,7 @@ class QuestRegistrationView(APIView):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def get_all_quests(request):
     try:
         quest = Quest.objects.get()

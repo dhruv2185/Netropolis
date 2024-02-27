@@ -35,7 +35,6 @@ const SearchQuestsPage = ({ destinations, destinationCategories }) => {
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json",
-          "Authorization": `Bearer ${tokens.access}`
         },
       });
       const data = await res.json();

@@ -15,6 +15,7 @@ import Header from "../components/globals/Header";
 import mesh from "../assets/images/mesh.png";
 import { AppError } from "../utils/AppError";
 import Footer from "../components/globals/Footer";
+import AppLoader from "../utils/AppLoader";
 const timeZone = "Asia/Tokyo"
 
 const convertToEvent = (eventIfo, date) => {
@@ -41,88 +42,11 @@ const convertToEvent = (eventIfo, date) => {
 }
 
 
-const ScheduleQuestPage = (props) => {
+const ScheduleQuestPage = () => {
     // route : baseUrl/applications/applicationId
     const navigate = useNavigate();
     const { userInfo, tokens } = useSelector((state) => state.auth);
-    const dummy_team_data = {
-
-        team_name: "Team Rocket",
-        compostion: "Jessie, James, Meowth",
-        expectations_for_the_platform: "To blast off at the speed of light!",
-        concerns: "To protect the world from devastation!",
-        members: [
-            {
-                name: "Jessie",
-                age: 25,
-                gender: "Female",
-                place_of_residence: "Kanto",
-                occupation: "Pokemon Trainer",
-            }
-            ,
-            {
-                name: "James",
-                age: 25,
-                gender: "Male",
-                place_of_residence: "Kanto",
-                occupation: "Pokemon Trainer",
-            },
-            {
-                name: "Meowth",
-                age: 25,
-                gender: "Male",
-                place_of_residence: "Kanto",
-                occupation: "Pokemon",
-            }
-        ]
-
-    }
-    const dummy_quest_data = {
-        quest_name: "Pokemon Quest",
-        region: "Kanto",
-        genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-        rewards: "$8000",
-        other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-        available_till: Date.now(),
-        duration: {
-            start_date: Date.now(),
-            end_date: Date.now()
-        }
-        ,
-        special_notes: "This is a special note for the quest",
-        desired_tasks: "Catch them all!",
-        daily_time_span: "10:00 AM - 6:00 PM",
-        team: {
-            team_name: "Team Rocket",
-            compostion: "Jessie, James, Meowth",
-            expectations_for_the_platform: "To blast off at the speed of light!",
-            concerns: "To protect the world from devastation!",
-            members: [
-                {
-                    name: "Jessie",
-                    age: 25,
-                    gender: "Female",
-                    place_of_residence: "Kanto",
-                    occupation: "Pokemon Trainer",
-                }
-                ,
-                {
-                    name: "James",
-                    age: 25,
-                    gender: "Male",
-                    place_of_residence: "Kanto",
-                    occupation: "Pokemon Trainer",
-                },
-                {
-                    name: "Meowth",
-                    age: 25,
-                    gender: "Male",
-                    place_of_residence: "Kanto",
-                    occupation: "Pokemon",
-                }
-            ]
-        }
-    }
+    const { applicationId } = useParams();
 
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
@@ -130,14 +54,13 @@ const ScheduleQuestPage = (props) => {
             navigate("/");
         }
         else {
-            fetchQuestData(questId)
-            fetchTeamData(teamId)
+            fetchApplicationData(applicationId);
         }
     }, [navigate, userInfo]);
 
-    const fetchQuestData = async (questId) => {
+    const fetchApplicationData = async (application_id) => {
         try {
-            const response = await fetch(`${BASE_URL}/quest/${questId}`, {
+            const response = await fetch(`${BASE_URL}/get_application_by_id/?pk=${application_id}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -147,53 +70,32 @@ const ScheduleQuestPage = (props) => {
             }
             )
             if (!response.ok) {
-                throw new Error('Failed to fetch quest data. Please try again later.');
+                throw new Error('Failed to fetch Application data. Please try again later.');
             }
             const data = await response.json();
             console.log(data);
-            setQuestData(data);
+            setApplicationData(data);
+            setTeamData(data.teamId);
+            setQuestData(data.quest_id);
         }
         catch (err) {
             toast.error(err.message);
         }
     }
 
-    const fetchTeamData = async (teamId) => {
-        try {
-            const response = await fetch(`${BASE_URL}/get_team_by_id/${teamId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    Authorization: `Bearer ${tokens.access}`
-                }
-            }
-            )
-            if (!response.ok) {
-                throw new Error('Failed to fetch team data. Please try again later.');
-            }
-            const data = await response.json();
-            setTeamData(data);
-            console.log(data);
-        }
-        catch (err) {
-            toast.error(err.message);
-        }
-    }
-
-    const [team_data, setTeamData] = useState(dummy_team_data)
-    const [quest_data, setQuestData] = useState(dummy_quest_data)
+    const [applicationData, setApplicationData] = useState()
+    const [team_data, setTeamData] = useState()
+    const [quest_data, setQuestData] = useState()
 
     const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
 
-    const { applicationId } = useParams();
-    const { questId, teamId } = props.appInfo;
+
 
     const [schedule, setSchedule] = useState({
-        createdBy: CMInfo.id,
+        createdBy: userInfo.cm_id,
         start_date: "",
         end_date: "",
-        questId: questId,
+        quest_id: "",
         application_id: applicationId
     })
 
@@ -280,34 +182,34 @@ const ScheduleQuestPage = (props) => {
         e.preventDefault();
         const bodyToBeSent = {
             ...schedule,
-            application_id: 14597,
+            quest_id: quest_data.id,
             day_to_day_schedule: days,
         }
         console.log(bodyToBeSent);
         try {
-            for (let i = 0; i < days.length; i++) {
-                const currDate = days[i].date;
-                for (let j = 0; j < days[i].events.length; j++) {
-                    const eventInfo = days[i].events[j];
-                    const event = convertToEvent(eventInfo, currDate);
-                    const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Accept: 'application/json',
-                            Authorization: `Bearer ${tokens.access_google}`
-                        },
-                        body: JSON.stringify(event)
-                    }
-                    )
-                    if (!response.ok) {
-                        throw new Error('Something went wrong');
-                    }
-                    const data = await response.json();
-                    console.log(data);
-                }
-            }
-            const response = await fetch(`${BASE_URL}/quest/schedule`, {
+            // for (let i = 0; i < days.length; i++) {
+            //     const currDate = days[i].date;
+            //     for (let j = 0; j < days[i].events.length; j++) {
+            //         const eventInfo = days[i].events[j];
+            //         const event = convertToEvent(eventInfo, currDate);
+            //         const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+            //             method: 'POST',
+            //             headers: {
+            //                 'Content-Type': 'application/json',
+            //                 Accept: 'application/json',
+            //                 Authorization: `Bearer ${tokens.access_google}`
+            //             },
+            //             body: JSON.stringify(event)
+            //         }
+            //         )
+            //         if (!response.ok) {
+            //             throw new Error('Something went wrong');
+            //         }
+            //         const data = await response.json();
+            //         console.log(data);
+            //     }
+            // }
+            const response = await fetch(`${BASE_URL}/quest_scheduling/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -333,7 +235,8 @@ const ScheduleQuestPage = (props) => {
 
     return (
         <><Header navigations={navigations} />
-            <div className="flex bg-transparent h-auto w-full" >
+            {!applicationData && <div className="w-full min-h-[80vh] flex justify-center items-center"><AppLoader /></div>}
+            {applicationData && <div className="flex bg-transparent h-auto w-full" >
                 {/* left side */}
                 <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
                     <div className="lg:flex flex-1 w-full max-md:mt-20 mt-10 min-h-[120vh]">
@@ -364,31 +267,31 @@ const ScheduleQuestPage = (props) => {
                                 <div className="flex flex-col gap-2 md:max-w-lg md:pl-[5%] w-full max-md:items-center max-md:justify-center max-md:p-10"><h2 className=" font-bold text-xl text-indigo-400 font-inter"> Team</h2>
                                     <div className="flex flex-col gap-2">
                                         <h3 className="font-medium text-indigo-400 font-inter"> Team Name</h3>
-                                        <p className="text-black font-inter mb-4">{quest_data.team.team_name}</p>
+                                        <p className="text-black font-inter mb-4">{team_data.team_name}</p>
                                         <h3 className="font-medium text-indigo-400 font-inter"> Composition</h3>
-                                        <p className="text-black font-inter mb-4">{quest_data.team.compostion}</p>
+                                        <p className="text-black font-inter mb-4">{team_data.composition}</p>
                                         <h3 className="font-medium text-indigo-400 font-inter"> Expectations for the Platform</h3>
-                                        <p className="text-black font-inter mb-4">{quest_data.team.expectations_for_the_platform}</p>
+                                        <p className="text-black font-inter mb-4">{team_data.expectations_for_the_platform}</p>
                                         <h3 className="font-medium text-indigo-400 font-inter"> Concerns</h3>
-                                        <p className="text-black font-inter mb-4">{quest_data.team.concerns}</p>
+                                        <p className="text-black font-inter mb-4">{team_data.concerns}</p>
 
                                     </div>
 
                                     <h2 className="font-medium text-indigo-400 font-inter"> Special Notes</h2>
-                                    <p className="text-black font-inter mb-4">{quest_data.special_notes}</p>
+                                    <p className="text-black font-inter mb-4">{applicationData.special_note}</p>
                                     <h2 className="font-medium text-indigo-400 font-inter"> Desired Tasks</h2>
-                                    <p className="text-black font-inter mb-4">{quest_data.desired_tasks}</p>
+                                    <p className="text-black font-inter mb-4">{applicationData.desired_tasks}</p>
                                     <h2 className="font-medium text-indigo-400 font-inter"> Daily Time Span</h2>
-                                    <p className="text-black font-inter mb-4">{quest_data.daily_time_span}</p>
+                                    <p className="text-black font-inter mb-4">{applicationData.preferred_time_span}</p>
                                     <h2 className="font-bold text-lg text-indigo-400 font-inter"> Duration of Stay</h2>
                                     <div className="grid grid-cols-2 gap-10">
                                         <div className="w-full">
                                             <h3 className="font-medium text-indigo-400 font-inter">Start Date</h3>
-                                            <p className="text-black font-inter mb-4">{new Date(quest_data.duration.start_date).toDateString()}</p>
+                                            <p className="text-black font-inter mb-4">{new Date(applicationData.stay_start_date).toDateString()}</p>
                                         </div>
                                         <div className="w-full">
                                             <h3 className="font-medium text-indigo-400 font-inter">End Date</h3>
-                                            <p className="text-black font-inter mb-4">{new Date(quest_data.duration.end_date).toDateString()}</p>
+                                            <p className="text-black font-inter mb-4">{new Date(applicationData.stay_end_date).toDateString()}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -397,7 +300,7 @@ const ScheduleQuestPage = (props) => {
                             <h3 className="font-bold text-xl text-indigo-400 font-inter "> Members</h3>
                             <div className="gap-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 m-3">
                                 {
-                                    team_data.map((member, index) => (
+                                    team_data.team_info.map((member, index) => (
                                         <div key={index} className="flex flex-col gap-5 min-w-[300px]" style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }}>
                                             <div className="flex justify-between gap-16">
                                                 <div>
@@ -595,7 +498,7 @@ const ScheduleQuestPage = (props) => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
             <Footer navigations={navigations} />
         </>
     );

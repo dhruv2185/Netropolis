@@ -21,7 +21,7 @@ const ApplicationPage = (props) => {
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "user") {
             toast.error("Please login to continue.")
-            navigate("/");
+            navigate("/login");
         }
         else
             fetchTeams();
@@ -57,7 +57,7 @@ const ApplicationPage = (props) => {
     const [teams, setTeams] = useState();
 
     const [appInfo, setAppInfo] = useState({
-        user_id: userInfo.user_id,
+        user_id: userInfo?.user_id,
         quest_id: questId,
         stay_start_date: "",
         stay_end_date: "",
@@ -77,7 +77,6 @@ const ApplicationPage = (props) => {
     //     other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
     //     available_till: Date.now(),
     // }
-    const listt = [1];
     const fetchTeams = async () => {
         try {
             const response = await fetch(`${BASE_URL}/teams/?pk=${userInfo.user_profile.username}`, {

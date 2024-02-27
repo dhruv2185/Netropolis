@@ -18,10 +18,17 @@ urlpatterns = [
     path('search/', quest_searching_views.QuestSearchingView.as_view(),
          name='quest_searching'),
     path('get_team_by_id/', login_views.get_by_id),
-    path('community_manager_register/', community_manager_views.CommunityManagerView.as_view()),
+    path('community_manager_register/',
+         community_manager_views.CommunityManagerView.as_view()),
     path('tasks/', tasks_entry.TaskView.as_view()),
-    path('get_all_quests/', quest_registration_views.get_all_quests, name='get_all_quests'),
-    path('get_quest_by_id/', quest_registration_views.get_quest_by_id, name='get_quest_by_id'),
-    path('get_quest_by_cm/', quest_registration_views.get_quest_by_cm, name = 'get_quests_by_cm'),
-    path('get_applications_by_cm/', application_views.get_by_community_manager, name = 'get_applications_by_cm')
+    path('get_all_quests/', quest_registration_views.get_all_quests,
+         name='get_all_quests'),
+    path('get_quest_by_id/', quest_registration_views.get_quest_by_id,
+         name='get_quest_by_id'),
+    path('get_quest_by_cm/', quest_registration_views.get_quest_by_cm,
+         name='get_quests_by_cm'),
+    path('get_applications_by_cm/', application_views.get_by_community_manager,
+         name='get_applications_by_cm'),
+    path('get_application_by_id/', application_views.get_by_id,
+         name='get_application_by_id')
 ]

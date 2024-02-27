@@ -44,14 +44,14 @@ qdrant = QdrantClient(
     api_key="L0Fmsd6X0lhZlODXOYLQmRYskoQFYnurV7d1Ovfh-2EW3yWKzw4LFQ",
 )
 
-# qdrant.recreate_collection(
-#     collection_name="quests",
-#     vectors_config=models.VectorParams(
-#         # Vector size is defined by used model
-#         size=encoder.get_sentence_embedding_dimension(),
-#         distance=models.Distance.COSINE,
-#     ),
-# )
+qdrant.recreate_collection(
+    collection_name="quests",
+    vectors_config=models.VectorParams(
+        # Vector size is defined by used model
+        size=encoder.get_sentence_embedding_dimension(),
+        distance=models.Distance.COSINE,
+    ),
+)
 
 # qdrant.recreate_collection(
 #     collection_name="my_books",
@@ -70,18 +70,18 @@ qdrant = QdrantClient(
 #         for idx, doc in enumerate(documents)
 #     ],
 # )
-qdrant.delete(
-    collection_name="quests",
-    points_selector=models.PointIdsList(
-        points=[1]
-    )
-)
-hits = qdrant.search(
-    collection_name="quests",
-    query_vector=encoder.encode("time travel").tolist(),
-    limit=6,)
-for hit in hits:
-    print(hit.payload, "score:", hit.score)
+# qdrant.delete(
+#     collection_name="quests",
+#     points_selector=models.PointIdsList(
+#         points=[1]
+#     )
+# )
+# hits = qdrant.search(
+#     collection_name="quests",
+#     query_vector=encoder.encode("time travel").tolist(),
+#     limit=6,)
+# for hit in hits:
+#     print(hit.payload, "score:", hit.score)
 
 # hits = qdrant.search(
 #     collection_name="my_books",

@@ -66,7 +66,7 @@ const ProfileMenu = () => {
     },
   ];
   const navigate = useNavigate();
-  console.log(profileMenuItems)
+  // console.log(profileMenuItems)
   const handleLogout = () => {
 
     dispatch(clearCredentials());

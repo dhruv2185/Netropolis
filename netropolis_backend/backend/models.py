@@ -8,7 +8,7 @@ class Team(models.Model):
     id = models.AutoField(primary_key=True)
     team_name = models.CharField(max_length=50)
     created_by = models.ForeignKey(
-        User, on_delete=models.CASCADE, default=7, null=True)
+        User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     number_of_people = models.IntegerField()
@@ -47,13 +47,13 @@ class Quest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     created_by = models.ForeignKey(
-        Community_Manager, on_delete=models.CASCADE, default=7)
+        Community_Manager, on_delete=models.CASCADE)
     available_till = models.DateTimeField()
 
 
 class Application(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, default=7)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     quest_id = models.ForeignKey(Quest, on_delete=models.CASCADE)
     status = models.CharField(max_length=30)
     preferred_time_span = models.TextField()
@@ -68,11 +68,11 @@ class Application(models.Model):
 
 class Schedule(models.Model):
     id = models.AutoField(primary_key=True)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     application_id = models.ForeignKey(Application, on_delete=models.CASCADE)
     quest_id = models.ForeignKey(Quest, on_delete=models.CASCADE)
-    day_to_day_schedule = models.TextField()
+    day_to_day_schedule = models.JSONField()
     createdBy = models.ForeignKey(Community_Manager, on_delete=models.CASCADE)
 
 
@@ -80,4 +80,4 @@ class TaskProblem(models.Model):
     id = models.AutoField(primary_key=True)
     description = models.TextField()
     created_by = models.ForeignKey(
-        Community_Manager, on_delete=models.CASCADE, default=7)
+        Community_Manager, on_delete=models.CASCADE)

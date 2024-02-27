@@ -32,15 +32,17 @@ const ApplicationCard = ({ application }) => {
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
               <strong>Genre Tags:</strong> {application.quest_id.genre_tags.join(", ")}
             </p>
-            <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
+            <p className="w-full text-neutral-600 text-sm lg:text-base leading-5 line-clamp-4 text-ellipsis">
               <strong>Description:</strong> {application.quest_id.description}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
               <strong>Rewards:</strong> ${application.quest_id.rewards}
             </p>
-
+            <p className="w-full text-neutral-600 text-sm lg:text-base leading-5 line-clamp-4 text-ellipsis">
+              <strong>Other Information:</strong> {application.quest_id.other_information}
+            </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
-              <strong>Available Till:</strong> {new Date(application.quest_id.available_till).toDateString()}
+              <strong>Available Till:</strong> {new Date(application.quest_id.available_till).toLocaleDateString()}
             </p>
           </div><div className=" flex flex-col">
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
