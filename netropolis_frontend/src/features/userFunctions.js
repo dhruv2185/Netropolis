@@ -13,7 +13,8 @@ export const loginRequest = async (userData) => {
     if (!res.ok) {
         return {
             error: {
-                message: "Please enter valid credentials"
+                message: "Please enter valid credentials",
+                statusCode: res.status
             }
         }
     }
@@ -34,7 +35,8 @@ export const fetchUserProfile = async (tokens) => {
     if (!res.ok) {
         return {
             error: {
-                message: "Failed to login. Please try again later."
+                message: "Failed to login. Please try again later.",
+                statusCode: res.status
             }
         }
     }
