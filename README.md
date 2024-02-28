@@ -1,8 +1,10 @@
 # Netropolis
 ## Live URL
 
-(Will be updated soon!)
+[Vercel Hosting](https://netropolis-nu.vercel.app/)
 
+
+Note: This is only a FRONTEND deployment, to use all the features of this app please set up the BACKEND locally by following the steps given below or by watching the demo video (drive link). Also, please ensure that the BACKEND is running on http://localhost:8000/.
 ## Description
 
 This project tackles the challenges posed by Japan's unique aging population and declining birthrate. Due to the declining population caused by the falling birthrate and aging population, local cities are depopulating, resulting in a loss of workers day by day. In rural areas where labor is scarce, it is increasingly difficult to maintain the history, culture, and economy that local residents have created over the years. This project aims to address the shortage of local workers by bringing in help from outside the region to establish a local city system of economy, culture, and history.
