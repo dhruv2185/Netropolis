@@ -16,6 +16,7 @@ import Footer from "../../components/globals/Footer";
 const ApplicationPage = (props) => {
     // route : /quests/questId
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const { userInfo, tokens } = useSelector((state) => state.auth);
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "user") {
@@ -34,24 +35,6 @@ const ApplicationPage = (props) => {
     const quest_data = location.state;
     console.log(quest_data);
 
-    let dummyTeams = [
-        {
-            id: 1,
-            team_name: "Team 1"
-        },
-        {
-            id: 2,
-            team_name: "Team 2"
-        },
-        {
-            id: 3,
-            team_name: "Team 3"
-        },
-        {
-            id: 4,
-            team_name: "Team 4"
-        }
-    ]
 
     const [teams, setTeams] = useState();
 
@@ -77,6 +60,7 @@ const ApplicationPage = (props) => {
     //     available_till: Date.now(),
     // }
     const fetchTeams = async () => {
+        setLoading(true);
         try {
             const response = await fetch(`${BASE_URL}/teams/?pk=${userInfo.user_profile.username}`, {
                 method: "GET",
@@ -101,6 +85,7 @@ const ApplicationPage = (props) => {
         catch (err) {
             toast.error(err.message);
         }
+        setLoading(false);
     }
 
     const handleInputChange = (e) => {
@@ -117,11 +102,15 @@ const ApplicationPage = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const today = new Date();
         if (appInfo.stay_start_date > appInfo.stay_end_date || new Date(appInfo.stay_start_date) < today || new Date(appInfo.stay_end_date) < today) {
+            setLoading(false);
             return toast.error("Oops! I guess you mixed up your dates. Please check again.");
+
         }
         if (appInfo.stay_start_date === "" || appInfo.stay_end_date === "" || appInfo.special_note === "" || appInfo.desired_tasks === "" || appInfo.teamId === "" || appInfo.preferred_time_span === "") {
+            setLoading(false);
             return toast.error("All fields are required");
         }
         // console.log(appInfo);
@@ -150,6 +139,7 @@ const ApplicationPage = (props) => {
         catch (err) {
             toast.error(err.message);
         }
+        setLoading(false);
     };
 
     return (
@@ -157,6 +147,7 @@ const ApplicationPage = (props) => {
             <Header navigations={navigations} ></Header>
             <div className="flex bg-transparent h-auto w-full" >
                 <div className="justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center" style={{ backgroundImage: `url(${mesh})` }}>
+                    {loading && <AppLoader customClass={"fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"} />}
                     <div className="md:flex flex-1 w-full max-md:mt-20 mt-14 min-h-[120vh]">
                         <div className="sm:w-full lg:max-w-[60%]  flex flex-col justify-center items-center">
                             <div className="text-center mb-10">

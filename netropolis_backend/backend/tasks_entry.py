@@ -1,13 +1,12 @@
-from rest_framework.decorators import api_view, permission_classes
+
 from rest_framework.response import Response
-from rest_framework import generics, status
+from rest_framework import status
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-from django.contrib.auth import get_user_model
-from django.core.exceptions import MultipleObjectsReturned
-from rest_framework.decorators import api_view, permission_classes
-from ..serializers import TaskSerializerBulk, TasksSerializer, CommunityManagerSerializer
-from ..models import TaskProblem
+from rest_framework.permissions import IsAuthenticated
+
+
+from .serializers import TaskSerializerBulk, TasksSerializer, CommunityManagerSerializer
+from .models import TaskProblem
 
 
 class TaskView(APIView):

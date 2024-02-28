@@ -65,9 +65,9 @@ const ApplicationCard = ({ application }) => {
       </main>
       <footer className="w-full mt-2 flex justify-between items-center">
         <div className="flex justify-center items-center gap-2 font-bold">
-          <h4 className="text-md text-indigo-400">STATUS : </h4><h4 className="text-neutral-600"> {application.status === "unviewed" ? "UNDER REVIEW" : "SCHEDULED"}</h4>
+          <h4 className="text-md text-indigo-400">STATUS : </h4><h4 className="text-neutral-600"> {application.status !== "Scheduled" ? "UNDER REVIEW" : "SCHEDULED"}</h4>
         </div>
-        {application.status !== "unviewed" && <Button text="View Schedule" path="/" customClass={"mx-4"} />}
+        {application.status === "Scheduled" && <Button text="View Schedule" path={`/viewschedule/${application.id}`} customClass={"mx-4"} />}
       </footer>
     </article>
   );

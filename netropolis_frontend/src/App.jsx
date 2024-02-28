@@ -6,21 +6,27 @@ import "react-toastify/dist/ReactToastify.css";
 import { fetchUserProfile } from "./features/userFunctions";
 import { clearCredentials, clearTokens } from "./features/slices/authSlice";
 const App = () => {
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, tokens } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const fetchUserProfileData = async () => {
+    const data = await fetchUserProfile(tokens);
+    console.log(data)
+    if (data.error?.statusCode === 401) {
+      dispatch(clearCredentials());
+      dispatch(clearTokens());
+      toast.error("Please login to continue.");
+      navigate("/");
+    }
+  };
   useEffect(() => {
     if (userInfo === null) {
       navigate("/");
     }
     else {
-      const data = fetchUserProfile(userInfo);
-      if (data.statusCode === 401) {
-        dispatch(clearCredentials());
-        dispatch(clearTokens());
-        toast.error("Please login to continue.");
-        navigate("/");
-      }
+      fetchUserProfileData();
+
+
     }
   }, [navigate, userInfo]);
   return (

@@ -17,6 +17,7 @@ const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 const RegisterQuest = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [questData, setQuestData] = useState({
         quest_name: "",
         region: "",
@@ -59,7 +60,6 @@ const RegisterQuest = () => {
             const data = await res.json();
             console.log(data);
             if (!res.ok) {
-                setTasks(dummyTasks);
                 throw new Error('Something went wrong. Please try again later.')
             }
             else {
@@ -76,68 +76,7 @@ const RegisterQuest = () => {
     }
 
 
-    let dummyTasks = [
-        {
-            task: "Choose your first Pokemon"
-        },
-        {
-            task: "Catch 5 Pokemons"
-        },
-        {
-            task: "Win 5 battles"
-        },
-        {
-            task: "Defeat Team Rocket"
-        },
-        {
-            task: "Defeat Gym Leader"
-        },
-        {
-            task: "Defeat Elite Four"
-        },
-        {
-            task: "Defeat Champion"
-        },
-        {
-            task: "Catch Legendary Pokemon"
-        },
-        {
-            task: "Catch Mythical Pokemon"
-        },
-        {
-            task: "Complete Pokedex and start new game plus. Padhai Likhai karo IAS VAIS bano aur desh ko sambhalo"
-        },
-        {
-            task: "Choose your first Pokemon"
-        },
-        {
-            task: "Catch 5 Pokemons"
-        },
-        {
-            task: "Win 5 battles"
-        },
-        {
-            task: "Defeat Team Rocket"
-        },
-        {
-            task: "Defeat Gym Leader"
-        },
-        {
-            task: "Defeat Elite Four"
-        },
-        {
-            task: "Defeat Champion"
-        },
-        {
-            task: "Catch Legendary Pokemon"
-        },
-        {
-            task: "Catch Mythical Pokemon"
-        },
-        {
-            task: "Complete Pokedex and start new game plus. Padhai Likhai karo IAS VAIS bano aur desh ko sambhalo"
-        }
-    ]
+
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
             console.log("redirecting to login");
@@ -149,7 +88,6 @@ const RegisterQuest = () => {
     }, []);
 
     const tokens = useSelector((state) => state.auth.tokens);
-    // console.log("tokens", tokens);
 
     // Handle Input Change
     const handleDynamicActivityInputChange = (e, index, activities, setActivities) => {
@@ -183,6 +121,7 @@ const RegisterQuest = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         // validation
         if (questData.quest_name === "" || questData.region === "" || questData.rewards === "" || questData.other_information === "" || questData.genre_tags.length === 0 || questData.available_till === "" || questData.description === "") {
             toast.error("Please fill in all the fields.");
@@ -232,11 +171,12 @@ const RegisterQuest = () => {
             }
             const data = await res.json();
             // console.log(data);
+            toast.success("Quest created successfully.");
             navigate("/")
         } catch (err) {
             toast.error("An error occurred. Please try again.");
         }
-
+        setLoading(false);
     };
 
     const addFields = (e, activities, setActivities) => {
@@ -252,6 +192,7 @@ const RegisterQuest = () => {
 
     return (
         <><Header navigations={navigations} /><div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
+            {loading && <AppLoader customClass={"fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"} />}
             <div className=" flex flex-auto max-md:flex-col flex-shrink-0 antialiased bg-transparent">
                 <div className=" md:sticky max-md:mt-20 flex flex-col top-20 left-0 max-md:w-[100%] md:w-[20%] xl:w-[30%] min-h-[100vh] max-h-[100vh] bg-white h-full border">
                     <div className=" overflow-auto flex-grow">

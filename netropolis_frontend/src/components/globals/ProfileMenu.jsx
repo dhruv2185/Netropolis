@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   UserCircleIcon,
   ChevronDownIcon,
@@ -22,10 +22,12 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCredentials, clearTokens } from "../../features/slices/authSlice";
-
+import { toast } from "react-toastify";
+const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 const ProfileMenu = () => {
   const dispatch = useDispatch();
   const role = useSelector((state) => state.auth.userInfo.role);
+  const tokens = useSelector((state) => state.auth.tokens);
   const profileMenuItems = [
     {
       label: "My Profile",
@@ -74,6 +76,34 @@ const ProfileMenu = () => {
     navigate('/');
     // Perform any additional logout operations you need here
   };
+  const [notifications, setNotifications] = useState(0);
+  useEffect(() => {
+    if (role === "cm") {
+      getNotifications();
+    }
+  }, [role]);
+  const getNotifications = async () => {
+    try {
+      const res = await fetch(`${baseUrl}/get_unviewed/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${tokens.access}`
+        }
+      })
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
+        setNotifications(data.length);
+      }
+      else {
+        throw Error(data.message)
+      }
+    }
+    catch (err) {
+      toast.error("Failed to fetch notifications.");
+    }
+  }
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -94,9 +124,9 @@ const ProfileMenu = () => {
             alt="tania andrew"
             className="border border-gray-900 p-0.5 size-12 rounded-full"
             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
-          /><span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-            2
-          </span>
+          />{notifications !== 0 && <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+            {notifications}
+          </span>}
           <ChevronDownIcon
             strokeWidth={2.5}
             className={`h-3 w-3 transition-transform ${isMenuOpen ? "rotate-180" : ""
@@ -126,8 +156,8 @@ const ProfileMenu = () => {
                 color={isLastItem ? "red" : "inherit"}
               >{!isLastItem && <Link to={link}>{label}</Link>}
                 {isLastItem && <p onClick={handleLogout}>{label}</p>}
-              </Typography>{label === "Applications" && <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-                2
+              </Typography>{label === "Applications" && notifications !== 0 && <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+                {notifications}
               </span>}
             </MenuItem>
           );

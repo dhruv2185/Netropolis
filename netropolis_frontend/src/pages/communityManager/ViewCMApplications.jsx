@@ -18,75 +18,13 @@ import CMApplicationList from "../../components/globals/CMApplicationList";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
 const ViewCMApplications = () => {
-
-    const dummyApplications = [
-        {
-            quest_name: "Pokemon Quest",
-            region: "Kanto",
-            genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-            rewards: 8000,
-            other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-            available_till: "Thu Feb 22 2024",
-            stay_start_date: "dd-mm-yyyy",
-            stay_end_date: "dd-mm-yyyy",
-            special_note: "Any specific information you want to share with us?",
-            desired_tasks: ["Task 1", "Task 2", "Task 3"],
-            daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
-            team_name: "Select Team",
-            description: "ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
-            status: "UNDER REVIEW"
-        }, {
-            quest_name: "Pokemon Quest",
-            region: "Kanto",
-            genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-            rewards: 8000,
-            other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-            available_till: "Thu Feb 22 2024",
-            stay_start_date: "dd-mm-yyyy",
-            stay_end_date: "dd-mm-yyyy",
-            special_note: "Any specific information you want to share with us?",
-            desired_tasks: ["Task 1", "Task 2", "Task 3"],
-            daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
-            team_name: "Select Team",
-            description: "ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
-            status: "UNDER REVIEW"
-        }, {
-            quest_name: "Pokemon Quest",
-            region: "Kanto",
-            genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-            rewards: 8000,
-            other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-            available_till: "Thu Feb 22 2024",
-            stay_start_date: "dd-mm-yyyy",
-            stay_end_date: "dd-mm-yyyy",
-            special_note: "Any specific information you want to share with us?",
-            desired_tasks: ["Task 1", "Task 2", "Task 3"],
-            daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
-            team_name: "Select Team",
-            description: "ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
-            status: "UNDER REVIEW"
-        }, {
-            quest_name: "Pokemon Quest",
-            region: "Kanto",
-            genre_tags: ["Pikachu", "Bulbasaur", "Charizard", "Squirtle", "Mewtwo"],
-            rewards: 8000,
-            other_information: "I wanna be the very best, like no one ever was. To catch them is my real test, to train them is my cause.",
-            available_till: "Thu Feb 22 2024",
-            stay_start_date: "dd-mm-yyyy",
-            stay_end_date: "dd-mm-yyyy",
-            special_note: "Any specific information you want to share with us?",
-            desired_tasks: ["Task 1", "Task 2", "Task 3"],
-            daily_time_span: "10:00 AM - 12:00 PM, 3:00 PM - 5:00 PM",
-            team_name: "Select Team",
-            description: "ERFVS wsdfc SWEDF e fcwesF WEF ewfWE FEDF  ewdfedw sdfFE WEDF EWD fewd fewDFCEWD fcWEF EW EDf WEDF wf",
-            status: "UNDER REVIEW"
-        },
-        // More applications...
-    ]
+    const [applications, setApplications] = useState()
+    const [loading, setLoading] = useState(false);
 
     const tokens = useSelector((state) => state.auth.tokens);
 
     const fetchApplications = async () => {
+        setLoading(true);
         try {
             const res = await fetch(`${baseUrl}/get_applications_by_cm/`, {
                 method: "GET",
@@ -113,9 +51,10 @@ const ViewCMApplications = () => {
             console.log(err);
             toast.error(err.message);
         }
+        setLoading(false);
     }
 
-    const [applications, setApplications] = useState()
+
 
     const userInfo = useSelector((state) => state.auth.userInfo);
 
@@ -138,7 +77,7 @@ const ViewCMApplications = () => {
         <><Header navigations={navigations} />
             <div className="flex bg-transparent h-auto w-full" >
                 {/* left side */}
-                <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
+                <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>{loading && <AppLoader customClass={"fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"} />}
                     <div className="flex flex-col h-auto min-h-[100vh] w-full flex-1 mb-5 mt-32">
                         {/* <div className="flex justify-end p-1"></div> */}
 

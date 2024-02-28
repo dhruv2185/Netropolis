@@ -19,12 +19,13 @@ class QuestSchedulingView(APIView):
         # if (Schedule.objects.filter(application_id=request.data['application_id']).exists()):
         #     return Response("Schedule already exists", status=status.HTTP_406_NOT_ACCEPTABLE)
         if serializer.is_valid():
-            print(serializer.validated_data['application_id'])
+            # print(serializer.validated_data['application_id'].id)
+            serializer.save()
             application = Application.objects.get(
-                id=serializer.validated_data['application_id'].id)
+                id=serializer.data['application_id'])
             application.status = "Scheduled"
             application.save()
-            serializer.save()
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

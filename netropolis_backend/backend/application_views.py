@@ -61,8 +61,9 @@ def get_by_community_manager(request):
         applications = Application.objects.filter(
             quest_id__created_by=cm).select_related('quest_id').select_related('teamId')
         for application in applications:
-            application.status = "viewed"
-            application.save()
+            if application.status == "unviewed":
+                application.status = "viewed"
+                application.save()
         if applications.exists():
             serializer = ApplicationQuestSerializer(applications, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)

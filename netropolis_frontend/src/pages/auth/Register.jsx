@@ -47,6 +47,7 @@ const Register = () => {
     }
 
     const success = async (codeResponse) => {
+        setLoading(true);
         try {
             const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
                 method: 'GET',
@@ -89,9 +90,10 @@ const Register = () => {
             navigate("/");
             toast.success("Signup is successful");
         } catch (err) {
-            setLoading(false);
+
             toast.error(err?.data?.message || err.error?.message);
         }
+        setLoading(false);
     }
 
     const login = useGoogleLogin({
@@ -105,6 +107,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         if (!userData.username || !userData.email || !userData.password || !userData.password2 || !userData.first_name || !userData.last_name) {
             return toast.error("All fields are required");
         }
@@ -123,7 +126,7 @@ const Register = () => {
             password: userData.password,
             password2: userData.password2,
         };
-        setLoading(true);
+
         try {
             const data = await signUpRequest(userInfo);
             if (data.error?.message) {
@@ -144,9 +147,10 @@ const Register = () => {
             navigate("/");
             toast.success("Signup is successful");
         } catch (err) {
-            setLoading(false);
+
             toast.error(err?.data?.message || err.error?.message);
         }
+        setLoading(false);
     };
     return (
         <>
@@ -154,6 +158,7 @@ const Register = () => {
             <div className="flex w-full bg-white">
                 {/* left side */}
                 <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center " style={{ backgroundImage: 'url("https://wallpaperaccess.com/full/3422595.jpg")', position: 'relative' }}>
+                    {loading && <AppLoader customClass={"fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"} />}
                     <div className="flex flex-col h-[100vh] justify-between w-full flex-1">
                         <div className="flex justify-end p-1">
                             {/* <div

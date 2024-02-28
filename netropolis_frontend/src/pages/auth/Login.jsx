@@ -19,7 +19,7 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
 
   const [{ isLoading }] = useLoginMutation();
@@ -36,6 +36,7 @@ const Login = () => {
   }, [navigate, userInfo]);
 
   const success = async (codeResponse) => {
+    setLoading(true);
     try {
       const newTokens = {
         ...tokens,
@@ -84,6 +85,7 @@ const Login = () => {
     } catch (err) {
       toast.error(err?.data?.message || err.error?.message);
     }
+    setLoading(false);
   }
 
   // Login with Google
@@ -99,7 +101,7 @@ const Login = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     console.log("submitHandler");
-
+    setLoading(true);
     if (!username || !password) {
       return toast.error("All fields are required");
     }
@@ -130,12 +132,14 @@ const Login = () => {
       console.log(err);
       toast.error(err?.data?.message || err.error?.message || err?.message || err);
     }
+    setLoading(false);
   };
 
   return (
     <>
       <Header navigations={navigations} ></Header>
       <div className="relative xs:flex justify-center items-center flex-1 w-full bg-cover bg-center h-screen" style={{ backgroundImage: 'url("https://wallpaperaccess.com/full/3422583.jpg")', position: 'relative' }}>
+        {loading && <AppLoader customClass={"fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"} />}
         <div className="flex h-screen bg-transparent">
 
           <div className="w-full flex justify-center items-center bg-transparent">

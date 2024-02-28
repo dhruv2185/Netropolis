@@ -47,7 +47,7 @@ const ScheduleQuestPage = () => {
     const navigate = useNavigate();
     const { userInfo, tokens } = useSelector((state) => state.auth);
     const { applicationId } = useParams();
-
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
             toast.error("Please login as Community Manager to continue.")
@@ -59,6 +59,7 @@ const ScheduleQuestPage = () => {
     }, [navigate, userInfo]);
 
     const fetchApplicationData = async (application_id) => {
+        setLoading(true);
         try {
             const response = await fetch(`${BASE_URL}/get_application_by_id/?pk=${application_id}`, {
                 method: 'GET',
@@ -81,6 +82,7 @@ const ScheduleQuestPage = () => {
         catch (err) {
             toast.error(err.message);
         }
+        setLoading(false);
     }
 
     const [applicationData, setApplicationData] = useState()
@@ -180,6 +182,7 @@ const ScheduleQuestPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const bodyToBeSent = {
             ...schedule,
             quest_id: quest_data.id,
@@ -231,12 +234,14 @@ const ScheduleQuestPage = () => {
         catch (err) {
             toast.error(err.message);
         }
+        setLoading(false);
 
     };
 
     return (
         <><Header navigations={navigations} />
-            {!applicationData && <div className="w-full min-h-[80vh] flex justify-center items-center"><AppLoader /></div>}
+
+            {loading && <AppLoader customClass={"fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"} />}
             {applicationData && <div className="flex bg-transparent h-auto w-full" >
                 {/* left side */}
                 <div className="sm:flex justify-center items-center bg-scroll flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${mesh})` }}>
