@@ -12,6 +12,7 @@ import { AppError } from "../../utils/AppError";
 import Button from "../../components/globals/Button";
 import Header from "../../components/globals/Header";
 import navigations from "../../data/navigations.json";
+import bg from "../../assets/images/registerbg.jpg";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 import { signUpRequest, fetchUserProfile } from "../../features/userFunctions";
 
@@ -157,7 +158,7 @@ const Register = () => {
             <Header navigations={navigations} ></Header>
             <div className="flex w-full bg-white">
                 {/* left side */}
-                <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center " style={{ backgroundImage: 'url("https://wallpaperaccess.com/full/3422595.jpg")', position: 'relative' }}>
+                <div className="relative sm:flex justify-center items-center flex-1 w-full bg-cover bg-center " style={{ backgroundImage: `url(${bg})`, position: 'relative' }}>
                     {loading && <AppLoader customClass={"fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"} />}
                     <div className="flex flex-col h-[100vh] justify-between w-full flex-1">
                         <div className="flex justify-end p-1">

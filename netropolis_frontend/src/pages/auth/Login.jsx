@@ -11,6 +11,7 @@ import Button from "../../components/globals/Button";
 import Title from "../../components/globals/Title";
 import navigations from "../../data/navigations.json";
 import Header from "../../components/globals/Header";
+import bg from "../../assets/images/loginbg.jpg";
 import { loginRequest, fetchUserProfile } from "../../features/userFunctions";
 const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
 
@@ -138,7 +139,7 @@ const Login = () => {
   return (
     <>
       <Header navigations={navigations} ></Header>
-      <div className="relative xs:flex justify-center items-center flex-1 w-full bg-cover bg-center h-screen" style={{ backgroundImage: 'url("https://wallpaperaccess.com/full/3422583.jpg")', position: 'relative' }}>
+      <div className="relative xs:flex justify-center items-center flex-1 w-full bg-cover bg-center h-screen" style={{ backgroundImage: `url(${bg})`, position: 'relative' }}>
         {loading && <AppLoader customClass={"fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50"} />}
         <div className="flex h-screen bg-transparent">
 
