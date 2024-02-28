@@ -75,6 +75,7 @@ The goal of the project is to propose functions to build a matching platform tha
 ### Built With
 
 - React + Vite
+- Tailwind CSS
 - Django Rest Framework
 - PostgreSQL
 - Python
