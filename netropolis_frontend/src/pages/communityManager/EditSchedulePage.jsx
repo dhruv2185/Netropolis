@@ -50,7 +50,7 @@ const EditSchedulePage = () => {
                 throw new Error('Failed to fetch Application data. Please try again later.');
             }
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setApplicationData(data);
             setTeamData(data.teamId);
             setQuestData(data.quest_id);
@@ -74,7 +74,7 @@ const EditSchedulePage = () => {
                 throw new Error('Failed to fetch Schedule data. Please try again later.');
             }
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setSchedule(data);
             setDays(data.day_to_day_schedule);
         }
@@ -184,7 +184,7 @@ const EditSchedulePage = () => {
             quest_id: quest_data.id,
             day_to_day_schedule: days,
         }
-        console.log(bodyToBeSent);
+        // console.log(bodyToBeSent);
         try {
             const response = await fetch(`${BASE_URL}/quest_scheduling/?pk=${applicationId}`, {
                 method: 'PUT',
@@ -198,10 +198,10 @@ const EditSchedulePage = () => {
             )
             const data = await response.json();
             if (!response.ok) {
-                console.log(data);
+                // console.log(data);
                 throw new Error('Something went wrong');
             }
-            console.log(data);
+            // console.log(data);
             toast.success("Schedule Edited Successfully");
         }
         catch (err) {

@@ -38,7 +38,7 @@ const SearchQuestsPage = ({ destinations, destinationCategories }) => {
         },
       });
       const data = await res.json();
-      console.log(data);
+
       if (!res.ok) {
         throw new Error('Something went wrong. Please try again later.')
       }

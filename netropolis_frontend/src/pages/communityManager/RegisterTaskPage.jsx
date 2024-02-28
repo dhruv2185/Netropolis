@@ -27,7 +27,7 @@ const RegisterTaskPage = () => {
 
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
-            console.log("redirecting to login");
+            // console.log("redirecting to login");
             toast.error("Please login as Community Manager to continue.")
             navigate('/')
         }
@@ -53,7 +53,7 @@ const RegisterTaskPage = () => {
                 task.created_by = userInfo?.cm_id;
             })
             const toBeSent = tasks;
-            console.log(toBeSent);
+            // console.log(toBeSent);
             const res = await fetch("http://localhost:8000/tasks/", {
                 method: "POST",
                 headers: {
@@ -65,7 +65,7 @@ const RegisterTaskPage = () => {
             )
             const data = await res.json();
             if (!res.ok) {
-                console.log(data);
+                // console.log(data);
                 throw Error("Error in creating tasks. Please Try Again");
             }
             toast.success("Tasks Created Successfully");
@@ -73,7 +73,7 @@ const RegisterTaskPage = () => {
         }
         catch (err) {
             toast.error(err.message);
-            console.log(err);
+            // console.log(err);
         }
 
     };

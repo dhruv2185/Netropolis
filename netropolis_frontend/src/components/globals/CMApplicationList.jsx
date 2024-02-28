@@ -18,7 +18,7 @@ const CMApplicationList = ({ applications }) => {
 };
 
 const ApplicationCard = ({ application }) => {
-  console.log(application);
+  // console.log(application);
   const status = {
     "viewed": "REVIEW PENDING",
     "Scheduled": "SCHEDULED",

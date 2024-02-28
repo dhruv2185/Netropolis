@@ -27,9 +27,8 @@ const ExploreQuestsPage = () => {
         },
       });
       const data = await res.json();
-      console.log(data);
       if (!res.ok) {
-        console.log("heh")
+
         throw new Error('Something went wrong. Please try again later.')
       }
       else {

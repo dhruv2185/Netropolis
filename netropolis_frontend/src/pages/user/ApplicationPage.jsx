@@ -33,7 +33,7 @@ const ApplicationPage = (props) => {
     // const { questData } = props;
     const location = useLocation();
     const quest_data = location.state;
-    console.log(quest_data);
+    // console.log(quest_data);
 
 
     const [teams, setTeams] = useState();
@@ -71,7 +71,7 @@ const ApplicationPage = (props) => {
             });
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
+                // console.log(data);
                 if (Array.isArray(data)) {
                     setTeams(data);
                 }
@@ -118,7 +118,7 @@ const ApplicationPage = (props) => {
         // appInfo.user_id = userInfo.id;
         try {
             const u = `${BASE_URL}/applications/`;
-            console.log(u);
+            // console.log(u);
             const response = await fetch(`${BASE_URL}/applications/`, {
                 method: "POST",
                 headers: {
@@ -128,7 +128,7 @@ const ApplicationPage = (props) => {
                 body: JSON.stringify(appInfo)
             });
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             if (response.ok) {
                 toast.success("Application submitted successfully");
                 navigate("/");

@@ -37,7 +37,7 @@ const ViewUserApplications = () => {
                 }
             })
             const data = await res.json();
-            console.log(data);
+
             if (res.ok) {
                 if (Array.isArray(data)) {
                     setApplications(data);
@@ -57,7 +57,7 @@ const ViewUserApplications = () => {
 
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "user") {
-            console.log("redirecting to login");
+
             toast.error("Please login to continue.")
             navigate('/')
         }

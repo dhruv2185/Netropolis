@@ -10,14 +10,14 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 const TeamArticle = ({ teams, fetchTeams }) => {
-  console.log(teams)
+  // console.log(teams)
   // const [teams, setTeams] = useState([]);
   // if (Array.isArray(teamsData)) {
   //   setTeams(teamsData);
   // } else {
   //   setTeams([teamsData]);
   // }
-  console.log(teams);
+  // console.log(teams);
   // console.log(typeof teams);
 
   return (
@@ -39,11 +39,11 @@ const TeamArticle = ({ teams, fetchTeams }) => {
 const TeamCard = ({ team, index, fetchTeams }) => {
   const baseUrl = import.meta.env.VITE_BASE_BACKEND_URL;
   const tokens = useSelector((state) => state.auth.tokens);
-  console.log(team);
+  // console.log(team);
   const removeFields = async (e, index) => {
     e.preventDefault();
     try {
-      console.log("try hua");
+      // console.log("try hua");
       const res = await fetch(`${baseUrl}/teams/?pk=${team.id}`, {
         method: 'DELETE',
         headers: {
@@ -57,14 +57,14 @@ const TeamCard = ({ team, index, fetchTeams }) => {
       }
       else {
         const e = await res.json();
-        console.log(e);
+        // console.log(e);
         throw Error("Failed to delete team. Please try again later.")
       }
     }
     catch (err) {
       toast.error(err.message);
     }
-    console.log("removeFields", index);
+    // console.log("removeFields", index);
   }
   return (
     <article className="w-full flex flex-col justify-center items-center border-b py-8">

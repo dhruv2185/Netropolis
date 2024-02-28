@@ -93,7 +93,7 @@ const ArticleCard = ({ data, selectedTags, setSelectedTags, setFilteredData, all
       newSelectedTags.push(tag);
     }
     setSelectedTags(newSelectedTags);
-    console.log(newSelectedTags, allData)
+    // console.log(newSelectedTags, allData)
     setFilteredData(allData.filter(item => newSelectedTags.every(t => item.genre_tags.includes(t))));
   };
   const randomIndex = Math.floor(Math.random() * data.quest_name.split(" ").length);

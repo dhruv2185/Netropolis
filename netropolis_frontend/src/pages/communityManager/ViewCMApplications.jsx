@@ -35,7 +35,7 @@ const ViewCMApplications = () => {
             })
             const data = await res.json();
             if (!res.ok) {
-                console.log(data);
+                // console.log(data);
                 throw Error("Failed to fetch applications. Please try again!");
             }
             else {
@@ -48,7 +48,7 @@ const ViewCMApplications = () => {
             }
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             toast.error(err.message);
         }
         setLoading(false);
@@ -62,7 +62,7 @@ const ViewCMApplications = () => {
 
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
-            console.log("redirecting to login");
+            // console.log("redirecting to login");
             toast.error("Please login as Community Manager to continue.")
             navigate('/')
         }

@@ -11,7 +11,6 @@ const App = () => {
   const dispatch = useDispatch();
   const fetchUserProfileData = async () => {
     const data = await fetchUserProfile(tokens);
-    console.log(data)
     if (data.error?.statusCode === 401) {
       dispatch(clearCredentials());
       dispatch(clearTokens());

@@ -35,7 +35,7 @@ const ViewCMQuests = () => {
         },
       });
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       if (!res.ok) {
         throw new Error('Something went wrong. Please try again later.')
       }
@@ -47,7 +47,7 @@ const ViewCMQuests = () => {
       }
     }
     catch (err) {
-      console.log(err)
+      // console.log(err)
       toast.error("Failed to fetch quest details.Please check your connection and try again later.");
     }
     setLoading(false);

@@ -45,7 +45,7 @@ export const fetchUserProfile = async (tokens) => {
 }
 
 export const signUpRequest = async (userInfo) => {
-    console.log("userInfo", userInfo);
+    // console.log("userInfo", userInfo);
     const res = await fetch(`${baseUrl}/register/`, {
         method: "POST",
         headers: {

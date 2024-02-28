@@ -16,56 +16,6 @@ import navigations from "../../data/navigations.json";
 import TeamArticle from "../../components/globals/TeamArticle";
 
 const ViewTeams = () => {
-    const dummyTeams = [
-        {
-            id: 1,
-            team_name: "Team A",
-            composition: "Designers, Developers, Project Managers",
-            expectations_for_the_platform: "To deliver high-quality projects on time",
-            concerns: "Resource allocation, Communication",
-            members: [
-                {
-                    name: "John Doe",
-                    age: 30,
-                    gender: "Male",
-                    occupation: "Designer",
-                    residence: "New York",
-                },
-                {
-                    name: "Jane Smith",
-                    age: 28,
-                    gender: "Female",
-                    occupation: "Developer",
-                    residence: "San Francisco",
-                },
-                // More members...
-            ],
-        },
-        {
-            id: 2,
-            team_name: "Team B",
-            composition: "Marketing Specialists, Content Writers",
-            expectations_for_the_platform: "To increase brand visibility and engagement",
-            concerns: "Content quality, Audience targeting",
-            members: [
-                {
-                    name: "Alice Johnson",
-                    age: 35,
-                    gender: "Female",
-                    occupation: "Marketing Specialistddddd dfvdvfr dvgfvfdvd",
-                    residence: "Los Angeles",
-                },
-                {
-                    name: "Bob Thompson",
-                    age: 32,
-                    gender: "Male",
-                    occupation: "Content Writer",
-                    residence: "Chicago",
-                },
-                // More members...
-            ],
-        },
-    ]
     const [teams, setTeams] = useState()
 
     const BASE_URL = import.meta.env.VITE_BASE_BACKEND_URL;
@@ -80,15 +30,15 @@ const ViewTeams = () => {
                 }
             });
             if (response.ok) {
-                console.log(response);
+
                 const data = await response.json();
-                console.log(data);
+
                 if (Array.isArray(data)) {
                     setTeams(data);
                 }
                 else {
                     const newdata = [data];
-                    console.log(newdata)
+
                     setTeams(newdata);
                 }
             }
@@ -107,7 +57,7 @@ const ViewTeams = () => {
 
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "user") {
-            console.log("redirecting to login");
+
             toast.error("Please login to continue.")
             navigate('/')
         }
@@ -116,7 +66,7 @@ const ViewTeams = () => {
     }, [tokens]);
 
 
-    // console.log("tokens", tokens);
+
 
     return (
         <><Header navigations={navigations} />

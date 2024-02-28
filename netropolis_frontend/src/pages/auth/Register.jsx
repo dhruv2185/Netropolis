@@ -100,7 +100,7 @@ const Register = () => {
     const login = useGoogleLogin({
         onSuccess: success,
         onError: (error) => {
-            console.log('Login Failed:', error)
+            // console.log('Login Failed:', error)
             toast.error("Login Failed");
         },
         scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events',

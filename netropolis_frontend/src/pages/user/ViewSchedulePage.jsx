@@ -73,11 +73,11 @@ const ViewSchedulePage = () => {
         let err = false;
         for (let i = 0; i < Schedule.length; i++) {
             const currDate = Schedule[i].date;
-            console.log(Schedule[i]);
+            // console.log(Schedule[i]);
             for (let j = 0; j < Schedule[i].events.length; j++) {
                 const eventInfo = Schedule[i].events[j];
                 const event = convertToEvent(eventInfo, currDate);
-                console.log(event);
+                // console.log(event);
                 try {
                     const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
                         method: 'POST',
@@ -93,7 +93,7 @@ const ViewSchedulePage = () => {
                         throw new Error('Something went wrong');
                     }
                     const data = await response.json();
-                    console.log(data);
+                    // console.log(data);
 
                     setDisabled(true);
                 }
@@ -127,7 +127,7 @@ const ViewSchedulePage = () => {
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log(data);
+
                 throw new Error('Something went wrong');
             }
             setSchedule(data);
@@ -157,7 +157,6 @@ const ViewSchedulePage = () => {
             });
             const data = await response.json();
             if (!response.ok) {
-                console.log(data);
                 throw new Error('Failed to send Reschedule request');
             }
             toast.success("Reschedule request sent successfully.");

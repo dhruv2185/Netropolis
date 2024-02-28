@@ -56,9 +56,9 @@ const RegisterQuest = () => {
                     "Authorization": "Bearer " + tokens.access
                 },
             });
-            console.log("chala toh hai");
+            // console.log("chala toh hai");
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
             if (!res.ok) {
                 throw new Error('Something went wrong. Please try again later.')
             }
@@ -70,7 +70,7 @@ const RegisterQuest = () => {
             }
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             toast.error("Failed to fetch tasks. Please check your connection and try again later.");
         }
     }
@@ -79,7 +79,7 @@ const RegisterQuest = () => {
 
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "cm") {
-            console.log("redirecting to login");
+            // console.log("redirecting to login");
             toast.error("Please login as Community Manager to continue.")
             navigate('/')
         }
@@ -145,7 +145,7 @@ const RegisterQuest = () => {
                 return;
             }
         })
-        console.log(questData);
+        // console.log(questData);
         const toBeSent = {
             ...questData,
             natural_activities: naturalActivities,

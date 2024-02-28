@@ -43,7 +43,7 @@ const Login = () => {
         ...tokens,
         access_google: codeResponse.access_token,
       };
-      console.log("newTokens", newTokens);
+      // console.log("newTokens", newTokens);
       dispatch(setTokens({ ...newTokens }));
 
       // fetch user profile stored in google
@@ -59,7 +59,7 @@ const Login = () => {
         throw Error('Failed to get user profile')
       }
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
 
       const username = data.email.split('@')[0];
       const pwd = data.sub + "@" + username;
@@ -93,7 +93,7 @@ const Login = () => {
   const login = useGoogleLogin({
     onSuccess: success,
     onError: (error) => {
-      console.log('Login Failed:', error)
+      // console.log('Login Failed:', error)
       toast.error("Login Failed");
     },
     scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events',
@@ -101,20 +101,20 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("submitHandler");
+    // console.log("submitHandler");
     setLoading(true);
     if (!username || !password) {
       return toast.error("All fields are required");
     }
     try {
       const tokens = await loginRequest({ username, password });
-      console.log(tokens);
+      // console.log(tokens);
       if (tokens.error) {
         const msg = tokens.error.message ? tokens.error.message : "Failed to login. Please try again later.";
         throw new Error(tokens.error.message)
       }
       const user = await fetchUserProfile(tokens);
-      console.log(user);
+      // console.log(user);
       if (user.error) {
         const msg = user.error.message ? user.error.message : "Failed to login. Please try again later.";
         throw new Error(msg)
@@ -130,7 +130,7 @@ const Login = () => {
         navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       toast.error(err?.data?.message || err.error?.message || err?.message || err);
     }
     setLoading(false);

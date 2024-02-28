@@ -20,7 +20,7 @@ const TeamRegistrationPage = () => {
     const userInfo = useSelector((state) => state.auth.userInfo);
     useEffect(() => {
         if (userInfo === null || userInfo.role !== "user") {
-            console.log("redirecting to login");
+            // console.log("redirecting to login");
             toast.error("Please login to create a team.")
             navigate('/login')
         }
@@ -54,7 +54,7 @@ const TeamRegistrationPage = () => {
 
     const handleSubmit = async (e) => {
 
-        console.log("yeh chal gaya bc");
+
         e.preventDefault();
         try {
             if (teamData.team_name === "" || teamData.composition === "" || teamData.expectations_for_the_platform === "" || teamData.concerns === "") {
@@ -68,7 +68,6 @@ const TeamRegistrationPage = () => {
             );
             setLoading(true);
             const b = { ...teamData, teamInfo: inputFields, number_of_people: inputFields.length };
-            console.log(b);
             const res = await fetch(`${VITE_BASE_BACKEND_URL}/teams/`, {
                 method: "POST",
                 headers: {
@@ -78,20 +77,20 @@ const TeamRegistrationPage = () => {
                 body: JSON.stringify({ ...teamData, team_info: inputFields, number_of_people: inputFields.length }),
             });
             if (!res.ok) {
-                console.log(res);
+                // console.log(res);
                 const d = await res.json();
-                console.log(d);
+                // console.log(d);
                 throw new Error("Error in creating team");
             }
             const data = await res.json();
-            console.log(data);
+            // console.log(data);
             toast.success("Team created successfully");
             setLoading(false);
             // yahape view teams wale pe redirect karna hai
             navigate("/viewteams");
         }
         catch (err) {
-            console.log(err);
+            // console.log(err);
             toast.error(err.message);
             return;
         }
