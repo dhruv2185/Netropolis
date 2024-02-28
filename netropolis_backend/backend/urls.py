@@ -1,5 +1,6 @@
 from django.urls import path
-from . import community_manager_views, login_views, application_views, quest_registration_views, quest_scheduling_views, quest_searching_views, tasks_entry
+
+from .views import tasks_entry, community_manager_views, login_views, application_views, quest_registration_views, quest_scheduling_views, quest_searching_views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 urlpatterns = [
