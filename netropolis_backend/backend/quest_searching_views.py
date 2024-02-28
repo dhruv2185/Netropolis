@@ -15,6 +15,8 @@ import os
 from dotenv import load_dotenv
 from .paginations import CustomPagination
 load_dotenv()
+path = os.path.dirname(os.path.abspath(__file__))
+path = os.path.join(path, "transformer")
 
 
 class QuestSearchingView(APIView):
@@ -22,7 +24,7 @@ class QuestSearchingView(APIView):
     pagination_class = CustomPagination
     serializer_class = QuestsSerializer
     serializer_class2 = CommunityManagersSerializer
-    encoder = SentenceTransformer("./transformer/")
+    encoder = SentenceTransformer(path)
     qdrant = QdrantClient(
         url=os.getenv("QDRANT_HOST"),
         api_key=os.getenv("QDRANT_API_KEY"),

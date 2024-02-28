@@ -15,12 +15,14 @@ import os
 from .models import Community_Manager
 from dotenv import load_dotenv
 load_dotenv()
+path = os.path.dirname(os.path.abspath(__file__))
+path = os.path.join(path, "transformer")
 
 
 class QuestRegistrationView(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = QuestsSerializer
-    encoder = SentenceTransformer("./transformer/")
+    encoder = SentenceTransformer(path)
     qdrant = QdrantClient(
         url=os.getenv("QDRANT_HOST"),
         api_key=os.getenv("QDRANT_API_KEY"),
