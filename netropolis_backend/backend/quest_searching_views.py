@@ -22,7 +22,7 @@ class QuestSearchingView(APIView):
     pagination_class = CustomPagination
     serializer_class = QuestsSerializer
     serializer_class2 = CommunityManagersSerializer
-    encoder = SentenceTransformer("all-MiniLM-L6-v2")
+    encoder = SentenceTransformer("./transformer/")
     qdrant = QdrantClient(
         url=os.getenv("QDRANT_HOST"),
         api_key=os.getenv("QDRANT_API_KEY"),
