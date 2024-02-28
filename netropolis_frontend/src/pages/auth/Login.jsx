@@ -222,7 +222,7 @@ const Login = () => {
               </form>
 
               <p className="font-medium text-sm text-center mt-5 text-[white]">
-                Already have an account?{" "}
+                Don't have an account?{" "}
                 <Link to="/register" className="text-indigo-400">
                   Sign Up
                 </Link>

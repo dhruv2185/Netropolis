@@ -137,9 +137,34 @@ const ProfileMenu = () => {
       <MenuList className="p-1">
         {profileMenuItems.map(({ label, icon, link }, key) => {
           const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
+          return (<div key={key}>
+            {!isLastItem && <Link to={link} >
+              <MenuItem
+
+                className={`flex items-center gap-2 rounded ${isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+                  }`}
+              >
+                {React.createElement(icon, {
+                  className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                  strokeWidth: 2,
+                })}
+
+                <Typography
+                  as="span"
+                  variant="small"
+                  className="font-normal"
+                  color={isLastItem ? "red" : "inherit"}
+                >{label}
+
+                </Typography>{label === "Applications" && notifications !== 0 && <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+                  {notifications}
+                </span>}
+              </MenuItem>
+            </Link>}
+            {isLastItem && <MenuItem
+
               className={`flex items-center gap-2 rounded ${isLastItem
                 ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                 : ""
@@ -149,17 +174,18 @@ const ProfileMenu = () => {
                 className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
                 strokeWidth: 2,
               })}
+
               <Typography
                 as="span"
                 variant="small"
                 className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >{!isLastItem && <Link to={link}>{label}</Link>}
-                {isLastItem && <p onClick={handleLogout}>{label}</p>}
-              </Typography>{label === "Applications" && notifications !== 0 && <span className="inline-flex items-center justify-center w-4 h-4 ms-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-                {notifications}
-              </span>}
-            </MenuItem>
+                color={"red"}
+              >
+                <p onClick={handleLogout}>{label}</p>
+              </Typography>
+            </MenuItem>}
+          </div>
+
           );
         })}
       </MenuList>

@@ -186,28 +186,6 @@ const EditSchedulePage = () => {
         }
         console.log(bodyToBeSent);
         try {
-            // for (let i = 0; i < days.length; i++) {
-            //     const currDate = days[i].date;
-            //     for (let j = 0; j < days[i].events.length; j++) {
-            //         const eventInfo = days[i].events[j];
-            //         const event = convertToEvent(eventInfo, currDate);
-            //         const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
-            //             method: 'POST',
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //                 Accept: 'application/json',
-            //                 Authorization: `Bearer ${tokens.access_google}`
-            //             },
-            //             body: JSON.stringify(event)
-            //         }
-            //         )
-            //         if (!response.ok) {
-            //             throw new Error('Something went wrong');
-            //         }
-            //         const data = await response.json();
-            //         console.log(data);
-            //     }
-            // }
             const response = await fetch(`${BASE_URL}/quest_scheduling/?pk=${applicationId}`, {
                 method: 'PUT',
                 headers: {
@@ -262,6 +240,7 @@ const EditSchedulePage = () => {
                                 <h2 className="font-medium text-indigo-400 font-inter "> Available Till</h2>
                                 <p className="text-black font-inter mb-4">{new Date(quest_data.available_till).toDateString()}</p>
 
+
                             </div>
                                 <div className="flex flex-col gap-2 md:max-w-lg md:pl-[5%] w-full max-md:items-center max-md:justify-center max-md:p-10"><h2 className=" font-bold text-xl text-indigo-400 font-inter"> Team</h2>
                                     <div className="flex flex-col gap-2">
@@ -273,6 +252,8 @@ const EditSchedulePage = () => {
                                         <p className="text-black font-inter mb-4">{team_data.expectations_for_the_platform}</p>
                                         <h3 className="font-medium text-indigo-400 font-inter"> Concerns</h3>
                                         <p className="text-black font-inter mb-4">{team_data.concerns}</p>
+
+
 
                                     </div>
 
@@ -297,7 +278,7 @@ const EditSchedulePage = () => {
 
                             </div>
                             <h3 className="font-bold text-xl text-indigo-400 font-inter "> Members</h3>
-                            <div className="gap-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 m-3">
+                            <div className="gap-10 flex flex-wrap m-3 justify-center items-center">
                                 {
                                     team_data.team_info.map((member, index) => (
                                         <div key={index} className="flex flex-col gap-5 min-w-[300px]" style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }}>
@@ -335,7 +316,9 @@ const EditSchedulePage = () => {
                             </div>
 
                             {<AppError />}
-
+                            <div className="flex flex-col justify-center items-center">
+                                <h3 className=" font-extrabold text-indigo-400 font-inter"> Remarks/Requests</h3>
+                                <p className="text-black font-inter mb-4">{applicationData.remarks ? applicationData.remarks : "None"}</p></div>
                             <form
                                 onSubmit={handleSubmit}
                                 className="flex flex-col items-center justify-center "

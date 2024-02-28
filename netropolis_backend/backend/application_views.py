@@ -105,3 +105,29 @@ def get_unviewed(request):
             return Response([], status=status.HTTP_200_OK)
     except Application.DoesNotExist:
         return Response([], status=status.HTTP_200_OK)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def send_for_review(request):
+    pk = request.query_params.get('pk', None)
+    if not pk:
+        return Response({"error": "Parameter 'pk' is missing."}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        application = Application.objects.get(id=pk)
+    except Application.DoesNotExist:
+        return Response({"error": "Application not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    status_val = request.data.get('status')
+    remarks = request.data.get('remarks')
+
+    if status_val is None:
+        return Response({"error": "Status field is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    application.status = status_val
+    if remarks is not None:
+        application.remarks = remarks
+    application.save()
+
+    return Response({"message": "Application updated successfully."}, status=status.HTTP_200_OK)

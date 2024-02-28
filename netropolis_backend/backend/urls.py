@@ -36,4 +36,6 @@ urlpatterns = [
     path('get_application_by_id/', application_views.get_by_id,
          name='get_application_by_id'),
     path('get_unviewed/', application_views.get_unviewed, name='get_unviewed'),
+    path('send_application_for_review/', application_views.send_for_review,
+         name='send_application_for_review'),
 ]

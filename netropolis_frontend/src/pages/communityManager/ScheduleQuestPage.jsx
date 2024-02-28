@@ -16,31 +16,6 @@ import mesh from "../../assets/images/mesh.png";
 import { AppError } from "../../utils/AppError";
 import Footer from "../../components/globals/Footer";
 import AppLoader from "../../utils/AppLoader";
-const timeZone = "Asia/Tokyo"
-
-const convertToEvent = (eventIfo, date) => {
-    const toBeReturned = {
-        summary: eventIfo.name,
-        location: eventIfo.location,
-        description: eventIfo.description,
-        start: {
-            dateTime: `${date}T${eventIfo.from}:00`,
-            timeZone: timeZone,
-        },
-        end: {
-            dateTime: `${date}T${eventIfo.to}:00`,
-            timeZone: timeZone,
-        },
-        reminders: {
-            useDefault: false,
-            overrides: [
-                { method: 'popup', minutes: 10 },
-            ],
-        }
-    }
-    return toBeReturned;
-}
-
 
 const ScheduleQuestPage = () => {
     // route : baseUrl/applications/applicationId
@@ -190,28 +165,6 @@ const ScheduleQuestPage = () => {
         }
         console.log(bodyToBeSent);
         try {
-            // for (let i = 0; i < days.length; i++) {
-            //     const currDate = days[i].date;
-            //     for (let j = 0; j < days[i].events.length; j++) {
-            //         const eventInfo = days[i].events[j];
-            //         const event = convertToEvent(eventInfo, currDate);
-            //         const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
-            //             method: 'POST',
-            //             headers: {
-            //                 'Content-Type': 'application/json',
-            //                 Accept: 'application/json',
-            //                 Authorization: `Bearer ${tokens.access_google}`
-            //             },
-            //             body: JSON.stringify(event)
-            //         }
-            //         )
-            //         if (!response.ok) {
-            //             throw new Error('Something went wrong');
-            //         }
-            //         const data = await response.json();
-            //         console.log(data);
-            //     }
-            // }
             const response = await fetch(`${BASE_URL}/quest_scheduling/`, {
                 method: 'POST',
                 headers: {
@@ -304,7 +257,7 @@ const ScheduleQuestPage = () => {
 
                             </div>
                             <h3 className="font-bold text-xl text-indigo-400 font-inter "> Members</h3>
-                            <div className="gap-10 grid xl:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 m-3">
+                            <div className="gap-10 flex flex-wrap m-3 justify-center items-center">
                                 {
                                     team_data.team_info.map((member, index) => (
                                         <div key={index} className="flex flex-col gap-5 min-w-[300px]" style={{ border: "1px solid #A6A6A6", borderRadius: "8px", padding: "15px", borderStyle: "dashed" }}>

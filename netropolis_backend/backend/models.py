@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
+from sympy import rem
 # Create your models here.
 
 
@@ -63,6 +64,7 @@ class Application(models.Model):
     stay_end_date = models.DateField(null=True)
     special_note = models.TextField(null=True)
     desired_tasks = models.TextField(null=True)
+    remarks = models.TextField(null=True)
     teamId = models.ForeignKey(Team, on_delete=models.CASCADE)
 
 

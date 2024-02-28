@@ -6,7 +6,7 @@ const CMApplicationList = ({ applications }) => {
   return (
     <article className="w-full flex justify-center items-center">
       <div className="w-full flex flex-col gap-16 lg:gap-0  items-center max-w-8xl">
-        <div className="lg:w-2/3 w-full lg:border-r flex justify-center items-center px-8 flex-col">
+        <div className="lg:w-2/3 w-full flex justify-center items-center px-8 flex-col gap-2">
 
           {applications.map((application, idx) => (
             <ApplicationCard key={idx} application={application} />
@@ -19,8 +19,13 @@ const CMApplicationList = ({ applications }) => {
 
 const ApplicationCard = ({ application }) => {
   console.log(application);
+  const status = {
+    "viewed": "REVIEW PENDING",
+    "Scheduled": "SCHEDULED",
+    "review": "RESCHEDULE REQUESTED"
+  }
   return (
-    <article className="w-full flex flex-col justify-center items-center border-b py-8">
+    <article className="w-full flex flex-col justify-center items-center border rounded-md bg-slate-50 shadow-lg p-8">
       <header className="w-full gap-2 flex justify-start items-center">
         <h1 className="text-lg lg:text-xl font-bold mt-2 text-indigo-400">{application.quest_id.quest_name}</h1>
       </header>
@@ -66,7 +71,8 @@ const ApplicationCard = ({ application }) => {
       </main>
       <footer className="w-full mt-2 flex justify-between items-center">
         <div className="flex justify-center items-center gap-2 font-bold">
-          <h4 className="text-md text-indigo-400">STATUS : </h4><h4 className="text-neutral-600"> {application.status === "viewed" ? "REVIEW PENDING" : "SCHEDULED"}</h4>
+          <h4 className="text-md text-indigo-400">STATUS : </h4><h4 className="text-neutral-600">
+            {status[application.status]} </h4>
         </div>
         <Button text={application.status === "viewed" ? "Schedule" : "Edit Schedule"} path={application.status === "viewed" ? `/schedulequest/${application.id}` : `/editschedule/${application.id}`} customClass={"mx-4"} />
       </footer>
