@@ -3,7 +3,7 @@ from django.urls import path
 
 from . import application_views, community_manager_views, login_views, quest_registration_views, quest_scheduling_views, quest_searching_views, tasks_entry
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('refresh/', TokenRefreshView.as_view(), name='token_refresh'),
@@ -38,4 +38,10 @@ urlpatterns = [
     path('get_unviewed/', application_views.get_unviewed, name='get_unviewed'),
     path('send_application_for_review/', application_views.send_for_review,
          name='send_application_for_review'),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/',
+         SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/schema/redoc/',
+         SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+
 ]
