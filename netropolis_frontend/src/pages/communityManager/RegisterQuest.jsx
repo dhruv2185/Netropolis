@@ -24,6 +24,7 @@ const RegisterQuest = () => {
         description: "",
         genre_tags: [],
         rewards: "",
+        fee: "",
         other_information: "",
         available_till: "",
     });
@@ -123,7 +124,7 @@ const RegisterQuest = () => {
         e.preventDefault();
         setLoading(true);
         // validation
-        if (questData.quest_name === "" || questData.region === "" || questData.rewards === "" || questData.other_information === "" || questData.genre_tags.length === 0 || questData.available_till === "" || questData.description === "") {
+        if (questData.quest_name === "" || questData.region === "" || questData.rewards === "" || questData.other_information === "" || questData.genre_tags.length === 0 || questData.available_till === "" || questData.description === "" || questData.fee === "") {
             toast.error("Please fill in all the fields.");
             return;
         }
@@ -298,6 +299,17 @@ const RegisterQuest = () => {
                                                 onChange={handlePrimaryInputChange}
                                                 className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
                                                 placeholder="Rewards"
+                                            />
+                                        </div>
+                                        <div className="w-8/12" >
+                                            <p className="text-indigo-400 font-inter mb-[4px]">Quest Fee</p>
+                                            <input
+                                                type="text"
+                                                name="fee"
+                                                value={questData.fee}
+                                                onChange={handlePrimaryInputChange}
+                                                className="w-full text-black rounded-full pl-4 placeholder-[#A6A6A6] border border-[#A6A6A6] focus:outline-none h-[35px]"
+                                                placeholder="Fee"
                                             />
                                         </div>
                                         <div className="w-8/12" >

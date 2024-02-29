@@ -5,7 +5,8 @@ import {
     MapPinIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    XMarkIcon
+    XMarkIcon,
+    BanknotesIcon
 } from "@heroicons/react/24/outline";
 import React, { useState } from 'react';
 
@@ -145,7 +146,14 @@ const ArticleCard = ({ data }) => {
                             <span className="text-neutral-600 lg:text-sm text-xs">
                                 {Math.floor(Math.random() * 10) + 1}k
                             </span>
-                        </div></div>
+                        </div>
+                        <div className="flex justify-center items-center gap-1 mx-2">
+                            <BanknotesIcon className="w-5 text-neutral-600 cursor-pointer" />
+                            <span className="text-neutral-600 lg:text-sm text-xs">
+                                {data.fee}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </footer>
         </article>

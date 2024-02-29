@@ -45,6 +45,7 @@ class Quest(models.Model):
     region = models.TextField()
     genre_tags = models.JSONField()
     rewards = models.TextField()
+    fee = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     description = models.TextField()
     created_by = models.ForeignKey(

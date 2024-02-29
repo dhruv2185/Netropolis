@@ -52,6 +52,9 @@ const ApplicationCard = ({ application }) => {
               <strong>Special Note:</strong> {application.special_note}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
+              <strong>Quest Fees:</strong> {application.quest_id.fee}
+            </p>
+            <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">
               <strong>Desired Tasks:</strong> {application.desired_tasks}
             </p>
             <p className="w-full text-neutral-600 text-sm lg:text-base leading-5">

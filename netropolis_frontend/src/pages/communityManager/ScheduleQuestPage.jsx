@@ -217,6 +217,8 @@ const ScheduleQuestPage = () => {
                                 </div>
                                 <h2 className="font-medium text-indigo-400 font-inter "> Rewards</h2>
                                 <p className="text-black font-inter mb-4">{quest_data.rewards}</p>
+                                <h2 className="font-medium text-indigo-400 font-inter "> Quest Fees</h2>
+                                <p className="text-black font-inter mb-4">{quest_data.fee}</p>
                                 <h2 className="font-medium text-indigo-400 font-inter"> Other Information</h2>
                                 <p className="text-black font-inter mb-4">{quest_data.other_information}</p>
                                 <h2 className="font-medium text-indigo-400 font-inter "> Available Till</h2>
