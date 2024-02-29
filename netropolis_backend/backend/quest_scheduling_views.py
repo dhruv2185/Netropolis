@@ -46,6 +46,9 @@ class QuestSchedulingView(APIView):
     def put(self, request):
         pk = request.query_params.get('pk', None)
         schedules = Schedule.objects.get(application_id=pk)
+        application = Application.objects.get(id=pk)
+        application.status = "Scheduled"
+        application.save()
         serializer = self.serializer_class(schedules, data=request.data)
         if serializer.is_valid():
             serializer.save()

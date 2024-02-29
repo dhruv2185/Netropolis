@@ -39,7 +39,6 @@ class QuestRegistrationView(APIView):
         if serialzer.is_valid():
             serialzer.save()
             newQuest = dict(serialzer.data)
-            print(newQuest['quest_name'])
             try:
                 self.qdrant.upload_points(
                     collection_name="quests",
